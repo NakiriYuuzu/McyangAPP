@@ -1,0 +1,22 @@
+<resources>
+    <!--Default-->
+    <string name="app_name">Mcyang學生APP</string>
+
+    <!--LoginActivity-->
+    <string name="text_Account">賬號</string>
+    <string name="text_Password">密碼</string>
+    <string name="toggle_RememberMe">記住我</string>
+    <string name="btn_Login">登入</string>
+
+    <!--MainActivity_UI-->
+    <string name="main_text_Title">學生APP</string>
+    <string name="main_btn_Sign">開始簽到</string>
+    <string name="main_btn_Qa">開始搶答</string>
+    <string name="main_btn_Group">選組討論</string>
+    <string name="main_btn_EndClass">結束課程</string>
+    <string name="main_btn_SignOut">登出</string>
+    <string name="main_btn_Question">我要提問</string>
+
+    <!--MainActivity_Code-->
+    <string name="request_Gps_Not_Enabled">偵測GPS未打開，請麻煩打開GPS之後在使用APP。</string>
+</resources>
