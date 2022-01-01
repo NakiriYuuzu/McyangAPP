@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.Toast;
@@ -38,9 +39,13 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         initView();
-        requestHelper.checkInternet_Enabled();
-        initButton();
-        autoLogin();
+        if (requestHelper.checkInternet_Enabled()) {
+            initButton();
+            autoLogin();
+        } else {
+            Toast.makeText(getApplicationContext(), "偵測無網絡，請打開網絡在重試。", Toast.LENGTH_SHORT).show();
+            new Handler().postDelayed(this::finish, 3000);
+        }
     }
 
     private void autoLogin() {
@@ -58,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             shareData.saveAccount("");
                             shareData.savePassword("");
-                            Toast.makeText(getApplicationContext(), "自動登入失敗，請重新輸入...", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, "autoLogin Failed.");
 
                         } catch (Exception e) {
                             Log.e(TAG, e.toString());
@@ -69,7 +74,6 @@ public class LoginActivity extends AppCompatActivity {
 
         } catch (Exception e) {
             Log.e(TAG, e.toString());
-
         }
     }
 

@@ -16,7 +16,16 @@
     <string name="main_btn_EndClass">結束課程</string>
     <string name="main_btn_SignOut">登出</string>
     <string name="main_btn_Question">我要提問</string>
+    <string name="main_request_Gps_Not_Enabled">偵測GPS未打開，請麻煩打開GPS之後在使用APP。</string>
 
-    <!--MainActivity_Code-->
-    <string name="request_Gps_Not_Enabled">偵測GPS未打開，請麻煩打開GPS之後在使用APP。</string>
+    <!--SignActivity-->
+    <string name="sign_title">簽到</string>
+    <string name="sign_recycleView_Left">選擇</string>
+    <string name="sign_recycleView_Right">課程編號</string>
+
+    <!--BottomSheet-->
+    <string name="bottom_sheet_Names">請輸入姓名</string>
+    <string name="bottom_sheet_ID">請輸入學號</string>
+    <string name="bottom_sheet_Button">送出</string>
+
 </resources>

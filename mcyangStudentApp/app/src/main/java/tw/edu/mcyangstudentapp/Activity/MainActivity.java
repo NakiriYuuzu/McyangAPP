@@ -1,8 +1,8 @@
 package tw.edu.mcyangstudentapp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.card.MaterialCardView;
@@ -20,13 +20,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         initView();
-
         requestHelper.requestGPSPermission();
         requestHelper.checkGPS_Enabled();
         requestHelper.requestBluetooth();
+        initButton();
+    }
+
+    private void initButton() {
+        btn_Sign.setOnClickListener(v -> {
+            Intent ii = new Intent(getApplicationContext(), SignActivity.class);
+            startActivity(ii);
+        });
+
+        btn_SignOut.setOnClickListener(v -> finish());
     }
 
     private void initView() {

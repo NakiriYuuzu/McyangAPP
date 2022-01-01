@@ -11,7 +11,6 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
-import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
@@ -104,21 +103,24 @@ public class RequestHelper {
 
         if (!gps_enabled || !network_enabled) {
             new MaterialAlertDialogBuilder(activity)
-                    .setMessage(R.string.request_Gps_Not_Enabled)
+                    .setMessage(R.string.main_request_Gps_Not_Enabled)
                     .setPositiveButton("確認", (dialogInterface, i) -> activity.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)))
                     .setNegativeButton("取消", null)
                     .show();
         }
     }
 
-    public void checkInternet_Enabled() {
+    public boolean checkInternet_Enabled() {
+        boolean internet = false;
         ConnectivityManager cm = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
 
         if (networkInfo != null)
-            if (!networkInfo.isConnected()) {
-                Toast.makeText(activity, "偵測到沒網絡，請麻煩打開網絡。", Toast.LENGTH_SHORT).show();
-                new Handler().postDelayed(activity::finish, 3000);
-            }
+            if (networkInfo.isConnected())
+                internet = true;
+            else
+                Log.e(TAG, networkInfo.getReason());
+
+       return internet;
     }
 }
