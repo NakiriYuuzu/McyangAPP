@@ -69,12 +69,30 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/sign_recycleView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="500dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/sign_textView_NoFound"
+        android:text="@string/sign_textview_NoData"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/noto_sans"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialCardView"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -30,18 +30,19 @@ public class SignAdapter extends RecyclerView.Adapter<SignAdapter.SignViewHolder
 
     Activity activity;
     ShareData shareData;
-    ClassID_Status status;
+    ClassID_Status status = new ClassID_Status();
 
-    ArrayList<SignModel> signModels;
-
-    public SignAdapter(Activity activity) {
-        this.activity = activity;
-        this.signModels = new ArrayList<>();
-    }
+    private ArrayList<SignModel> signData;
 
     public SignAdapter(Activity activity, ArrayList<SignModel> signModels) {
         this.activity = activity;
-        this.signModels = signModels;
+        this.signData = signModels;
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void updateSignAdapter(ArrayList<SignModel> signModels) {
+        this.signData = signModels;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -53,22 +54,19 @@ public class SignAdapter extends RecyclerView.Adapter<SignAdapter.SignViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull SignViewHolder holder, int position) {
+        Log.e(TAG, " adapter size: " + signData.size());
+        holder.tvLeft.setText(signData.get(position).getMajor());
+        holder.tvRight.setText(status.getClassNames(signData.get(position).getMinor()));
+
         holder.btnSummit.setOnClickListener(v -> bottomSheet());
     }
 
     @Override
     public int getItemCount() {
-        if (signModels != null)
-            return signModels.size();
+        if (this.signData != null)
+            return this.signData.size();
         else
             return 0;
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    public void updateSignList(ArrayList<SignModel> signModels) {
-        this.signModels.clear();
-        this.signModels = signModels;
-        notifyDataSetChanged();
     }
 
     public void bottomSheet() {

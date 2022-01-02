@@ -17,11 +17,9 @@ import tw.edu.mcyangstudentapp.ActivityModel.SignModel;
 public class ShareData {
     private static final String TAG = "ShareData: ";
 
-    private Activity activity;
+    private final Activity activity;
 
     private ArrayList<SignModel> signModels;
-
-    public ShareData() { }
 
     public ShareData(Activity activity) {
         this.activity = activity;
@@ -111,8 +109,8 @@ public class ShareData {
     public void sign_saveData(ArrayList<SignModel> signModels) {
         this.signModels = signModels;
 
-        if (signModels.size() > 0)
-            Log.e(TAG, "Save Data Successfully!");
+        if (signModels.size() == 0)
+            Log.e(TAG, "No Data Can Save!");
 
         SharedPreferences sharedPreferences = activity.getSharedPreferences(ShareVariables.SIGN_SAVE_DATA, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -131,14 +129,16 @@ public class ShareData {
             Gson gson = new Gson();
             String json = sharedPreferences.getString(ShareVariables.SIGN_GET_DATA, null);
 
-            Type type = new TypeToken<ArrayList<SignModel>>() {}.getType();
+            Type type = new TypeToken<ArrayList<SignModel>>() {
+            }.getType();
 
             signModels = gson.fromJson(json, type);
 
-            Log.e(TAG,signModels.get(0).getMajor());
 
             if (signModels == null)
                 signModels = new ArrayList<>();
+            else
+                Log.e(TAG, signModels.get(0).getMajor());
         }
 
         return signModels;

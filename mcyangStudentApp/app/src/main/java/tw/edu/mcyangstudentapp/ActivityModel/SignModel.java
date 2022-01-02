@@ -3,10 +3,6 @@ package tw.edu.mcyangstudentapp.ActivityModel;
 public class SignModel {
     private String major, minor;
 
-    public SignModel() {
-
-    }
-
     public SignModel(String major, String minor) {
         this.major = major;
         this.minor = minor;
