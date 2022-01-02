@@ -2,32 +2,46 @@ package tw.edu.mcyangstudentapp.RecycleAdapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
 
+import tw.edu.mcyangstudentapp.ActivityModel.SignModel;
 import tw.edu.mcyangstudentapp.R;
+import tw.edu.mcyangstudentapp.StoredData.ClassID_Status;
+import tw.edu.mcyangstudentapp.StoredData.ShareData;
 
 public class SignAdapter extends RecyclerView.Adapter<SignAdapter.SignViewHolder> {
 
-    ArrayList<String> leftData;
-    ArrayList<String> rightData;
-    Activity activity;
+    private static final String TAG = "SignAdapter: ";
 
-    public SignAdapter(Activity activity, ArrayList<String> left, ArrayList<String> right) {
+    Activity activity;
+    ShareData shareData;
+    ClassID_Status status;
+
+    ArrayList<SignModel> signModels;
+
+    public SignAdapter(Activity activity) {
         this.activity = activity;
-        this.leftData = left;
-        this.rightData = right;
+        this.signModels = new ArrayList<>();
+    }
+
+    public SignAdapter(Activity activity, ArrayList<SignModel> signModels) {
+        this.activity = activity;
+        this.signModels = signModels;
     }
 
     @NonNull
@@ -39,46 +53,82 @@ public class SignAdapter extends RecyclerView.Adapter<SignAdapter.SignViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull SignViewHolder holder, int position) {
-        String left = leftData.get(position);
-        String right = rightData.get(position);
-
-        holder.tvLeft.setText(left);
-        holder.tvRight.setText(right);
-
-        holder.tvLeft.setOnClickListener(v -> {
-            final BottomSheetDialog bsd = new BottomSheetDialog(activity, R.style.BottomSheetDialogTheme);
-
-            @SuppressLint("InflateParams")
-            View view = LayoutInflater.from(activity).inflate(R.layout.layout_bottom_sheet, null);
-
-            view.findViewById(R.id.bottom_sheet_btn_Send).setOnClickListener(view1 -> {
-                Toast.makeText(activity, "Send~", Toast.LENGTH_SHORT).show();
-                bsd.dismiss();
-            });
-
-            bsd.setContentView(view);
-            bsd.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-            bsd.show();
-        });
+        holder.btnSummit.setOnClickListener(v -> bottomSheet());
     }
 
     @Override
     public int getItemCount() {
-        int itemCount = 0;
-        if (leftData.size() != 0 && rightData.size() != 0)
-            itemCount = leftData.size();
+        if (signModels != null)
+            return signModels.size();
+        else
+            return 0;
+    }
 
-        return itemCount;
+    @SuppressLint("NotifyDataSetChanged")
+    public void updateSignList(ArrayList<SignModel> signModels) {
+        this.signModels.clear();
+        this.signModels = signModels;
+        notifyDataSetChanged();
+    }
+
+    public void bottomSheet() {
+        final BottomSheetDialog bsd = new BottomSheetDialog(activity, R.style.BottomSheetDialogTheme);
+        shareData = new ShareData(activity);
+
+        @SuppressLint("InflateParams")
+        View view = LayoutInflater.from(activity).inflate(R.layout.layout_bottom_sheet, null);
+
+        TextInputEditText studentID = view.findViewById(R.id.bottom_sheet_input_Names);
+        TextInputEditText studentNames = view.findViewById(R.id.bottom_sheet_input_ID);
+
+        if (shareData.getStudentID() != null && shareData.getStudentNames() != null) {
+            Log.e(TAG, "StudentID: " + shareData.getStudentID() + " StudentName: " + shareData.getStudentNames());
+            studentID.setText(shareData.getStudentID());
+            studentNames.setText(shareData.getStudentNames());
+
+        } else {
+            shareData.saveStudentName(null);
+            shareData.saveStudentID(null);
+        }
+
+        view.findViewById(R.id.bottom_sheet_btn_Send).setOnClickListener(view1 -> {
+            String id, name;
+            if (studentID.getText() != null && studentNames.getText() != null) {
+                id = studentID.getText().toString();
+                name = studentNames.getText().toString();
+
+                if (id.equals("") || name.equals("")) {
+                    Toast.makeText(activity, R.string.tag_NoInput, Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "Input Please~");
+                    shareData.saveStudentName(null);
+                    shareData.saveStudentID(null);
+
+                } else {
+                    shareData.saveStudentID(id);
+                    shareData.saveStudentName(name);
+
+                    Toast.makeText(activity, "Send~", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "Success~");
+                    bsd.dismiss();
+                }
+            }
+        });
+
+        bsd.setContentView(view);
+        bsd.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        bsd.show();
     }
 
     public static class SignViewHolder extends RecyclerView.ViewHolder {
 
         MaterialTextView tvLeft, tvRight;
+        LinearLayout btnSummit;
 
         public SignViewHolder(@NonNull View itemView) {
             super(itemView);
             tvLeft = itemView.findViewById(R.id.sign_recycleView_tv_Left);
             tvRight = itemView.findViewById(R.id.sign_recycleView_tv_Right);
+            btnSummit = itemView.findViewById(R.id.sign_recycleView_btn);
         }
     }
 }

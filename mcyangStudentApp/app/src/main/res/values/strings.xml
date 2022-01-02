@@ -2,11 +2,19 @@
     <!--Default-->
     <string name="app_name">Mcyang學生APP</string>
 
+    <!--TAG-->
+    <string name="tag_NoInput">請輸入賬號和密碼！</string>
+    <string name="tag_NoInternet">偵測無網絡，請打開網絡在重試。</string>
+    <string name="tag_request_Gps_Not_Enabled">偵測GPS未打開，請麻煩打開GPS之後在使用APP。</string>
+    <string name="tag_Login">登入中，請稍後…</string>
+    <string name="tag_LoginFailed">登入失敗，賬號密碼錯誤！</string>
+    <string name="tag_ServerFailed">連接伺服器失敗，請稍後嘗試。</string>
+
     <!--LoginActivity-->
-    <string name="text_Account">賬號</string>
-    <string name="text_Password">密碼</string>
-    <string name="toggle_RememberMe">記住我</string>
-    <string name="btn_Login">登入</string>
+    <string name="login_text_Account">賬號</string>
+    <string name="login_text_Password">密碼</string>
+    <string name="login_toggle_RememberMe">記住我</string>
+    <string name="login_btn_Login">登入</string>
 
     <!--MainActivity_UI-->
     <string name="main_text_Title">學生APP</string>
@@ -16,11 +24,10 @@
     <string name="main_btn_EndClass">結束課程</string>
     <string name="main_btn_SignOut">登出</string>
     <string name="main_btn_Question">我要提問</string>
-    <string name="main_request_Gps_Not_Enabled">偵測GPS未打開，請麻煩打開GPS之後在使用APP。</string>
 
     <!--SignActivity-->
     <string name="sign_title">簽到</string>
-    <string name="sign_recycleView_Left">選擇</string>
+    <string name="sign_recycleView_Left">遞號</string>
     <string name="sign_recycleView_Right">課程編號</string>
 
     <!--BottomSheet-->

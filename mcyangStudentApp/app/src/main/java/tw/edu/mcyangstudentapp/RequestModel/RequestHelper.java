@@ -103,7 +103,7 @@ public class RequestHelper {
 
         if (!gps_enabled || !network_enabled) {
             new MaterialAlertDialogBuilder(activity)
-                    .setMessage(R.string.main_request_Gps_Not_Enabled)
+                    .setMessage(R.string.tag_request_Gps_Not_Enabled)
                     .setPositiveButton("確認", (dialogInterface, i) -> activity.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)))
                     .setNegativeButton("取消", null)
                     .show();

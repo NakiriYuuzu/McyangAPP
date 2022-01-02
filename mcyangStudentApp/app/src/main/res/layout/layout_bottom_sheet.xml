@@ -75,11 +75,12 @@
             app:counterMaxLength="30">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/bottom_sheet_input_student"
+                android:id="@+id/bottom_sheet_input_ID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/noto_sans"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
             initButton();
             autoLogin();
         } else {
-            Toast.makeText(getApplicationContext(), "偵測無網絡，請打開網絡在重試。", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.tag_NoInternet, Toast.LENGTH_SHORT).show();
             new Handler().postDelayed(this::finish, 3000);
         }
     }
@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
             pass = editText_Pass.getText().toString();
 
             if (id.equals("") || pass.equals(""))
-                Toast.makeText(this, "請輸入賬號和密碼！", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.tag_NoInput, Toast.LENGTH_SHORT).show();
             else {
                 //For API
                 volleyApi.postApi(DefaultSetting.URL_LOGIN, id, pass, new VolleyApi.VolleyGet() {
@@ -109,11 +109,11 @@ public class LoginActivity extends AppCompatActivity {
                     public void onFailed(VolleyError error) {
                         try {
                             if (error.networkResponse.statusCode == 401)
-                                Toast.makeText(getApplicationContext(), "登入失敗，賬號密碼錯誤！", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), R.string.tag_LoginFailed, Toast.LENGTH_SHORT).show();
 
                         } catch (Exception e) {
                             Log.e(TAG, e.toString());
-                            Toast.makeText(getApplicationContext(), "連接伺服器失敗，請稍後嘗試。", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), R.string.tag_ServerFailed, Toast.LENGTH_SHORT).show();
                         }
 
                         clearFunction();
@@ -138,7 +138,7 @@ public class LoginActivity extends AppCompatActivity {
                 btn_SignIn.setEnabled(false);
                 loginFunction();
             } else
-                Toast.makeText(this, "登入中，請稍後...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.tag_Login, Toast.LENGTH_SHORT).show();
         });
     }
 
