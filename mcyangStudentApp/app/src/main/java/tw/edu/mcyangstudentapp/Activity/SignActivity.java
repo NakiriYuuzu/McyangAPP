@@ -33,7 +33,7 @@ public class SignActivity extends AppCompatActivity {
     MaterialTextView tvNoData;
     RecyclerView recyclerView;
 
-    BeaconController beaconController;0
+    BeaconController beaconController;
     ShareData shareData;
     SignAdapter signAdapter;
     SignViewModel signViewModel;
