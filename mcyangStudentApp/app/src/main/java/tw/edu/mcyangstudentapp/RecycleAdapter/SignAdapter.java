@@ -28,6 +28,8 @@ public class SignAdapter extends RecyclerView.Adapter<SignAdapter.SignViewHolder
 
     private static final String TAG = "SignAdapter: ";
 
+    private String btmSheetTitle = "";
+
     Activity activity;
     ShareData shareData;
     ClassID_Status status = new ClassID_Status();
@@ -55,8 +57,11 @@ public class SignAdapter extends RecyclerView.Adapter<SignAdapter.SignViewHolder
     @Override
     public void onBindViewHolder(@NonNull SignViewHolder holder, int position) {
         Log.e(TAG, " adapter size: " + signData.size());
+
+        btmSheetTitle = status.getClassNames(signData.get(position).getMinor());
+
         holder.tvLeft.setText(signData.get(position).getMajor());
-        holder.tvRight.setText(status.getClassNames(signData.get(position).getMinor()));
+        holder.tvRight.setText(btmSheetTitle);
 
         holder.btnSummit.setOnClickListener(v -> bottomSheet());
     }
@@ -69,6 +74,7 @@ public class SignAdapter extends RecyclerView.Adapter<SignAdapter.SignViewHolder
             return 0;
     }
 
+    @SuppressLint("SetTextI18n")
     public void bottomSheet() {
         final BottomSheetDialog bsd = new BottomSheetDialog(activity, R.style.BottomSheetDialogTheme);
         shareData = new ShareData(activity);
@@ -76,8 +82,12 @@ public class SignAdapter extends RecyclerView.Adapter<SignAdapter.SignViewHolder
         @SuppressLint("InflateParams")
         View view = LayoutInflater.from(activity).inflate(R.layout.layout_bottom_sheet, null);
 
+        MaterialTextView titleNames = view.findViewById(R.id.bottom_sheet_Title);
         TextInputEditText studentID = view.findViewById(R.id.bottom_sheet_input_Names);
         TextInputEditText studentNames = view.findViewById(R.id.bottom_sheet_input_ID);
+
+        if (!btmSheetTitle.equals(""))
+            titleNames.setText("已選擇課程：" + btmSheetTitle);
 
         if (shareData.getStudentID() != null && shareData.getStudentNames() != null) {
             Log.e(TAG, "StudentID: " + shareData.getStudentID() + " StudentName: " + shareData.getStudentNames());
@@ -89,6 +99,7 @@ public class SignAdapter extends RecyclerView.Adapter<SignAdapter.SignViewHolder
             shareData.saveStudentID(null);
         }
 
+        // FIXME: BottomSheet_Button
         view.findViewById(R.id.bottom_sheet_btn_Send).setOnClickListener(view1 -> {
             String id, name;
             if (studentID.getText() != null && studentNames.getText() != null) {

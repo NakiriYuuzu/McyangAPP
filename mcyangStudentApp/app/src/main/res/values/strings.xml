@@ -32,6 +32,7 @@
     <string name="sign_textview_NoData">暫無資料，請等待老師廣播。</string>
 
     <!--BottomSheet-->
+    <string name="bottom_sheet_Title">已選擇課程：</string>
     <string name="bottom_sheet_Names">請輸入姓名</string>
     <string name="bottom_sheet_ID">請輸入學號</string>
     <string name="bottom_sheet_Button">送出</string>
