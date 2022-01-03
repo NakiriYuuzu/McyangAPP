@@ -1,19 +1,49 @@
 <resources>
     <!--Default-->
-    <string name="app_name">McyangTeacherApp</string>
+    <string name="app_name">Mcyang老師APP</string>
+
+    <!--TAG-->
+    <string name="tag_NoInput">請輸入賬號和密碼！</string>
+    <string name="tag_NoInternet">偵測無網絡，請打開網絡在重試。</string>
+    <string name="tag_request_Gps_Not_Enabled">偵測GPS未打開，請麻煩打開GPS之後在使用APP。</string>
+    <string name="tag_Login">登入中，請稍後…</string>
+    <string name="tag_LoginFailed">登入失敗，賬號密碼錯誤！</string>
+    <string name="tag_ServerFailed">連接伺服器失敗，請稍後嘗試。</string>
 
     <!--LoginActivity-->
-    <string name="text_Account">賬號</string>
-    <string name="text_Password">密碼</string>
-    <string name="toggle_RememberMe">記住我</string>
-    <string name="btn_Login">登入</string>
+    <string name="login_text_Account">賬號</string>
+    <string name="login_text_Password">密碼</string>
+    <string name="login_toggle_RememberMe">記住我</string>
+    <string name="login_btn_Login">登入</string>
 
     <!--MainActivity_UI-->
-    <string name="main_text_Title">主功能</string>
-    <string name="main_btn_Sign">點名功能</string>
-    <string name="main_btn_Qa">搶答功能</string>
-    <string name="main_btn_Check">查看功能</string>
+    <string name="main_text_Title">老師端APP</string>
+    <string name="main_btn_Create">創建課程</string>
+    <string name="main_btn_Sign">開始點名</string>
+    <string name="main_btn_Group">分組討論</string>
+    <string name="main_btn_OpenQA">開放搶答</string>
+    <string name="main_btn_EndClass">結束課程</string>
+    <string name="main_btn_SignOut">登出</string>
 
-    <!--MainActivity_Code-->
-    <string name="request_Gps_Not_Enabled">偵測GPS未打開，請麻煩打開GPS之後在使用APP。</string>
+    <!--CreateActivity-->
+    <string name="create_Title">創建課程</string>
+    <string name="create_recycleView_Left">課程編號</string>
+    <string name="create_recycleView_Right">課程名稱</string>
+    <string name="create_textview_NoData">暫無資料，請老師新增資料。</string>
+    <string name="create_btn_Enter">新增</string>
+
+    <!--SignActivity-->
+    <string name="sign_example_course_01">離散數學</string>
+    <string name="sign_btn_Enter">確認</string>
+
+    <string-array name="sign_example_course">
+        <item>離散數學</item>
+        <item>程式設計</item>
+        <item>資訊入門</item>
+    </string-array>
+
+    <!--BottomSheet-->
+    <string name="bottom_sheet_Title">已選擇課程：</string>
+    <string name="bottom_sheet_ClassName">請輸入課程名稱：</string>
+    <string name="bottom_sheet_Button">送出</string>
 </resources>

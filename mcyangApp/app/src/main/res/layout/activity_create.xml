@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.SignActivity">
+    tools:context=".Activity.CreateActivity">
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/materialTextView"
+        android:id="@+id/create_Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="@string/sign_title"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:text="@string/create_Title"
+        android:textAlignment="center"
+        android:textAppearance="?attr/subtitle"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,24 +21,24 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/sign_btn_back"
+        android:id="@+id/create_btn_Back"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="25dp"
-        android:tint="#7ea6e0"
         android:background="@android:color/transparent"
+        android:tint="#7ea6e0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_arrow_back_24"
         tools:ignore="ImageContrastCheck" />
 
     <LinearLayout
-        android:id="@+id/materialCardView"
+        android:id="@+id/create_recyclerview_Title"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="125dp"
         android:layout_marginLeft="15dp"
+        android:layout_marginTop="125dp"
         android:layout_marginRight="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,20 +47,19 @@
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="125dp"
             android:layout_height="match_parent"
-            android:background="@drawable/sign_recycleview"
+            android:background="@drawable/create_recyclerview_background"
             android:gravity="center"
-            android:text="@string/sign_recycleView_Left"
+            android:text="@string/create_recycleView_Left"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textSize="18sp"
             android:textStyle="bold" />
 
-
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/sign_recycleview"
+            android:background="@drawable/create_recyclerview_background"
             android:gravity="center"
-            android:text="@string/sign_recycleView_Right"
+            android:text="@string/create_recycleView_Right"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -67,32 +67,48 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/sign_recycleView"
+        android:id="@+id/create_recycleView"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="300dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
+        app:layout_constraintTop_toBottomOf="@+id/create_recyclerview_Title" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/sign_textView_NoFound"
-        android:text="@string/sign_textview_NoData"
+        android:id="@+id/create_textView_NoFound"
+        android:text="@string/create_textview_NoData"
         android:textSize="25sp"
         android:textStyle="bold"
         android:fontFamily="@font/noto_sans"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:gravity="center_horizontal"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="300dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialCardView"/>
+        app:layout_constraintTop_toBottomOf="@+id/create_recyclerview_Title"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/create_btn_Enter"
+        android:text="@string/create_btn_Enter"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/create_recycleView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

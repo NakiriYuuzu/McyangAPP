@@ -9,9 +9,12 @@
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="15dp"
-        android:text="@string/btn_Login"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="30dp"
+        android:text="@string/app_name"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,7 +27,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="200dp"
         android:layout_marginEnd="30dp"
-        android:hint="@string/text_Account"
+        android:hint="@string/login_text_Account"
         app:boxCornerRadiusBottomEnd="15dp"
         app:boxCornerRadiusBottomStart="15dp"
         app:boxCornerRadiusTopEnd="15dp"
@@ -40,7 +43,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/noto_sans"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            tools:ignore="TextContrastCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -53,7 +57,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="30dp"
-        android:hint="@string/text_Password"
+        android:hint="@string/login_text_Password"
         app:boxCornerRadiusBottomEnd="15dp"
         app:boxCornerRadiusBottomStart="15dp"
         app:boxCornerRadiusTopEnd="15dp"
@@ -71,19 +75,20 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/noto_sans"
             android:inputType="textPassword"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            tools:ignore="TextContrastCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <CheckBox
-        android:id="@+id/checkBox_rememberMe"
+        android:id="@+id/login_checkBox_rememberMe"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:checked="false"
         android:fontFamily="@font/noto_sans"
-        android:text="@string/toggle_RememberMe"
+        android:text="@string/login_toggle_RememberMe"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/outlinedTextField_Pass" />
@@ -98,11 +103,11 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="30dp"
         android:fontFamily="@font/noto_sans"
-        android:text="@string/btn_Login"
+        android:text="@string/login_btn_Login"
         android:textSize="16sp"
         app:cornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox_rememberMe" />
+        app:layout_constraintTop_toBottomOf="@+id/login_checkBox_rememberMe" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

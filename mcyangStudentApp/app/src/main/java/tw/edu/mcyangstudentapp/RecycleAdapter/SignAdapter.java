@@ -63,7 +63,7 @@ public class SignAdapter extends RecyclerView.Adapter<SignAdapter.SignViewHolder
         holder.tvLeft.setText(signData.get(position).getMajor());
         holder.tvRight.setText(btmSheetTitle);
 
-        holder.btnSummit.setOnClickListener(v -> bottomSheet());
+        holder.btnEnter.setOnClickListener(v -> bottomSheet());
     }
 
     @Override
@@ -131,13 +131,13 @@ public class SignAdapter extends RecyclerView.Adapter<SignAdapter.SignViewHolder
     public static class SignViewHolder extends RecyclerView.ViewHolder {
 
         MaterialTextView tvLeft, tvRight;
-        LinearLayout btnSummit;
+        LinearLayout btnEnter;
 
         public SignViewHolder(@NonNull View itemView) {
             super(itemView);
             tvLeft = itemView.findViewById(R.id.sign_recycleView_tv_Left);
             tvRight = itemView.findViewById(R.id.sign_recycleView_tv_Right);
-            btnSummit = itemView.findViewById(R.id.sign_recycleView_btn);
+            btnEnter = itemView.findViewById(R.id.sign_recycleView_btn);
         }
     }
 }

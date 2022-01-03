@@ -7,36 +7,27 @@
     android:layout_height="match_parent"
     tools:context=".Activity.MainActivity">
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/main_switch_toggle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/main_Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/noto_sans"
         android:text="@string/main_text_Title"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="30sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/main_btn_Btn1"
+        android:id="@+id/main_btn_Create"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:layout_marginTop="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
         app:cardBackgroundColor="#FF8E8E"
         app:cardCornerRadius="25dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,7 +35,9 @@
         app:layout_constraintTop_toBottomOf="@+id/main_Title">
 
         <com.google.android.material.textview.MaterialTextView
-            android:text="@string/app_name"
+            android:text="@string/main_btn_Create"
+            android:textSize="20sp"
+            android:textStyle="bold"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -52,21 +45,23 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/main_btn_Btn2"
+        android:id="@+id/main_btn_Sign"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
         android:layout_marginTop="25dp"
         app:cardBackgroundColor="#FFBB8E"
         app:cardCornerRadius="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.163"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_btn_Btn1" >
+        app:layout_constraintTop_toBottomOf="@+id/main_btn_Create" >
 
         <com.google.android.material.textview.MaterialTextView
-            android:text="@string/app_name"
+            android:text="@string/main_btn_Sign"
+            android:textSize="20sp"
+            android:textStyle="bold"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -74,21 +69,23 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/main_btn_Btn3"
+        android:id="@+id/main_btn_Group"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
         android:layout_marginTop="25dp"
         app:cardBackgroundColor="#FFF48E"
         app:cardCornerRadius="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.737"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_btn_Btn2" >
+        app:layout_constraintTop_toBottomOf="@+id/main_btn_Sign" >
 
         <com.google.android.material.textview.MaterialTextView
-            android:text="@string/app_name"
+            android:text="@string/main_btn_Group"
+            android:textSize="20sp"
+            android:textStyle="bold"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -96,21 +93,23 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/main_btn_Btn4"
+        android:id="@+id/main_btn_OpenQA"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
         android:layout_marginTop="25dp"
         app:cardBackgroundColor="#B9FF8E"
         app:cardCornerRadius="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.584"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_btn_Btn3" >
+        app:layout_constraintTop_toBottomOf="@+id/main_btn_Group" >
 
         <com.google.android.material.textview.MaterialTextView
-            android:text="@string/app_name"
+            android:text="@string/main_btn_OpenQA"
+            android:textSize="20sp"
+            android:textStyle="bold"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -118,26 +117,51 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/main_btn_Btn5"
+        android:id="@+id/main_btn_EndClass"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
         android:layout_marginTop="25dp"
         app:cardBackgroundColor="#8EFFF2"
         app:cardCornerRadius="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_btn_Btn4" >
+        app:layout_constraintTop_toBottomOf="@+id/main_btn_OpenQA" >
 
         <com.google.android.material.textview.MaterialTextView
-            android:text="@string/app_name"
+            android:text="@string/main_btn_EndClass"
+            android:textSize="20sp"
+            android:textStyle="bold"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
     </com.google.android.material.card.MaterialCardView>
 
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/main_btn_SignOut"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginTop="25dp"
+        app:cardBackgroundColor="#B68EFF"
+        app:cardCornerRadius="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_btn_EndClass" >
+
+        <com.google.android.material.textview.MaterialTextView
+            android:text="@string/main_btn_SignOut"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
