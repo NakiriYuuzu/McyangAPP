@@ -30,28 +30,40 @@ public class ShareData {
     // TODO: LoginActivity
     ///////////////////////////////////////////////////////////////////////////
 
-    public void saveAccount(String account) {
+    public void saveLoginAccount(String account) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(ShareVariables.ACCOUNT, account);
+        editor.putString(ShareVariables.LOGIN_ACCOUNT, account);
         editor.apply();
     }
 
-    public String getAccount() {
+    public String getLoginAccount() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
-        return preferences.getString(ShareVariables.ACCOUNT, null);
+        return preferences.getString(ShareVariables.LOGIN_ACCOUNT, null);
     }
 
-    public void savePassword(String password) {
+    public void saveLoginPassword(String password) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(ShareVariables.PASSWORD, password);
+        editor.putString(ShareVariables.LOGIN_PASSWORD, password);
         editor.apply();
     }
 
-    public String getPassword() {
+    public String getLoginPassword() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
-        return preferences.getString(ShareVariables.PASSWORD, null);
+        return preferences.getString(ShareVariables.LOGIN_PASSWORD, null);
+    }
+
+    public void saveLoginName(String name) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ShareVariables.LOGIN_NAME, name);
+        editor.apply();
+    }
+
+    public String getLoginName() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getString(ShareVariables.LOGIN_NAME, null);
     }
 
     ///////////////////////////////////////////////////////////////////////////

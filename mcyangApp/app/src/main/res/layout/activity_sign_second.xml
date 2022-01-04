@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.CreateActivity">
+    tools:context=".Activity.Sign.Sign_Second_Activity">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/signSecond_Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="@string/create_Title"
+        android:text="@string/signSecond_tv_Title"
         android:textAlignment="center"
         android:textAppearance="?attr/subtitle"
         android:textSize="30sp"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/race_btn_Back"
+        android:id="@+id/signSecond_btn_Back"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="25dp"
@@ -32,6 +32,51 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_arrow_back_24"
         tools:ignore="ImageContrastCheck" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <com.google.android.material.card.MaterialCardView
+            android:background="@drawable/recyclerview_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/signSecond_btn_BeaconOn"
+                android:text="@string/default_Beacon_Open"
+                android:textStyle="bold"
+                android:textColor="#4CAF50"
+                android:textAppearance="?attr/textAppearanceSubtitle2"
+                android:background="@drawable/recyclerview_background"
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:background="@drawable/recyclerview_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/signSecond_btn_BeaconOff"
+                android:text="@string/default_Beacon_Close"
+                android:textStyle="bold"
+                android:textColor="#E91E63"
+                android:background="@drawable/recyclerview_background"
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/signSecond_recyclerview_Title"
@@ -49,7 +94,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/recyclerview_background"
             android:gravity="center"
-            android:text="@string/create_recycleView_Left"
+            android:text="@string/signSecond_tv_Left"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -59,7 +104,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/recyclerview_background"
             android:gravity="center"
-            android:text="@string/create_recycleView_Right"
+            android:text="@string/signSecond_tv_Right"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -79,7 +124,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/signSecond_textView_NoFound"
-        android:text="@string/create_textview_NoData"
+        android:text="@string/signSecond_notification_NoData"
         android:textSize="25sp"
         android:textStyle="bold"
         android:fontFamily="@font/noto_sans"
@@ -97,7 +142,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/signSecond_btn_Enter"
-        android:text="@string/create_btn_Enter"
+        android:text="@string/signSecond_btn_Finish"
         android:textSize="16sp"
         android:textColor="@color/white"
         android:textStyle="bold"
@@ -110,5 +155,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signSecond_recycleView" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

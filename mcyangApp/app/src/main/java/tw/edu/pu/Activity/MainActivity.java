@@ -6,12 +6,14 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.card.MaterialCardView;
+
+import tw.edu.pu.Activity.Sign.SignActivity;
 import tw.edu.pu.R;
 import tw.edu.pu.RequestModel.RequestHelper;
 
 public class MainActivity extends AppCompatActivity {
 
-    MaterialCardView btnCreate, btnSign, btnGroup, btnOpenQA, btnEndClass, btnSignOut;
+    MaterialCardView btnCreate, btnSign, btnGroup, btnRace, btnEndClass, btnSignOut;
     RequestHelper requestHelper;
 
     @Override
@@ -37,6 +39,22 @@ public class MainActivity extends AppCompatActivity {
             startActivity(ii);
         });
 
+        btnGroup.setOnClickListener(v -> {
+            Intent ii = new Intent(this, GroupActivity.class);
+            startActivity(ii);
+        });
+
+        btnRace.setOnClickListener(v -> {
+            Intent ii = new Intent(this, RaceActivity.class);
+            startActivity(ii);
+        });
+
+
+        btnEndClass.setOnClickListener(v -> {
+            Intent ii = new Intent(this, MainActivity.class);
+            startActivity(ii);
+        });
+
         // FIXME: Add when sign out turn off auto login
         btnSignOut.setOnClickListener(v -> finish());
     }
@@ -45,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         btnCreate = findViewById(R.id.main_btn_Create);
         btnSign = findViewById(R.id.main_btn_Sign);
         btnGroup = findViewById(R.id.main_btn_Group);
-        btnOpenQA = findViewById(R.id.main_btn_OpenQA);
+        btnRace = findViewById(R.id.main_btn_OpenQA);
         btnEndClass = findViewById(R.id.main_btn_EndClass);
         btnSignOut = findViewById(R.id.main_btn_SignOut);
 

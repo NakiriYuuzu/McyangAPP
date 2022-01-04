@@ -50,8 +50,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private void autoLogin() {
         try {
-            if (shareData.getAccount() != null && shareData.getPassword() != null) {
-                volleyApi.postApi(DefaultSetting.URL_LOGIN, shareData.getAccount(), shareData.getPassword(), new VolleyApi.VolleyGet() {
+            if (shareData.getLoginAccount() != null && shareData.getLoginPassword() != null) {
+                volleyApi.postApi(DefaultSetting.URL_LOGIN, shareData.getLoginAccount(), shareData.getLoginPassword(), new VolleyApi.VolleyGet() {
                     @Override
                     public void onSuccess(String result) {
                         Intent ii = new Intent(getApplicationContext(), MainActivity.class);
@@ -61,8 +61,8 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onFailed(VolleyError error) {
                         try {
-                            shareData.saveAccount("");
-                            shareData.savePassword("");
+                            shareData.saveLoginAccount("");
+                            shareData.saveLoginPassword("");
                             Log.e(TAG, "autoLogin Failed.");
 
                         } catch (Exception e) {
@@ -93,8 +93,8 @@ public class LoginActivity extends AppCompatActivity {
                     public void onSuccess(String result) {
                         try {
                             if (btn_rememberMe.isChecked()) {
-                                shareData.saveAccount(id);
-                                shareData.savePassword(pass);
+                                shareData.saveLoginAccount(id);
+                                shareData.saveLoginPassword(pass);
                             }
 
                             Intent ii = new Intent(getApplicationContext(), MainActivity.class);

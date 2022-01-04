@@ -1,6 +1,8 @@
 <resources>
     <!--Default-->
     <string name="app_name">Mcyang老師APP</string>
+    <string name="default_Beacon_Open">Open</string>
+    <string name="default_Beacon_Close">Close</string>
 
     <!--TAG-->
     <string name="tag_NoInput">請輸入賬號和密碼！</string>
@@ -33,7 +35,7 @@
     <string name="create_btn_Enter">新增</string>
 
     <!--SignActivity-->
-    <string name="sign_example_course_01">離散數學</string>
+    <string name="sign_tv_Title">選擇課程</string>
     <string name="sign_btn_Enter">確認</string>
 
     <string-array name="sign_example_course">
@@ -46,4 +48,22 @@
     <string name="bottom_sheet_Title">已選擇課程：</string>
     <string name="bottom_sheet_ClassName">請輸入課程名稱：</string>
     <string name="bottom_sheet_Button">送出</string>
+
+    <!--SignSecondActivity-->
+    <string name="signSecond_tv_Title">點名</string>
+    <string name="signSecond_tv_Left">姓名</string>
+    <string name="signSecond_tv_Right">出缺席</string>
+    <string name="signSecond_btn_Finish">完成點名</string>
+    <string name="signSecond_notification_NoData">目前暫無學生資料。</string>
+
+    <!--GroupActivity-->
+    <string name="group_tv_Title">搶答</string>
+    <string name="group_tv_textHint">新增搶答説明</string>
+    <string name="group_et_textHint">請輸入搶答説明</string>
+
+    <!--RaceActivity-->
+    <string name="race_tv_Title">搶答</string>
+    <string name="race_tv_textHint">新增搶答説明:</string>
+    <string name="race_et_textHint">請輸入搶答説明</string>
+    <string name="race_btn_startRace">開始搶答</string>
 </resources>

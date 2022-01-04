@@ -30,7 +30,16 @@
         android:windowSoftInputMode="stateVisible|adjustResize"
         tools:ignore="AllowBackup,UnusedAttribute">
         <activity
-            android:name=".Activity.SignActivity"
+            android:name=".Activity.RaceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.GroupActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Sign.Sign_Second_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Sign.SignActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.CreateActivity"

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "918672633597",
+    "project_id": "mcyangproject",
+    "storage_bucket": "mcyangproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:918672633597:android:528f364c3ccd3d6fac9894",
+        "android_client_info": {
+          "package_name": "tw.edu.pu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "918672633597-j1mp20c269gef54c1f9mia07ita603hb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKEYXct699WjT0r7ZLThOj5bZ_CpJh0Bg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "918672633597-j1mp20c269gef54c1f9mia07ita603hb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
