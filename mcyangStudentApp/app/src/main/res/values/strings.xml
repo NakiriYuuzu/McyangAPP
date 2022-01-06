@@ -31,6 +31,11 @@
     <string name="sign_recycleView_Right">課程名稱</string>
     <string name="sign_textview_NoData">暫無資料，請等待老師廣播。</string>
 
+    <!--RaceActivity-->
+    <string name="race_tv_Title">搶答</string>
+    <string name="race_btn_Next">下一題</string>
+    <string name="race_btn_End">結束</string>
+
     <!--BottomSheet-->
     <string name="bottom_sheet_Title">已選擇課程：</string>
     <string name="bottom_sheet_Names">請輸入姓名</string>

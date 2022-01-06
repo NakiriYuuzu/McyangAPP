@@ -30,7 +30,10 @@
         android:windowSoftInputMode="stateVisible|adjustResize"
         tools:ignore="AllowBackup,UnusedAttribute">
         <activity
-            android:name=".Activity.RaceActivity"
+            android:name=".Activity.Race.RaceSecondActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Race.RaceActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.GroupActivity"

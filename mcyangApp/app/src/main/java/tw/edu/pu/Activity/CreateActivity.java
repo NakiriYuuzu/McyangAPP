@@ -129,9 +129,9 @@ public class CreateActivity extends AppCompatActivity {
 
     private void initView() {
         btnBack = findViewById(R.id.race_btn_Back);
-        btnEnter = findViewById(R.id.signSecond_btn_Enter);
-        tvNotFound = findViewById(R.id.signSecond_textView_NoFound);
-        recyclerView = findViewById(R.id.signSecond_recycleView);
+        btnEnter = findViewById(R.id.raceSecond_btn_Enter);
+        tvNotFound = findViewById(R.id.raceSecond_textView_NoFound);
+        recyclerView = findViewById(R.id.raceSecond_recycleView);
 
         shareData = new ShareData(this);
         createList = shareData.create_getData();

@@ -34,7 +34,7 @@
         tools:ignore="ImageContrastCheck" />
 
     <LinearLayout
-        android:id="@+id/signSecond_recyclerview_Title"
+        android:id="@+id/raceSecond_recyclerview_Title"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="15dp"
@@ -67,7 +67,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/signSecond_recycleView"
+        android:id="@+id/raceSecond_recycleView"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_marginStart="15dp"
@@ -75,10 +75,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signSecond_recyclerview_Title" />
+        app:layout_constraintTop_toBottomOf="@+id/raceSecond_recyclerview_Title" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/signSecond_textView_NoFound"
+        android:id="@+id/raceSecond_textView_NoFound"
         android:text="@string/create_textview_NoData"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -93,10 +93,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signSecond_recyclerview_Title"/>
+        app:layout_constraintTop_toBottomOf="@+id/raceSecond_recyclerview_Title"/>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/signSecond_btn_Enter"
+        android:id="@+id/raceSecond_btn_Enter"
         android:text="@string/create_btn_Enter"
         android:textSize="16sp"
         android:textColor="@color/white"
@@ -109,6 +109,6 @@
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signSecond_recycleView" />
+        app:layout_constraintTop_toBottomOf="@+id/raceSecond_recycleView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

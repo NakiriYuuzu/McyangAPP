@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.Sign.Sign_Second_Activity">
+    tools:context=".Activity.Race.RaceSecondActivity">
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/signSecond_Title"
+        android:id="@+id/materialTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="@string/signSecond_tv_Title"
-        android:textAlignment="center"
-        android:textAppearance="?attr/subtitle"
+        android:fontFamily="@font/noto_sans"
+        android:text="@string/raceSecond_tv_Title"
+        android:textAppearance="?attr/title"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/signSecond_btn_Back"
+        android:id="@+id/raceSecond_btn_Back"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="25dp"
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content" >
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/signSecond_btn_BeaconOn"
+                android:id="@+id/raceSecond_btn_BeaconOn"
                 android:text="@string/default_Beacon_Open"
                 android:textStyle="bold"
                 android:textColor="#4CAF50"
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content" >
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/signSecond_btn_BeaconOff"
+                android:id="@+id/raceSecond_btn_BeaconOff"
                 android:text="@string/default_Beacon_Close"
                 android:textStyle="bold"
                 android:textColor="#E91E63"
@@ -79,7 +79,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/signSecond_recyclerview_Title"
+        android:id="@+id/raceSecond_recyclerview_Title"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="15dp"
@@ -90,11 +90,21 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textview.MaterialTextView
-            android:layout_width="125dp"
+            android:layout_width="110dp"
             android:layout_height="match_parent"
             android:background="@drawable/recyclerview_background"
             android:gravity="center"
-            android:text="@string/signSecond_tv_Left"
+            android:text="@string/raceSecond_tv_Left"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="130dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/recyclerview_background"
+            android:gravity="center"
+            android:text="@string/raceSecond_tv_mid"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -104,7 +114,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/recyclerview_background"
             android:gravity="center"
-            android:text="@string/signSecond_tv_Right"
+            android:text="@string/raceSecond_tv_Right"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -112,7 +122,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/signSecond_recycleView"
+        android:id="@+id/raceSecond_recycleView"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_marginStart="15dp"
@@ -120,11 +130,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signSecond_recyclerview_Title" />
+        app:layout_constraintTop_toBottomOf="@+id/raceSecond_recyclerview_Title" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/signSecond_textView_NoFound"
-        android:text="@string/signSecond_notification_NoData"
+        android:id="@+id/raceSecond_textView_NoFound"
+        android:text="@string/raceSecond_notification_NoData"
         android:textSize="25sp"
         android:textStyle="bold"
         android:fontFamily="@font/noto_sans"
@@ -138,21 +148,34 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signSecond_recyclerview_Title"/>
+        app:layout_constraintTop_toBottomOf="@+id/raceSecond_recyclerview_Title"/>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/signSecond_btn_Enter"
-        android:text="@string/signSecond_btn_Finish"
-        android:textSize="16sp"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginEnd="100dp"
-        android:layout_width="match_parent"
+        android:id="@+id/raceSecond_btn_Enter"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="30dp"
+        android:text="@string/raceSecond_btn_Finish"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:cornerRadius="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/raceSecond_recycleView" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/raceSecond_btn_Next"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="30dp"
+        android:text="@string/raceSecond_btn_next"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signSecond_recycleView"/>
+        app:layout_constraintTop_toBottomOf="@+id/raceSecond_recycleView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

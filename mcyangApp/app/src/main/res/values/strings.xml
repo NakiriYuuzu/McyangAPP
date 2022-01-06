@@ -66,4 +66,14 @@
     <string name="race_tv_textHint">新增搶答説明:</string>
     <string name="race_et_textHint">請輸入搶答説明</string>
     <string name="race_btn_startRace">開始搶答</string>
+
+    <!--RaceSecondActivity-->
+    <string name="raceSecond_tv_Title">搶答</string>
+    <string name="raceSecond_tv_Left">搶答順序</string>
+    <string name="raceSecond_tv_mid">姓名</string>
+    <string name="raceSecond_tv_Right">答題</string>
+    <string name="raceSecond_btn_next">下一題</string>
+    <string name="raceSecond_btn_Finish">結束</string>
+    <string name="raceSecond_notification_NoData">目前暫無資料。</string>
+
 </resources>

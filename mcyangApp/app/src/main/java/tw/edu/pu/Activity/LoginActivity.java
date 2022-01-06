@@ -13,6 +13,12 @@ import com.android.volley.VolleyError;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.nio.charset.StandardCharsets;
+
 import tw.edu.pu.ApiModel.VolleyApi;
 import tw.edu.pu.DefaultSetting;
 import tw.edu.pu.R;
@@ -52,23 +58,36 @@ public class LoginActivity extends AppCompatActivity {
     private void autoLogin() {
         try {
             if (shareData.getAccount() != null && shareData.getPassword() != null) {
-                volleyApi.postApi(DefaultSetting.URL_LOGIN, shareData.getAccount(), shareData.getPassword(), new VolleyApi.VolleyGet() {
+                volleyApi.getApi(DefaultSetting.URL_LOGIN, new VolleyApi.VolleyGet() {
                     @Override
                     public void onSuccess(String result) {
-                        Intent ii = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(ii);
+                        try {
+                            JSONArray jsonArray = new JSONArray(new String(result.getBytes(StandardCharsets.ISO_8859_1)));
+                            JSONObject jsonObject;
+                            String api_ID = null, api_Password = null;
+
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                jsonObject = jsonArray.getJSONObject(i);
+                                api_ID = jsonObject.getString("T_Email");
+                                api_Password = jsonObject.getString("T_Password");
+                            }
+
+                            if (shareData.getAccount().equals(api_ID))
+                                if (shareData.getPassword().equals(api_Password)) {
+                                    Intent ii = new Intent(getApplicationContext(), MainActivity.class);
+                                    startActivity(ii);
+
+                                } else
+                                    Log.e(TAG, "AutoLogin: failed.");
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     @Override
                     public void onFailed(VolleyError error) {
-                        try {
-                            shareData.saveAccount("");
-                            shareData.savePassword("");
-                            Log.e(TAG, "autoLogin Failed.");
-
-                        } catch (Exception e) {
-                            Log.e(TAG, e.toString());
-                        }
+                        Log.e(TAG, error.toString());
                     }
                 });
             }
@@ -88,48 +107,62 @@ public class LoginActivity extends AppCompatActivity {
             if (id.equals("") || pass.equals(""))
                 Toast.makeText(this, R.string.tag_NoInput, Toast.LENGTH_SHORT).show();
             else {
-                //For API
-                volleyApi.postApi(DefaultSetting.URL_LOGIN, id, pass, new VolleyApi.VolleyGet() {
+                volleyApi.getApi(DefaultSetting.URL_LOGIN, new VolleyApi.VolleyGet() {
                     @Override
                     public void onSuccess(String result) {
                         try {
-                            if (btn_rememberMe.isChecked()) {
-                                shareData.saveAccount(id);
-                                shareData.savePassword(pass);
+                            JSONArray jsonArray = new JSONArray(new String(result.getBytes(StandardCharsets.ISO_8859_1)));
+                            JSONObject jsonObject;
+                            String api_ID = null, api_Password = null;
+
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                jsonObject = jsonArray.getJSONObject(i);
+                                api_ID = jsonObject.getString("T_Email");
+                                api_Password = jsonObject.getString("T_Password");
                             }
 
-                            Intent ii = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(ii);
+                            if (id.equals(api_ID))
+                                if (pass.equals(api_Password)) {
+                                    if (btn_rememberMe.isChecked()) {
+                                        shareData.saveAccount(id);
+                                        shareData.savePassword(pass);
+                                    }
 
-                        } catch (Exception e) {
-                            Log.e(TAG, e.toString());
+                                    loginBtnChecked = true;
+                                    btn_SignIn.setEnabled(true);
+                                    Intent ii = new Intent(getApplicationContext(), MainActivity.class);
+                                    startActivity(ii);
+
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "密碼錯誤，請重新輸入密碼！", Toast.LENGTH_SHORT).show();
+                                    editText_Pass.setText("");
+                                    loginBtnChecked = true;
+                                    btn_SignIn.setEnabled(true);
+                                }
+                            else {
+                                Toast.makeText(getApplicationContext(), "查無此賬號，請重新輸入！", Toast.LENGTH_SHORT).show();
+                                editText_Acc.setText("");
+                                editText_Pass.setText("");
+                                loginBtnChecked = true;
+                                btn_SignIn.setEnabled(true);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            loginBtnChecked = true;
+                            btn_SignIn.setEnabled(true);
                         }
                     }
 
                     @Override
                     public void onFailed(VolleyError error) {
-                        try {
-                            if (error.networkResponse.statusCode == 401)
-                                Toast.makeText(getApplicationContext(), R.string.tag_LoginFailed, Toast.LENGTH_SHORT).show();
-
-                        } catch (Exception e) {
-                            Log.e(TAG, e.toString());
-                            Toast.makeText(getApplicationContext(), R.string.tag_ServerFailed, Toast.LENGTH_SHORT).show();
-                        }
-
-                        clearFunction();
+                        Log.e(TAG, error.toString());
+                        loginBtnChecked = true;
+                        btn_SignIn.setEnabled(true);
                     }
                 });
             }
         }
-
-        loginBtnChecked = true;
-        btn_SignIn.setEnabled(true);
-    }
-
-    private void clearFunction() {
-        editText_Acc.setText("");
-        editText_Pass.setText("");
     }
 
     private void initButton() {

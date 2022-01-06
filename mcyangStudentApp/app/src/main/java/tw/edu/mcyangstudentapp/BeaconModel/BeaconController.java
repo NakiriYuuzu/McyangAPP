@@ -30,7 +30,6 @@ public class BeaconController {
 
     //Broadcast_Beacon
     private final BeaconParser beaconParser = new BeaconParser()
-            .setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24")
             .setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25");
 
     public BeaconController(Activity activity) {
@@ -70,7 +69,7 @@ public class BeaconController {
 
     public void init_BroadcastBeacon() {
         beacon = new Beacon.Builder()
-                .setId1(DefaultSetting.BEACON_UUID)
+                .setId1(DefaultSetting.BEACON_UUID_TEACHER)
                 .setId2("1")
                 .setId3("2")
                 .setManufacturer(0x0118)
@@ -83,20 +82,7 @@ public class BeaconController {
 
     public void init_BroadcastBeacon(String Major, String Minor) {
         beacon = new Beacon.Builder()
-                .setId1(DefaultSetting.BEACON_UUID)
-                .setId2(Major)
-                .setId3(Minor)
-                .setManufacturer(0x0118)
-                .setTxPower(-79)
-                .setDataFields(Collections.singletonList(0L))
-                .build();
-
-        beaconTransmitter = new BeaconTransmitter(activity, beaconParser);
-    }
-
-    public void init_BroadcastBeacon(String UUID, String Major, String Minor) {
-        beacon = new Beacon.Builder()
-                .setId1(UUID)
+                .setId1(DefaultSetting.BEACON_UUID_TEACHER)
                 .setId2(Major)
                 .setId3(Minor)
                 .setManufacturer(0x0118)

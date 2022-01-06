@@ -8,8 +8,10 @@ import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.BeaconTransmitter;
 import org.altbeacon.beacon.Identifier;
+import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
 
+import java.util.Collection;
 import java.util.Collections;
 
 import tw.edu.pu.DefaultSetting;
@@ -27,7 +29,7 @@ public class BeaconController {
     private BeaconTransmitter beaconTransmitter;
 
     //Scan_Beacon
-    private final Region region = new Region("UniqueID", Identifier.parse("2f234454-cf6d-4a0f-adf2-f4911ba9ffa6"),null,null);
+    private final Region region = new Region("UniqueID", null, null, null);
 
     //Broadcast_Beacon
     private final BeaconParser beaconParser = new BeaconParser()
@@ -48,10 +50,15 @@ public class BeaconController {
 
     public void startScanning() {
         beaconManager.addRangeNotifier((beacons, region) -> {
-            if (beacons.size() > 0) {
-                Log.i(TAG, "The first beacon I see is about "+beacons.iterator().next().getDistance()+" meters away.");
-            }
+            if (beacons.size() > 0)
+                Log.e(TAG,"" + beacons.iterator().next().getDistance());
         });
+
+        beaconManager.startRangingBeacons(region);
+    }
+
+    public void startScanning(BeaconModify beaconModify) {
+        beaconManager.addRangeNotifier(beaconModify::modifyData);
 
         beaconManager.startRangingBeacons(region);
     }
@@ -92,5 +99,9 @@ public class BeaconController {
 
     public void stop_BroadcastBeacon() {
         beaconTransmitter.stopAdvertising();
+    }
+
+    public interface BeaconModify {
+        void modifyData(Collection<Beacon> beacons, Region region);
     }
 }

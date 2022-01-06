@@ -1,4 +1,4 @@
-package tw.edu.pu.Activity.Sign;
+package tw.edu.pu.Activity.Race;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,11 +14,11 @@ import tw.edu.pu.Activity.MainActivity;
 import tw.edu.pu.BeaconModel.BeaconController;
 import tw.edu.pu.R;
 
-public class Sign_Second_Activity extends AppCompatActivity {
+public class RaceSecondActivity extends AppCompatActivity {
 
     ShapeableImageView btnBack;
-    MaterialTextView btnOpen, btnClose;
-    MaterialButton btnEnter;
+    MaterialTextView btn_Open, btn_Close;
+    MaterialButton btnNext, btnEnd;
     RecyclerView recyclerView;
 
     BeaconController beaconController;
@@ -26,18 +26,23 @@ public class Sign_Second_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_second);
+        setContentView(R.layout.activity_race_second);
 
         initView();
         initButton();
     }
 
     private void initButton() {
-        btnOpen.setOnClickListener(v -> beaconController.start_BroadcastBeacon());
+        btn_Open.setOnClickListener(v -> beaconController.start_BroadcastBeacon());
 
-        btnClose.setOnClickListener(v -> beaconController.stop_BroadcastBeacon());
+        btn_Close.setOnClickListener(v -> beaconController.stop_BroadcastBeacon());
 
-        btnEnter.setOnClickListener(v -> {
+        btnNext.setOnClickListener(v -> {
+            Intent ii = new Intent(this, RaceActivity.class);
+            startActivity(ii);
+        });
+
+        btnEnd.setOnClickListener(v -> {
             Intent ii = new Intent(this, MainActivity.class);
             ii.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(ii);
@@ -47,32 +52,14 @@ public class Sign_Second_Activity extends AppCompatActivity {
     }
 
     private void initView() {
-        //FixME Beacon init need major and minor
         beaconController = new BeaconController(this);
         beaconController.init_BroadcastBeacon();
 
-        btnBack = findViewById(R.id.signSecond_btn_Back);
-        btnOpen = findViewById(R.id.signSecond_btn_BeaconOn);
-        btnClose = findViewById(R.id.signSecond_btn_BeaconOff);
-        btnEnter = findViewById(R.id.signSecond_btn_Enter);
+        btnBack = findViewById(R.id.raceSecond_btn_Back);
+        btn_Open = findViewById(R.id.raceSecond_btn_BeaconOn);
+        btn_Close = findViewById(R.id.raceSecond_btn_BeaconOff);
+        btnNext = findViewById(R.id.raceSecond_btn_Next);
+        btnEnd = findViewById(R.id.raceSecond_btn_Enter);
         recyclerView = findViewById(R.id.raceSecond_recycleView);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        beaconController.stop_BroadcastBeacon();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        beaconController.stop_BroadcastBeacon();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        beaconController.stop_BroadcastBeacon();
     }
 }

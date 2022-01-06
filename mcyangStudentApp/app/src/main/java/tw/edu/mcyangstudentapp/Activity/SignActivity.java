@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
@@ -26,6 +27,7 @@ import tw.edu.mcyangstudentapp.ViewModel.SignViewModel;
 public class SignActivity extends AppCompatActivity {
 
     private static final String TAG = "SignActivity: ";
+    private boolean checkedData = false;
 
     ArrayList<SignModel> globalSignList;
 
@@ -70,12 +72,22 @@ public class SignActivity extends AppCompatActivity {
                 signViewModel.setSignList(signList);
                 shareData.sign_saveData(signList);
                 tvNoData.setVisibility(View.GONE);
+                checkedData = true;
 
             } else {
                 ArrayList<SignModel> signList = new ArrayList<>();
-                signViewModel.setSignList(signList);
-                Log.e(TAG, "Nothing Here");
-                tvNoData.setVisibility(View.VISIBLE);
+                if (checkedData) {
+                    new Handler().postDelayed(() -> {
+                        signViewModel.setSignList(signList);
+                        Log.e(TAG, "Nothing Here");
+                        tvNoData.setVisibility(View.VISIBLE);
+                        checkedData = false;
+                    }, 10000);
+                } else {
+                    signViewModel.setSignList(signList);
+                    Log.e(TAG, "Nothing Here");
+                    tvNoData.setVisibility(View.VISIBLE);
+                }
             }
         });
     }

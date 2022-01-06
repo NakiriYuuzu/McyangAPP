@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ClassID_Status {
-    private static final String classID_0001 = "數學";
-    private static final String classID_0002 = "英文";
+    private static final String classID_0001 = "離散數學";
+    private static final String classID_0002 = "程式設計";
 
     Map<String, String> selections = new HashMap<>();
 
@@ -14,8 +14,8 @@ public class ClassID_Status {
     }
 
     private void initLocationData() {
-        selections.put("11365", classID_0001);
-        selections.put("1221", classID_0002);
+        selections.put("1", classID_0001);
+        selections.put("2", classID_0002);
     }
 
     public String getClassNames(String major) {

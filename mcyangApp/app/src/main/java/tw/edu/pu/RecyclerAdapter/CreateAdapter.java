@@ -33,7 +33,7 @@ public class CreateAdapter extends RecyclerView.Adapter<CreateAdapter.CreateView
     @NonNull
     @Override
     public CreateViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_create_recyclerview, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_2_recyclerview, parent, false);
         return new CreateViewHolder(view);
     }
 
@@ -66,8 +66,8 @@ public class CreateAdapter extends RecyclerView.Adapter<CreateAdapter.CreateView
 
         public CreateViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvLeft = itemView.findViewById(R.id.create_recycleView_tv_Left);
-            tvRight = itemView.findViewById(R.id.create_recycleView_tv_Right);
+            tvLeft = itemView.findViewById(R.id.recycleView_tv_Left);
+            tvRight = itemView.findViewById(R.id.recycleView_tv_Right);
             btnEnter = itemView.findViewById(R.id.create_recycleView_btn);
         }
     }
