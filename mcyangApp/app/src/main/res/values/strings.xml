@@ -58,8 +58,26 @@
 
     <!--GroupActivity-->
     <string name="group_tv_Title">搶答</string>
-    <string name="group_tv_textHint">新增搶答説明</string>
-    <string name="group_et_textHint">請輸入搶答説明</string>
+    <string name="group_tv_Title_1">選擇既有分組</string>
+    <string name="group_hint_Title_1">選擇組別</string>
+    <string name="group_tv_Title_2">新增分組說明</string>
+    <string name="group_tv_Title_3">組數</string>
+    <string name="group_tv_Title_4">每組人數</string>
+    <string name="group_et_Title_3">5組</string>
+    <string name="group_et_Title_4">5人</string>
+    <string name="group_btn_Enter">確認</string>
+
+    <!--GroupSecondActivity-->
+    <string name="groupSecond_recycleView_title_Left">點選</string>
+    <string name="groupSecond_recycleView_title_Right">隊長後選</string>
+    <string name="groupSecond_notification_NoData">目前暫無資料。</string>
+    <string name="groupSecond_btn_NextPage">已選擇0位隊長</string>
+
+    <!--GroupThirdActivity-->
+    <string name="groupThird_recycleView_Left">組別</string>
+    <string name="groupThird_recycleView_Mid">隊長</string>
+    <string name="groupThird_recycleView_Right">組員數</string>
+    <string name="groupThird_btn_Enter">完成組隊</string>
 
     <!--RaceActivity-->
     <string name="race_tv_Title">搶答</string>

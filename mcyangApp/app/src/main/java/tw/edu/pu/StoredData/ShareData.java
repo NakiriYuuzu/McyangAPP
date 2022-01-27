@@ -51,6 +51,18 @@ public class ShareData {
         return preferences.getString(ShareVariables.PASSWORD, null);
     }
 
+    public void saveID(String id) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ShareVariables.ID, id);
+        editor.apply();
+    }
+
+    public String getID() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getString(ShareVariables.ID, null);
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // TODO: CreateActivity
     ///////////////////////////////////////////////////////////////////////////

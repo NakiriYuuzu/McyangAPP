@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="tw.edu.pu">
+    package="tw.edu.pu" >
     <!-- Internet -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -28,7 +28,13 @@
         android:theme="@style/Theme.McyangApp"
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="stateVisible|adjustResize"
-        tools:ignore="AllowBackup,UnusedAttribute">
+        tools:ignore="AllowBackup,UnusedAttribute" >
+        <activity
+            android:name=".Activity.Group.GroupThirdActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Group.GroupSecondActivity"
+            android:exported="false" />
         <activity
             android:name=".Activity.Race.RaceSecondActivity"
             android:exported="false" />
@@ -36,7 +42,7 @@
             android:name=".Activity.Race.RaceActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.GroupActivity"
+            android:name=".Activity.Group.GroupActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.Sign.Sign_Second_Activity"
@@ -49,7 +55,7 @@
             android:exported="false" />
         <activity
             android:name=".Activity.LoginActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import tw.edu.pu.Activity.Group.GroupActivity;
 import tw.edu.pu.Activity.Race.RaceActivity;
 import tw.edu.pu.Activity.Sign.SignActivity;
 import tw.edu.pu.BeaconModel.BeaconController;

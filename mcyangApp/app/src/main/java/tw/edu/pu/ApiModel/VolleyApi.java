@@ -75,37 +75,6 @@ public class VolleyApi {
         requestQueue.add(stringRequest);
     }
 
-    public void postApi(String url, String id, String pass, VolleyGet get) {
-        RequestQueue requestQueue = Volley.newRequestQueue(activity);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                response -> {
-                    Log.e(TAG, response);
-                    get.onSuccess(response);
-
-                }, error -> {
-            Log.e(TAG, error.toString());
-            get.onFailed(error);
-        }) {
-            @NonNull
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("sidimei", id);
-                params.put("password", pass);
-                return params;
-            }
-
-            @Override
-            public Map<String, String> getHeaders() {
-                HashMap<String, String> headers = new HashMap<>();
-                headers.put("Accept", "application/json");
-                return headers;
-            }
-        };
-
-        requestQueue.add(stringRequest);
-    }
-
     public void postApi(String url, VolleyGet get, VolleyPost post) {
         RequestQueue requestQueue = Volley.newRequestQueue(activity);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,

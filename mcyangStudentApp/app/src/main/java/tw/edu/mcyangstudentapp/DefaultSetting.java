@@ -7,5 +7,6 @@ public class DefaultSetting {
 
     // FIXME: Url for api
     //http://140.128.10.144:54080/public/api/login/user
-    public final static String URL_LOGIN = "http://120.110.115.128:8080/api/student/";
+    public final static String URL_LOGIN = "http://192.168.31.74:8080/api/Student/";
+    public final static String URL_COURSE = "http://192.168.31.74:8080/api/Course/";
 }

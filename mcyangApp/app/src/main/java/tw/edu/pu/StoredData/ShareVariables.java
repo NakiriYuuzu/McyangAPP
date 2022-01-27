@@ -4,6 +4,7 @@ public class ShareVariables {
     // FIXME: Login
     public static final String ACCOUNT = "Account";
     public static final String PASSWORD = "Password";
+    public static final String ID = "ID";
 
     // FIXME: CreateActivity
     public static final String MAJOR = "major";

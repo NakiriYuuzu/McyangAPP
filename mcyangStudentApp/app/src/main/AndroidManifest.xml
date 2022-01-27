@@ -30,6 +30,18 @@
         android:windowSoftInputMode="stateVisible|adjustResize"
         tools:ignore="AllowBackup,UnusedAttribute">
         <activity
+            android:name=".Activity.Group.GroupMemberSecondActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Group.GroupMemberActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Group.GroupLeaderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Group.GroupActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.RaceActivity"
             android:exported="false" />
         <activity

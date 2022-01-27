@@ -8,6 +8,7 @@ import android.os.Handler;
 
 import com.google.android.material.card.MaterialCardView;
 
+import tw.edu.mcyangstudentapp.Activity.Group.GroupActivity;
 import tw.edu.mcyangstudentapp.BeaconModel.BeaconController;
 import tw.edu.mcyangstudentapp.R;
 import tw.edu.mcyangstudentapp.RequestModel.RequestHelper;
@@ -36,6 +37,11 @@ public class MainActivity extends AppCompatActivity {
 
         btn_Qa.setOnClickListener(v -> {
             Intent ii = new Intent(getApplicationContext(), RaceActivity.class);
+            startActivity(ii);
+        });
+
+        btn_Group.setOnClickListener(v -> {
+            Intent ii = new Intent(getApplicationContext(), GroupActivity.class);
             startActivity(ii);
         });
 

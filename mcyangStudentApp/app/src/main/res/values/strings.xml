@@ -31,6 +31,28 @@
     <string name="sign_recycleView_Right">課程名稱</string>
     <string name="sign_textview_NoData">暫無資料，請等待老師廣播。</string>
 
+    <!--GroupActivity-->
+    <string name="group_btn_Leader">我要當隊長</string>
+    <string name="group_btn_member">我要當組員</string>
+    
+    <!--GroupLeaderActivity-->
+    <string name="groupLeader_recyclerView_Left">人數</string>
+    <string name="groupLeader_recyclerView_Right">名稱</string>
+    <string name="groupLeader_Notification">老師選擇中，請稍後</string>
+    <string name="groupLeader_Button">完成</string>
+    
+    <!--GroupMemberActivity-->
+    <string name="groupMember_recyclerView_Left">組別</string>
+    <string name="groupMember_recyclerView_Right">隊長</string>
+    <string name="groupMember_Notification">目前暫無資料</string>
+    <string name="groupMember_Button">選擇組別</string>
+
+    <!--GroupMemberSecondActivity-->
+    <string name="groupMemberSecond_recyclerView_Left">組別</string>
+    <string name="groupMemberSecond_recyclerView_Right">姓名</string>
+    <string name="groupMemberSecond_Notification">目前暫無資料</string>
+    <string name="groupMemberSecond_Button">完成組隊</string>
+
     <!--RaceActivity-->
     <string name="race_tv_Title">搶答</string>
     <string name="race_btn_Next">下一題</string>

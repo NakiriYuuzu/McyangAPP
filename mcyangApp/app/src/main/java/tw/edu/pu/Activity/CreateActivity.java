@@ -13,15 +13,25 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import tw.edu.pu.ActivityModel.CreateModel;
+import tw.edu.pu.ApiModel.VolleyApi;
+import tw.edu.pu.DefaultSetting;
 import tw.edu.pu.R;
 import tw.edu.pu.RecyclerAdapter.CreateAdapter;
 import tw.edu.pu.StoredData.ShareData;
@@ -39,6 +49,7 @@ public class CreateActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
     ShareData shareData;
+    VolleyApi volleyApi;
     CreateAdapter createAdapter;
     CreateViewModel createViewModel;
 
@@ -49,6 +60,7 @@ public class CreateActivity extends AppCompatActivity {
 
         initView();
         notFound();
+        syncData();
         initButton();
         initViewModel();
         initRecyclerView();
@@ -95,6 +107,38 @@ public class CreateActivity extends AppCompatActivity {
         bsd.setContentView(v);
         bsd.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         bsd.show();
+    }
+
+    private void syncData() {
+        volleyApi = new VolleyApi(this);
+        volleyApi.getApi(DefaultSetting.URL_COURSE + shareData.getID(), new VolleyApi.VolleyGet() {
+            @Override
+            public void onSuccess(String result) {
+                List<String> course_ID = new ArrayList<>();
+                List<String> course_Name = new ArrayList<>();
+
+                try {
+                    JSONArray jsonArray = new JSONArray(new String(result.getBytes(StandardCharsets.ISO_8859_1)));
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        course_ID.add(jsonObject.getString("C_id"));
+                        course_Name.add(jsonObject.getString("C_Name"));
+                    }
+
+                    Log.e(TAG, course_ID.toString());
+                    Log.e(TAG, course_Name.toString());
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailed(VolleyError error) {
+
+            }
+        });
     }
 
     private void notFound() {
