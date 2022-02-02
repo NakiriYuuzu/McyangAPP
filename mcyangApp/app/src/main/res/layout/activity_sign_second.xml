@@ -123,7 +123,7 @@
         app:layout_constraintTop_toBottomOf="@+id/signSecond_recyclerview_Title" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/signSecond_textView_NoFound"
+        android:id="@+id/signSecond_textView_NotFound"
         android:text="@string/signSecond_notification_NoData"
         android:textSize="25sp"
         android:textStyle="bold"

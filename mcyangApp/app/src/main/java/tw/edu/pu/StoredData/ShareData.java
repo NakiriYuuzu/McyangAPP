@@ -24,6 +24,34 @@ public class ShareData {
     }
 
     ///////////////////////////////////////////////////////////////////////////
+    // fixme: BeaconController
+    ///////////////////////////////////////////////////////////////////////////
+
+    public void saveMajor(String major) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ShareVariables.MAJOR, major);
+        editor.apply();
+    }
+
+    public String getMajor() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getString(ShareVariables.MAJOR, null);
+    }
+
+    public void saveMinor(String minor) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ShareVariables.MINOR, minor);
+        editor.apply();
+    }
+
+    public String getMinor() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getString(ShareVariables.MINOR, null);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
     // TODO: LoginActivity
     ///////////////////////////////////////////////////////////////////////////
 
@@ -75,22 +103,22 @@ public class ShareData {
         if (createModels.size() == 0)
             Log.e(TAG, "No Data Can Save!");
 
-        SharedPreferences sharedPreferences = activity.getSharedPreferences(ShareVariables.CREATE_SAVE_DATA, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = activity.getSharedPreferences(ShareVariables.CREATE_SAVE_LEFT_DATA, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         Gson gson = new Gson();
         String json = gson.toJson(createModels);
 
-        editor.putString(ShareVariables.CREATE_GET_DATA, json);
+        editor.putString(ShareVariables.CREATE_GET_RIGHT_DATA, json);
         editor.apply();
     }
 
     public ArrayList<CreateModel> create_getData() {
         if (activity != null) {
-            SharedPreferences sharedPreferences = activity.getSharedPreferences(ShareVariables.CREATE_SAVE_DATA, Context.MODE_PRIVATE);
+            SharedPreferences sharedPreferences = activity.getSharedPreferences(ShareVariables.CREATE_SAVE_LEFT_DATA, Context.MODE_PRIVATE);
 
             Gson gson = new Gson();
-            String json = sharedPreferences.getString(ShareVariables.CREATE_GET_DATA, null);
+            String json = sharedPreferences.getString(ShareVariables.CREATE_GET_RIGHT_DATA, null);
 
             Type type = new TypeToken<ArrayList<CreateModel>>() {
             }.getType();
@@ -100,15 +128,24 @@ public class ShareData {
             // FIXME: Fix this shit
             if (createModels == null)
                 createModels = new ArrayList<>();
-
         }
 
         return createModels;
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    // Todo: LoginActivity
+    // Todo: SignActivity
     ///////////////////////////////////////////////////////////////////////////
 
+    public void saveCourseID(String id) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ShareVariables.COURSE_ID, id);
+        editor.apply();
+    }
 
+    public String getCourseID() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getString(ShareVariables.COURSE_ID, null);
+    }
 }

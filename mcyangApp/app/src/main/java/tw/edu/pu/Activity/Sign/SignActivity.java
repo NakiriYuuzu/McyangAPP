@@ -9,21 +9,30 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.imageview.ShapeableImageView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
-import tw.edu.pu.ActivityModel.CreateModel;
+import tw.edu.pu.ApiModel.VolleyApi;
+import tw.edu.pu.DefaultSetting;
 import tw.edu.pu.R;
 import tw.edu.pu.StoredData.ShareData;
 
 public class SignActivity extends AppCompatActivity {
 
     private static final String TAG = "SignActivity: ";
+    boolean isClicked = false;
+    String id, name;
 
-    ArrayList<String> courses;
-    ArrayList<CreateModel> createList;
+    ArrayList<String> coursesID;
+    ArrayList<String> coursesName;
 
     AutoCompleteTextView autoCompleteTextView;
     ShapeableImageView btn_Back;
@@ -32,6 +41,7 @@ public class SignActivity extends AppCompatActivity {
     ArrayAdapter<String> arrayAdapter;
 
     ShareData shareData;
+    VolleyApi volleyApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,33 +57,63 @@ public class SignActivity extends AppCompatActivity {
         autoCompleteTextView.setOnItemClickListener((adapterView, view, i, l) -> {
             String item = adapterView.getItemAtPosition(i).toString();
             Toast.makeText(getApplicationContext(), " " + item, Toast.LENGTH_SHORT).show();
+
+            id = coursesID.get(i);
+            name = coursesName.get(i);
+            isClicked = true;
+            Log.e(TAG, "selected: " + id + ", " + name);
         });
 
         btn_Enter.setOnClickListener(view -> {
-            Intent ii = new Intent(getApplicationContext(), Sign_Second_Activity.class);
-            startActivity(ii);
+            if (isClicked) {
+                isClicked = false;
+                shareData.saveCourseID(id);
+                Intent ii = new Intent(getApplicationContext(), Sign_Second_Activity.class);
+                startActivity(ii);
+            }
         });
 
         btn_Back.setOnClickListener(view -> finish());
     }
 
     private void initData() {
-        courses = new ArrayList<>();
-        if (shareData.create_getData() != null)
-            createList = shareData.create_getData();
+        coursesName = new ArrayList<>();
+        coursesID = new ArrayList<>();
 
-        Log.e(TAG, "initData: " + shareData.create_getData().size());
+        volleyApi.getApi(DefaultSetting.URL_COURSE + shareData.getID(), new VolleyApi.VolleyGet() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    JSONArray jsonArray = new JSONArray(new String(result.getBytes(StandardCharsets.ISO_8859_1)));
 
-        if (createList.size() != 0)
-            for (int i = 0; i < createList.size(); i++)
-                courses.add(createList.get(i).getClassName());
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        coursesID.add(jsonObject.getString("C_id"));
+                        coursesName.add(jsonObject.getString("C_Name"));
+                    }
+
+                    Log.e(TAG, coursesID.toString() + " " + coursesName.toString());
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailed(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "連接不上伺服器，無法更新資料。", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
+
 
     private void initView() {
         shareData = new ShareData(this);
-        initData();
+        volleyApi = new VolleyApi(this);
 
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.dropdown_item, courses);
+        initData();
+        arrayAdapter = new ArrayAdapter<>(this, R.layout.dropdown_item, coursesName);
 
         autoCompleteTextView = findViewById(R.id.sign_AutoCompleteText);
         btn_Back = findViewById(R.id.race_btn_Back);
@@ -83,7 +123,5 @@ public class SignActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        initData();
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.dropdown_item, courses);
     }
 }

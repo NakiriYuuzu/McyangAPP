@@ -1,9 +1,6 @@
 package tw.edu.pu.ApiModel;
 
 import android.app.Activity;
-import android.util.Log;
-
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.android.volley.Request;
@@ -16,26 +13,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class VolleyApi {
-
-    private final String TAG = "Volley Debug: ";
     private final Activity activity;
 
     public VolleyApi(Activity activity) {
         this.activity = activity;
-    }
-
-    public void getApi(String url) {
-        RequestQueue requestQueue = Volley.newRequestQueue(activity);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                response -> {
-                    //function response
-                    Log.e(TAG, "Success!");
-                }, error -> {
-            Log.e(TAG, "Failed!");
-            //function error
-        });
-
-        requestQueue.add(stringRequest);
     }
 
     public void getApi(String url, VolleyGet get) {
@@ -43,34 +24,6 @@ public class VolleyApi {
         //function response
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 get::onSuccess, get::onFailed);
-
-        requestQueue.add(stringRequest);
-    }
-
-    public void postApi(String url, VolleyGet get) {
-        RequestQueue requestQueue = Volley.newRequestQueue(activity);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                response -> {
-                    Log.e(TAG, response);
-                    get.onSuccess(response);
-
-                }, error -> {
-            Log.e(TAG, error.toString());
-            get.onFailed(error);
-        }) {
-            @NonNull
-            @Override
-            protected Map<String, String> getParams() {
-                return new HashMap<>();
-            }
-
-            @Override
-            public Map<String, String> getHeaders() {
-                HashMap<String, String> headers = new HashMap<>();
-                headers.put("Accept", "application/json");
-                return headers;
-            }
-        };
 
         requestQueue.add(stringRequest);
     }

@@ -2,19 +2,19 @@ package tw.edu.pu.BeaconModel;
 
 import android.app.Activity;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.BeaconTransmitter;
-import org.altbeacon.beacon.Identifier;
-import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
 
 import java.util.Collection;
 import java.util.Collections;
 
 import tw.edu.pu.DefaultSetting;
+import tw.edu.pu.StoredData.ShareData;
 
 public class BeaconController {
 
@@ -27,6 +27,7 @@ public class BeaconController {
     private Beacon beacon;
     private BeaconManager beaconManager;
     private BeaconTransmitter beaconTransmitter;
+    private ShareData shareData;
 
     //Scan_Beacon
     private final Region region = new Region("UniqueID", null, null, null);
@@ -37,6 +38,7 @@ public class BeaconController {
 
     public BeaconController(Activity activity) {
         this.activity = activity;
+        shareData = new ShareData(activity);
     }
 
     public void beaconInit() {
@@ -70,27 +72,21 @@ public class BeaconController {
     }
 
     public void init_BroadcastBeacon() {
-        beacon = new Beacon.Builder()
-                .setId1(DefaultSetting.BEACON_UUID)
-                .setId2("1")
-                .setId3("2")
-                .setManufacturer(0x0118)
-                .setTxPower(-79)
-                .setDataFields(Collections.singletonList(0L))
-                .build();
+        if (shareData.getMajor() != null && shareData.getMinor() != null) {
+            beacon = new Beacon.Builder()
+                    .setId1(DefaultSetting.BEACON_UUID_TEACHER)
+                    .setId2(shareData.getMajor())
+                    .setId3(shareData.getMinor())
+                    .setManufacturer(0x0118)
+                    .setTxPower(-79)
+                    .setDataFields(Collections.singletonList(0L))
+                    .build();
 
-        beaconTransmitter = new BeaconTransmitter(activity, beaconParser);
-    }
-
-    public void init_BroadcastBeacon(String Major, String Minor) {
-        beacon = new Beacon.Builder()
-                .setId1(DefaultSetting.BEACON_UUID)
-                .setId2(Major)
-                .setId3(Minor)
-                .setManufacturer(0x0118)
-                .setTxPower(-79)
-                .setDataFields(Collections.singletonList(0L))
-                .build();
+            beaconTransmitter = new BeaconTransmitter(activity, beaconParser);
+        }
+        else {
+            Toast.makeText(activity, "App 出現異常請重新啓動APP。", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void start_BroadcastBeacon() {

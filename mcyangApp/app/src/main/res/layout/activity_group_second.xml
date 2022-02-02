@@ -112,7 +112,7 @@
     </LinearLayout>
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/signSecond_textView_NoFound"
+        android:id="@+id/signSecond_textView_NotFound"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_marginStart="15dp"
@@ -143,6 +143,6 @@
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signSecond_textView_NoFound" />
+        app:layout_constraintTop_toBottomOf="@+id/signSecond_textView_NotFound" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

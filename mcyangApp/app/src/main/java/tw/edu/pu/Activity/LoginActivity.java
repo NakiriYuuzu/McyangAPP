@@ -38,13 +38,13 @@ public class LoginActivity extends AppCompatActivity {
     VolleyApi volleyApi;
     ShareData shareData;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         initView();
+        initData();
         if (requestHelper.checkInternet_Enabled()) {
             initButton();
             autoLogin();
@@ -52,6 +52,13 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), R.string.tag_NoInternet, Toast.LENGTH_SHORT).show();
             new Handler().postDelayed(this::finish, 3000);
         }
+    }
+
+    private void initData() {
+        shareData.saveCourseID(null);
+        shareData.saveMajor(null);
+        shareData.saveMinor(null);
+        shareData.saveID(null);
     }
 
     private void autoLogin() {
@@ -68,6 +75,8 @@ public class LoginActivity extends AppCompatActivity {
                             String api_Password = jsonObject.getString("T_Password");
 
                             if (shareData.getPassword().equals(api_Password)) {
+                                Log.e(TAG, jsonObject.getString("T_id"));
+                                shareData.saveID(jsonObject.getString("T_id"));
                                 Intent ii = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(ii);
 
@@ -110,14 +119,16 @@ public class LoginActivity extends AppCompatActivity {
                             result = new String(text);
                             Log.e(TAG, result);
                             JSONObject jsonObject = new JSONObject(result);
-                            String api_Password = jsonObject.getString("T_Password"), tid = jsonObject.getString("T_id");
+                            String api_Password = jsonObject.getString("T_Password");
 
                             if (pass.equals(api_Password)) {
                                 if (btn_rememberMe.isChecked()) {
                                     shareData.saveAccount(id);
                                     shareData.savePassword(pass);
-                                    shareData.saveID(tid);
                                 }
+
+                                Log.e(TAG, jsonObject.getString("T_id"));
+                                shareData.saveID(jsonObject.getString("T_id"));
 
                                 Intent ii = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(ii);

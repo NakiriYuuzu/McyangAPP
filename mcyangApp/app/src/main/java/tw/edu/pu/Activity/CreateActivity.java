@@ -26,7 +26,7 @@ import org.json.JSONObject;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 import tw.edu.pu.ActivityModel.CreateModel;
@@ -59,8 +59,8 @@ public class CreateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create);
 
         initView();
-        notFound();
         syncData();
+        notFound();
         initButton();
         initViewModel();
         initRecyclerView();
@@ -86,21 +86,25 @@ public class CreateActivity extends AppCompatActivity {
                     Toast.makeText(this, "請輸入課程名稱！", Toast.LENGTH_SHORT).show();
 
                 else {
-                    int id = 1000;
-                    String strID;
-                    if (createList.size() != 0) {
-                        strID = createList.get(createList.size() - 1).getClassID();
-                        id = Integer.parseInt(strID) + 1;
+                    volleyApi.postApi(DefaultSetting.URL_COURSE, new VolleyApi.VolleyGet() {
+                        @Override
+                        public void onSuccess(String result) {
+                            syncData();
+                        }
 
-                    } else
-                        id += 1;
-
-                    strID = String.valueOf(id);
-                    createList.add(new CreateModel(strID, names));
-                    shareData.create_saveData(createList);
-                    createViewModel.setCreateList(shareData.create_getData());
-                    bsd.dismiss();
+                        @Override
+                        public void onFailed(VolleyError error) {
+                            Toast.makeText(getApplicationContext(), "連接不上伺服器，無法更新資料。", Toast.LENGTH_SHORT).show();
+                        }
+                    }, () -> {
+                        Map<String, String> params = new HashMap<>();
+                        params.put("C_Name", names);
+                        params.put("T_id", shareData.getID());
+                        return params;
+                    });
                 }
+
+                bsd.dismiss();
             }
         });
 
@@ -110,24 +114,20 @@ public class CreateActivity extends AppCompatActivity {
     }
 
     private void syncData() {
+        createList = new ArrayList<>();
         volleyApi = new VolleyApi(this);
         volleyApi.getApi(DefaultSetting.URL_COURSE + shareData.getID(), new VolleyApi.VolleyGet() {
             @Override
             public void onSuccess(String result) {
-                List<String> course_ID = new ArrayList<>();
-                List<String> course_Name = new ArrayList<>();
-
                 try {
                     JSONArray jsonArray = new JSONArray(new String(result.getBytes(StandardCharsets.ISO_8859_1)));
 
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        course_ID.add(jsonObject.getString("C_id"));
-                        course_Name.add(jsonObject.getString("C_Name"));
+                        createList.add(new CreateModel(jsonObject.getString("C_id"), jsonObject.getString("C_Name")));
                     }
 
-                    Log.e(TAG, course_ID.toString());
-                    Log.e(TAG, course_Name.toString());
+                    createViewModel.setCreateList(createList);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -136,7 +136,7 @@ public class CreateActivity extends AppCompatActivity {
 
             @Override
             public void onFailed(VolleyError error) {
-
+                Toast.makeText(getApplicationContext(), "連接不上伺服器，無法更新資料。", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -151,7 +151,7 @@ public class CreateActivity extends AppCompatActivity {
     private void initRecyclerView() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        createAdapter = new CreateAdapter(this, createList);
+        createAdapter = new CreateAdapter(createList);
         recyclerView.setAdapter(createAdapter);
     }
 
@@ -178,6 +178,5 @@ public class CreateActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.raceSecond_recycleView);
 
         shareData = new ShareData(this);
-        createList = shareData.create_getData();
     }
 }

@@ -51,8 +51,8 @@
 
     <!--SignSecondActivity-->
     <string name="signSecond_tv_Title">點名</string>
-    <string name="signSecond_tv_Left">姓名</string>
-    <string name="signSecond_tv_Right">出缺席</string>
+    <string name="signSecond_tv_Left">出缺席</string>
+    <string name="signSecond_tv_Right">姓名</string>
     <string name="signSecond_btn_Finish">完成點名</string>
     <string name="signSecond_notification_NoData">目前暫無學生資料。</string>
 
