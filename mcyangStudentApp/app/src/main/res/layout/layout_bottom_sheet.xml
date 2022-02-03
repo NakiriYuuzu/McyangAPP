@@ -31,58 +31,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
+        android:layout_marginBottom="10dp"
         android:orientation="vertical" >
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="30dp"
-            android:hint="@string/bottom_sheet_Names"
-            app:boxCornerRadiusBottomEnd="15dp"
-            app:boxCornerRadiusBottomStart="15dp"
-            app:boxCornerRadiusTopEnd="15dp"
-            app:boxCornerRadiusTopStart="15dp"
-            app:counterEnabled="true"
-            app:counterMaxLength="30" >
+            android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/bottom_sheet_input_Names"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_marginStart="30dp"
+                android:text="@string/bottom_sheet_Title"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:fontFamily="@font/noto_sans"
-                android:textSize="16sp" />
+                android:layout_width="130dp"
+                android:layout_height="wrap_content" />
 
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="30dp"
-            android:hint="@string/bottom_sheet_ID"
-            app:boxCornerRadiusBottomEnd="15dp"
-            app:boxCornerRadiusBottomStart="15dp"
-            app:boxCornerRadiusTopEnd="15dp"
-            app:boxCornerRadiusTopStart="15dp"
-            app:counterEnabled="true"
-            app:counterMaxLength="30">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/bottom_sheet_input_ID"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/bottom_sheet_SelectedCourse"
+                android:text=""
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textAppearance="?attr/title"
                 android:fontFamily="@font/noto_sans"
-                android:textSize="16sp"
-                android:inputType="number" />
+                android:layout_marginEnd="30dp"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
 
     </LinearLayout>
 

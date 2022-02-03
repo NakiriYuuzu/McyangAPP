@@ -3,7 +3,7 @@ package tw.edu.pu.StoredData;
 public class ShareVariables {
     // FIXME: BeaconController
     public static final String MAJOR = "major";
-    public static final String MINOR = "major";
+    public static final String MINOR = "minor";
 
     // FIXME: Login
     public static final String ACCOUNT = "Account";

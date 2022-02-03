@@ -7,6 +7,7 @@ import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.BeaconTransmitter;
+import org.altbeacon.beacon.Identifier;
 import org.altbeacon.beacon.Region;
 
 import java.util.Collection;
@@ -26,7 +27,7 @@ public class BeaconController {
     private BeaconTransmitter beaconTransmitter;
 
     //Scan_Beacon
-    private final Region region = new Region("UniqueID", null, null, null);
+    private final Region region = new Region("UniqueID", Identifier.parse(DefaultSetting.BEACON_UUID_TEACHER), null, null);
 
     //Broadcast_Beacon
     private final BeaconParser beaconParser = new BeaconParser()
@@ -69,7 +70,7 @@ public class BeaconController {
 
     public void init_BroadcastBeacon() {
         beacon = new Beacon.Builder()
-                .setId1(DefaultSetting.BEACON_UUID_TEACHER)
+                .setId1(DefaultSetting.BEACON_UUID_STUDENT)
                 .setId2("1")
                 .setId3("2")
                 .setManufacturer(0x0118)
@@ -82,7 +83,7 @@ public class BeaconController {
 
     public void init_BroadcastBeacon(String Major, String Minor) {
         beacon = new Beacon.Builder()
-                .setId1(DefaultSetting.BEACON_UUID_TEACHER)
+                .setId1(DefaultSetting.BEACON_UUID_STUDENT)
                 .setId2(Major)
                 .setId3(Minor)
                 .setManufacturer(0x0118)

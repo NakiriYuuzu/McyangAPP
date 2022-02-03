@@ -23,4 +23,12 @@ public class SignModel {
     public void setMinor(String minor) {
         this.minor = minor;
     }
+
+    @Override
+    public String toString() {
+        return "SignModel{" +
+                "major='" + major + '\'' +
+                ", minor='" + minor + '\'' +
+                '}';
+    }
 }

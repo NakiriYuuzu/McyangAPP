@@ -22,10 +22,8 @@ public class SignViewModel extends ViewModel {
     }
 
     public void setSignList(ArrayList<SignModel> signModels) {
-        signList.setValue(signModels);
         if (signModels != null) {
-            for (SignModel s : signModels)
-                Log.e("AAA", s.getMajor());
+            signList.setValue(signModels);
         }
     }
 }

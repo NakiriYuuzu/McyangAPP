@@ -74,7 +74,6 @@ public class Sign_Second_Activity extends AppCompatActivity {
 
     private void initView() {
         shareData = new ShareData(this);
-        shareData.saveMajor(shareData.getCourseID());
         Log.e(TAG, "CourseID: " + shareData.getCourseID());
 
         volleyApi = new VolleyApi(this);
@@ -198,7 +197,7 @@ public class Sign_Second_Activity extends AppCompatActivity {
                         if (isExisted_initData(str))
                             studentID.add(str);
 
-                        Log.e(TAG, "studentID: " + studentID.size() + " | " + studentID.toString());
+                        Log.e(TAG, "studentID: " + studentID.size() + " | " + studentID);
                     }
 
                     getStudentData();
@@ -228,7 +227,7 @@ public class Sign_Second_Activity extends AppCompatActivity {
                         if (isExisted_StudentData(name))
                             signList.add(new SignModel(jsonObject.getString("S_Name"), "已簽到"));
 
-                        Log.e(TAG, "signList: " + signList.size() + " signListData: " + signList.toString());
+                        Log.e(TAG, "signList: " + signList.size() + " signListData: " + signList);
                         notFound();
 
                     } catch (JSONException e) {

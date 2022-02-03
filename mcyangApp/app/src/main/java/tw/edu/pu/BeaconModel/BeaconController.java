@@ -27,7 +27,7 @@ public class BeaconController {
     private Beacon beacon;
     private BeaconManager beaconManager;
     private BeaconTransmitter beaconTransmitter;
-    private ShareData shareData;
+    private final ShareData shareData;
 
     //Scan_Beacon
     private final Region region = new Region("UniqueID", null, null, null);
@@ -73,6 +73,7 @@ public class BeaconController {
 
     public void init_BroadcastBeacon() {
         if (shareData.getMajor() != null && shareData.getMinor() != null) {
+            Log.e(TAG, "Major: " + shareData.getMajor() + " Minor: " + shareData.getMinor());
             beacon = new Beacon.Builder()
                     .setId1(DefaultSetting.BEACON_UUID_TEACHER)
                     .setId2(shareData.getMajor())

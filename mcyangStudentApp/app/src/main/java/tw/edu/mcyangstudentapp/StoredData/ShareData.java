@@ -54,16 +54,29 @@ public class ShareData {
         return preferences.getString(ShareVariables.LOGIN_PASSWORD, null);
     }
 
-    public void saveLoginName(String name) {
+
+    public void saveStudentName(String studentNames) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(ShareVariables.LOGIN_NAME, name);
+        editor.putString(ShareVariables.STUDENT_NAME, studentNames);
         editor.apply();
     }
 
-    public String getLoginName() {
+    public String getStudentNames() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
-        return preferences.getString(ShareVariables.LOGIN_NAME, null);
+        return preferences.getString(ShareVariables.STUDENT_NAME, null);
+    }
+
+    public void saveStudentID(String studentID) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ShareVariables.STUDENT_ID, studentID);
+        editor.apply();
+    }
+
+    public String getStudentID() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getString(ShareVariables.STUDENT_ID, null);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -92,30 +105,6 @@ public class ShareData {
     public String getMinor() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         return preferences.getString(ShareVariables.MINOR, null);
-    }
-
-    public void saveStudentName(String studentNames) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(ShareVariables.STUDENT_NAME, studentNames);
-        editor.apply();
-    }
-
-    public String getStudentNames() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
-        return preferences.getString(ShareVariables.STUDENT_NAME, null);
-    }
-
-    public void saveStudentID(String studentID) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(ShareVariables.STUDENT_ID, studentID);
-        editor.apply();
-    }
-
-    public String getStudentID() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
-        return preferences.getString(ShareVariables.STUDENT_ID, null);
     }
 
     public void sign_saveData(ArrayList<SignModel> signModels) {

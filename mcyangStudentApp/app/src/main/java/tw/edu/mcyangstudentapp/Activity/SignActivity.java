@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
@@ -27,9 +26,8 @@ import tw.edu.mcyangstudentapp.ViewModel.SignViewModel;
 public class SignActivity extends AppCompatActivity {
 
     private static final String TAG = "SignActivity: ";
-    private boolean checkedData = false;
 
-    ArrayList<SignModel> globalSignList;
+    ArrayList<SignModel> signModels;
 
     ShapeableImageView btnBack;
     MaterialTextView tvNoData;
@@ -47,11 +45,10 @@ public class SignActivity extends AppCompatActivity {
         initView();
         initButton();
         startScanning();
-        initViewModel();
         initRecycleView();
     }
 
-    private void initViewModel() {
+    private void syncViewModel() {
         signViewModel = new ViewModelProvider(this).get(SignViewModel.class);
         signViewModel.getSignListObserver().observe(this, signModels -> {
             if (signModels != null)
@@ -59,35 +56,32 @@ public class SignActivity extends AppCompatActivity {
         });
     }
 
-    private void startScanning() {
-        Log.e(TAG, "startScanning: ");
-
-        beaconController.startScanning((beacons, region) -> {
-            if (beacons.size() > 0) {
-                ArrayList<SignModel> signList = new ArrayList<>();
-
-                for (Beacon beaconList : beacons)
-                    signList.add(new SignModel(beaconList.getId2().toString(), beaconList.getId3().toString()));
-
-                signViewModel.setSignList(signList);
-                shareData.sign_saveData(signList);
-                tvNoData.setVisibility(View.GONE);
-                checkedData = true;
-
-            } else {
-                ArrayList<SignModel> signList = new ArrayList<>();
-                if (checkedData) {
-                    new Handler().postDelayed(() -> {
-                        signViewModel.setSignList(signList);
-                        Log.e(TAG, "Nothing Here");
-                        tvNoData.setVisibility(View.VISIBLE);
-                        checkedData = false;
-                    }, 10000);
-                } else {
-                    signViewModel.setSignList(signList);
-                    Log.e(TAG, "Nothing Here");
-                    tvNoData.setVisibility(View.VISIBLE);
+    private boolean isBeaconExisted(String major) {
+        boolean isExist = true;
+        if (signModels.size() > 0)
+            for (int i = 0; i < signModels.size(); i++)
+                if (signModels.get(i).getMajor().equals(major)) {
+                    isExist = false;
+                    break;
                 }
+
+        return isExist;
+    }
+
+    private void startScanning() {
+        beaconController.startScanning((beacons, region) -> {
+            Log.e(TAG, "startScanning: " + beacons.size() + " " + beacons);
+            if (beacons.size() > 0) {
+                for (Beacon beacon : beacons)
+                    if (isBeaconExisted(beacon.getId2().toString()))
+                        signModels.add(new SignModel(beacon.getId2().toString(), beacon.getId3().toString()));
+
+                Log.e(TAG, "signModels: " + signModels.size() + " " + signModels);
+
+                syncViewModel();
+                signViewModel.setSignList(signModels);
+                //shareData.sign_saveData(signModels);
+                tvNoData.setVisibility(View.GONE);
             }
         });
     }
@@ -95,8 +89,7 @@ public class SignActivity extends AppCompatActivity {
     private void initRecycleView() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        signAdapter = new SignAdapter(this, globalSignList);
+        signAdapter = new SignAdapter(this, signModels);
         recyclerView.setAdapter(signAdapter);
     }
 
@@ -111,6 +104,8 @@ public class SignActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.sign_btn_back);
         recyclerView = findViewById(R.id.sign_recycleView);
         tvNoData = findViewById(R.id.sign_textView_NoFound);
+
+        signModels = new ArrayList<>();
 
         shareData = new ShareData(this);
 

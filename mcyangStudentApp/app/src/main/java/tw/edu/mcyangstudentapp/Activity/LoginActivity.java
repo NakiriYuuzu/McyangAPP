@@ -45,12 +45,20 @@ public class LoginActivity extends AppCompatActivity {
         initView();
 
         if (requestHelper.checkInternet_Enabled()) {
+            initData();
             initButton();
             autoLogin();
         } else {
             Toast.makeText(getApplicationContext(), R.string.tag_NoInternet, Toast.LENGTH_SHORT).show();
             new Handler().postDelayed(this::finish, 3000);
         }
+    }
+
+    private void initData() {
+        shareData.saveMajor("");
+        shareData.saveMinor("");
+        shareData.saveStudentID("");
+        shareData.saveStudentName("");
     }
 
     private void autoLogin() {
@@ -65,6 +73,9 @@ public class LoginActivity extends AppCompatActivity {
                             Log.e(TAG, result);
                             JSONObject jsonObject = new JSONObject(result);
                             String api_Password = jsonObject.getString("S_Password");
+                            shareData.saveStudentName(jsonObject.getString("S_Name"));
+                            shareData.saveStudentID(jsonObject.getString("S_id"));
+                            Log.e(TAG, "sid: " + shareData.getStudentID() + " |Names: " + shareData.getStudentNames());
 
                             if (shareData.getLoginPassword().equals(api_Password)) {
                                 Intent ii = new Intent(getApplicationContext(), MainActivity.class);
@@ -109,6 +120,9 @@ public class LoginActivity extends AppCompatActivity {
                             Log.e(TAG, result);
                             JSONObject jsonObject = new JSONObject(result);
                             String api_Password = jsonObject.getString("S_Password");
+                            shareData.saveStudentID(jsonObject.getString("S_Name"));
+                            shareData.saveStudentID(jsonObject.getString("S_id"));
+                            Log.e(TAG, "sid: " + shareData.getStudentID() + " |Names: " + shareData.getStudentNames());
 
                             if (pass.equals(api_Password)) {
                                 if (btn_rememberMe.isChecked()) {

@@ -67,6 +67,7 @@ public class SignActivity extends AppCompatActivity {
         btn_Enter.setOnClickListener(view -> {
             if (isClicked) {
                 isClicked = false;
+                shareData.saveMajor(id);
                 shareData.saveCourseID(id);
                 Intent ii = new Intent(getApplicationContext(), Sign_Second_Activity.class);
                 startActivity(ii);
