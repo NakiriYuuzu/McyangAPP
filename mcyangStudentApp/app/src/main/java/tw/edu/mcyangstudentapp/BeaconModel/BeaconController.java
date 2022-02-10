@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import tw.edu.mcyangstudentapp.DefaultSetting;
+import tw.edu.mcyangstudentapp.StoredData.ShareData;
 
 public class BeaconController {
 
@@ -26,6 +27,8 @@ public class BeaconController {
     private BeaconManager beaconManager;
     private BeaconTransmitter beaconTransmitter;
 
+    ShareData shareData;
+
     //Scan_Beacon
     private final Region region = new Region("UniqueID", Identifier.parse(DefaultSetting.BEACON_UUID_TEACHER), null, null);
 
@@ -35,6 +38,7 @@ public class BeaconController {
 
     public BeaconController(Activity activity) {
         this.activity = activity;
+        shareData = new ShareData(activity);
     }
 
     public void beaconInit() {
@@ -71,21 +75,8 @@ public class BeaconController {
     public void init_BroadcastBeacon() {
         beacon = new Beacon.Builder()
                 .setId1(DefaultSetting.BEACON_UUID_STUDENT)
-                .setId2("1")
+                .setId2(shareData.getStudentID())
                 .setId3("2")
-                .setManufacturer(0x0118)
-                .setTxPower(-79)
-                .setDataFields(Collections.singletonList(0L))
-                .build();
-
-        beaconTransmitter = new BeaconTransmitter(activity, beaconParser);
-    }
-
-    public void init_BroadcastBeacon(String Major, String Minor) {
-        beacon = new Beacon.Builder()
-                .setId1(DefaultSetting.BEACON_UUID_STUDENT)
-                .setId2(Major)
-                .setId3(Minor)
                 .setManufacturer(0x0118)
                 .setTxPower(-79)
                 .setDataFields(Collections.singletonList(0L))

@@ -76,7 +76,7 @@
         android:text="@string/race_btn_startRace"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="300dp"
+        android:layout_marginBottom="30dp"
         android:layout_marginStart="120dp"
         android:layout_marginEnd="120dp"
         app:cornerRadius="10dp"

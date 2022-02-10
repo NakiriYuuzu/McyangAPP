@@ -2,27 +2,32 @@ package tw.edu.pu.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.VolleyError;
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import tw.edu.pu.Activity.Group.GroupActivity;
 import tw.edu.pu.Activity.Race.RaceActivity;
 import tw.edu.pu.Activity.Sign.SignActivity;
+import tw.edu.pu.ApiModel.VolleyApi;
 import tw.edu.pu.BeaconModel.BeaconController;
+import tw.edu.pu.DefaultSetting;
 import tw.edu.pu.R;
 import tw.edu.pu.RequestModel.RequestHelper;
+import tw.edu.pu.StoredData.ShareData;
 
 public class MainActivity extends AppCompatActivity {
 
-    private boolean checked = true;
-
     MaterialCardView btnCreate, btnSign, btnGroup, btnRace, btnEndClass, btnSignOut;
 
+    VolleyApi volleyApi;
+    ShareData shareData;
     RequestHelper requestHelper;
     BeaconController beaconController;
 
@@ -42,22 +47,33 @@ public class MainActivity extends AppCompatActivity {
     private void startScanning() {
         beaconController.startScanning((beacons, region) -> {
             if (beacons.size() > 0) {
-                Log.e("", "startScanning: " + beacons.iterator().next().getDistance());
-                beaconController.stopScanning();
-                if (checked) {
-                    checked =false;
-                    new MaterialAlertDialogBuilder(this)
-                            .setTitle("同學提問")
-                            .setMessage("同學：蔡淇鴻")
-                            .setPositiveButton("確認", (dialogInterface, i) -> {
-                                dialogInterface.dismiss();
-                                new Handler().postDelayed(() -> checked = true, 5000);
-                            }).setOnCancelListener(dialogInterface -> checked = true)
-                            .show();
-                }
+                toastStudent(beacons.iterator().next().getId2().toString());
             }
         });
     }
+
+    private void toastStudent(String major) {
+        volleyApi.getApi(DefaultSetting.URL_STUDENT + major, new VolleyApi.VolleyGet() {
+            @Override
+            public void onSuccess(String result) {
+                JSONObject jsonObject;
+                try {
+                    jsonObject = new JSONObject(result);
+                    String studentNames = jsonObject.getString("S_Name");
+                    Toast.makeText(MainActivity.this, studentNames + "同學：提問中...", Toast.LENGTH_SHORT).show();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailed(VolleyError error) {
+                Toast.makeText(MainActivity.this, "同學提問中，無法查詢該同學的名稱！", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     private void initButton() {
         btnCreate.setOnClickListener(v -> {
@@ -82,8 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         btnEndClass.setOnClickListener(v -> {
-            Intent ii = new Intent(this, MainActivity.class);
-            startActivity(ii);
+            shareData.cleanData();
         });
 
         // FIXME: Add when sign out turn off auto login
@@ -98,6 +113,8 @@ public class MainActivity extends AppCompatActivity {
         btnEndClass = findViewById(R.id.main_btn_EndClass);
         btnSignOut = findViewById(R.id.main_btn_SignOut);
 
+        volleyApi = new VolleyApi(this);
+        shareData = new ShareData(this);
         requestHelper = new RequestHelper(this);
         beaconController = new BeaconController(this);
         beaconController.beaconInit();

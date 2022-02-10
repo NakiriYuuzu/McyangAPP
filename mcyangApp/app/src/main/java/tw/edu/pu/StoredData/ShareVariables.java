@@ -16,4 +16,11 @@ public class ShareVariables {
 
     //FixMe: LoginActivity
     public static final String COURSE_ID = "cid";
+
+    //FIXME: RaceActivity
+    public static final String RACE_DOC = "DOC";
+    public static final String RACE_ID = "R_id";
+
+    //FIXME: RaceSecondActivity
+    public static final String RACE_SECOND_RACE_LIST = "race_second_ID";
 }

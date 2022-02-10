@@ -8,6 +8,7 @@ import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.BeaconTransmitter;
+import org.altbeacon.beacon.Identifier;
 import org.altbeacon.beacon.Region;
 
 import java.util.Collection;
@@ -30,7 +31,7 @@ public class BeaconController {
     private final ShareData shareData;
 
     //Scan_Beacon
-    private final Region region = new Region("UniqueID", null, null, null);
+    private final Region region = new Region("UniqueID", Identifier.parse(DefaultSetting.BEACON_UUID_STUDENT), null, null);
 
     //Broadcast_Beacon
     private final BeaconParser beaconParser = new BeaconParser()
@@ -71,9 +72,28 @@ public class BeaconController {
         beaconManager.removeAllRangeNotifiers();
     }
 
-    public void init_BroadcastBeacon() {
+    public void init_Sign_BroadcastBeacon() {
         if (shareData.getMajor() != null && shareData.getMinor() != null) {
             Log.e(TAG, "Major: " + shareData.getMajor() + " Minor: " + shareData.getMinor());
+            beacon = new Beacon.Builder()
+                    .setId1(DefaultSetting.BEACON_UUID_TEACHER)
+                    .setId2(shareData.getMajor())
+                    .setId3(shareData.getMinor())
+                    .setManufacturer(0x0118)
+                    .setTxPower(-79)
+                    .setDataFields(Collections.singletonList(0L))
+                    .build();
+
+            beaconTransmitter = new BeaconTransmitter(activity, beaconParser);
+        }
+        else {
+            Toast.makeText(activity, "App 出現異常請重新啓動APP。", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void init_Race_BroadcastBeacon() {
+        if (shareData.getMajor() != null && shareData.getRaceID() != null) {
+            Log.e(TAG, "Major: " + shareData.getMajor() + " Minor: " + shareData.getRaceID());
             beacon = new Beacon.Builder()
                     .setId1(DefaultSetting.BEACON_UUID_TEACHER)
                     .setId2(shareData.getMajor())

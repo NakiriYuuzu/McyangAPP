@@ -27,6 +27,12 @@ public class ShareData {
     // fixme: BeaconController
     ///////////////////////////////////////////////////////////////////////////
 
+    public void cleanData() {
+        saveMajor(null);
+        saveMinor(null);
+        saveCourseID(null);
+    }
+
     public void saveMajor(String major) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = preferences.edit();
@@ -147,5 +153,49 @@ public class ShareData {
     public String getCourseID() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         return preferences.getString(ShareVariables.COURSE_ID, null);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Todo: RaceActivity
+    ///////////////////////////////////////////////////////////////////////////
+
+    public void saveDoc(String doc) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ShareVariables.RACE_DOC, doc);
+        editor.apply();
+    }
+
+    public String getDoc() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getString(ShareVariables.RACE_DOC, null);
+    }
+
+    public void saveRaceID(String raceID) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ShareVariables.RACE_ID, raceID);
+        editor.apply();
+    }
+
+    public String getRaceID() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getString(ShareVariables.RACE_ID, null);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Todo: RaceSecondActivity
+    ///////////////////////////////////////////////////////////////////////////
+
+    public void saveRaceSecondID(String raceSecondID) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ShareVariables.RACE_SECOND_RACE_LIST, raceSecondID);
+        editor.apply();
+    }
+
+    public String getRaceSecondID() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getString(ShareVariables.RACE_SECOND_RACE_LIST, null);
     }
 }

@@ -30,20 +30,36 @@
         android:windowSoftInputMode="stateVisible|adjustResize"
         tools:ignore="AllowBackup,UnusedAttribute">
         <activity
-            android:name=".Activity.Group.GroupMemberSecondActivity"
+            android:name=".Activity.LearningRecordActivity"
             android:exported="false" />
+        <activity
+            android:name=".Activity.AnswerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Group.GroupMemberSecondActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".Activity.Group.GroupMemberActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".Activity.Group.GroupLeaderActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".Activity.Group.GroupActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".Activity.RaceActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".Activity.SignActivity"
             android:exported="false"

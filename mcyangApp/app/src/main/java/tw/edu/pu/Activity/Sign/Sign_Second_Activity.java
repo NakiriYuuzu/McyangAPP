@@ -22,6 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -68,7 +69,6 @@ public class Sign_Second_Activity extends AppCompatActivity {
         initView();
         signCreated();
         initButton();
-        initViewModel();
         initRecyclerView();
     }
 
@@ -97,7 +97,7 @@ public class Sign_Second_Activity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "已開始廣播！", Toast.LENGTH_SHORT).show();
             else {
                 Toast.makeText(getApplicationContext(), "開始廣播", Toast.LENGTH_SHORT).show();
-                beaconController.init_BroadcastBeacon();
+                beaconController.init_Sign_BroadcastBeacon();
                 beaconController.start_BroadcastBeacon();
                 checkedBeacon = true;
 
@@ -176,7 +176,8 @@ public class Sign_Second_Activity extends AppCompatActivity {
             }
         }, () -> {
             Map<String, String> params = new HashMap<>();
-            params.put("C_id", shareData.getID());
+            Log.e(TAG, "signCreated: " + shareData.getMajor());
+            params.put("C_id", shareData.getMajor());
             return params;
         });
     }
@@ -221,13 +222,16 @@ public class Sign_Second_Activity extends AppCompatActivity {
                 @Override
                 public void onSuccess(String result) {
                     try {
+                        byte[] text = result.getBytes(StandardCharsets.ISO_8859_1);
+                        result = new String(text);
                         JSONObject jsonObject = new JSONObject(result);
                         String name = jsonObject.getString("S_Name");
 
                         if (isExisted_StudentData(name))
-                            signList.add(new SignModel(jsonObject.getString("S_Name"), "已簽到"));
+                            signList.add(new SignModel(name, "已簽到"));
 
                         Log.e(TAG, "signList: " + signList.size() + " signListData: " + signList);
+                        initViewModel();
                         notFound();
 
                     } catch (JSONException e) {
@@ -241,7 +245,7 @@ public class Sign_Second_Activity extends AppCompatActivity {
                 }
             });
         }
-        signAdapter.notifyDataSetChanged();
+        //signAdapter.notifyDataSetChanged();
     }
 
     private void initViewModel() {
@@ -251,6 +255,7 @@ public class Sign_Second_Activity extends AppCompatActivity {
                 signAdapter.updateSignAdapter(signModels);
             }
         });
+        signViewModel.setSignList(signList);
     }
 
     private void initRecyclerView() {

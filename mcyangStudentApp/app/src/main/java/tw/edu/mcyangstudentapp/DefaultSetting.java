@@ -5,9 +5,12 @@ public class DefaultSetting {
     public final static String BEACON_UUID_STUDENT = "2f234454-cf6d-4a0f-adf2-f4911ba9ffa6";
     public final static String BEACON_UUID_TEACHER = "2f234454-cf6d-4a0f-adf2-f4911ba9ffa5";
 
+    //FIXME: Url for WebView
+    public static final String URL_WEB = "http://120.110.114.104/domjudge/login";
+
     // FIXME: Url for api
-    //http://140.128.10.144:54080/public/api/login/user
-    public final static String URL_LOGIN = "http://192.168.31.74:8080/api/StudentLogin/";
-    public static final String URL_COURSE = "http://192.168.31.74:8080/api/Course/";
-    public static final String URL_SIGN_RECORD = "http://192.168.31.74:8080/api/SignRecord/";
+    public final static String URL_LOGIN = "http://120.110.115.128:8080/api/StudentLogin/";
+    public static final String URL_COURSE = "http://120.110.115.128:8080/api/CourseRecord/";
+    public static final String URL_SIGN_RECORD = "http://120.110.115.128:8080/api/SignRecord/";
+    public static final String URL_RACE_LIST = "http://120.110.115.128:8080/api/Race_List";
 }

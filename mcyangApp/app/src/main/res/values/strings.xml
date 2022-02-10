@@ -49,6 +49,11 @@
     <string name="bottom_sheet_ClassName">請輸入課程名稱：</string>
     <string name="bottom_sheet_Button">送出</string>
 
+    <!--BottomSheet_Race-->
+    <string name="bottom_sheet_race_Title">將該學生批改為正確？</string>
+    <string name="bottom_sheet_race_names">姓名：</string>
+    <string name="bottom_sheet_race_detail">狀況：</string>
+
     <!--SignSecondActivity-->
     <string name="signSecond_tv_Title">點名</string>
     <string name="signSecond_tv_Left">出缺席</string>
@@ -93,5 +98,17 @@
     <string name="raceSecond_btn_next">下一題</string>
     <string name="raceSecond_btn_Finish">結束</string>
     <string name="raceSecond_notification_NoData">目前暫無資料。</string>
+
+    <!--AnswerActivity-->
+    <string name="answer_tv_Title">回答</string>
+    <string name="answer_autoText_SelectedBank">選擇題庫</string>
+    <string name="answer_autoText_SelectedQuestion">選擇題目</string>
+
+    <!--AnswerSecondActivity-->
+    <string name="answerSecond_tv_Title">回答</string>
+    <string name="answerSecond_Left">姓名</string>
+    <string name="answerSecond_Right">答題</string>
+    <string name="answerSecond_Button_Left">結束</string>
+    <string name="answerSecond_Button_Right">下一題</string>
 
 </resources>

@@ -144,4 +144,31 @@ public class ShareData {
 
         return signModels;
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // TODO: RaceActivity
+    ///////////////////////////////////////////////////////////////////////////
+
+    public void saveRaceID(String raceID) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ShareVariables.RACE_ID, raceID);
+        editor.apply();
+    }
+
+    public String getRaceID() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getString(ShareVariables.RACE_ID, null);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // TODO: Other
+    ///////////////////////////////////////////////////////////////////////////
+
+    public void cleanData() {
+        saveMajor(null);
+        saveMinor(null);
+        saveStudentName(null);
+        saveStudentID(null);
+    }
 }

@@ -19,6 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/materialTextView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -122,10 +123,20 @@
 
     </LinearLayout>
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/signSecond_textView_NotFound"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/groupThird_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="400dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/groupThird_recyclerview_Title" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/groupThird_textView_NotFound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         android:fontFamily="@font/noto_sans"
@@ -142,18 +153,18 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/groupThird_btn_NextPage"
-        android:text="@string/groupThird_btn_Enter"
-        android:textSize="16sp"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:layout_marginTop="80dp"
-        android:layout_marginLeft="110dp"
-        android:layout_marginRight="110dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="110dp"
+        android:layout_marginRight="110dp"
+        android:layout_marginBottom="30dp"
+        android:text="@string/groupThird_btn_Enter"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:cornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signSecond_textView_NotFound" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

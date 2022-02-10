@@ -26,6 +26,27 @@ public class VolleyApi {
                 get::onSuccess, get::onFailed);
 
         requestQueue.add(stringRequest);
+        requestQueue.getCache().clear();
+    }
+
+    public void putApi(String url, VolleyGet get, VolleyPost post) {
+        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+        StringRequest stringRequest = new StringRequest(Request.Method.PUT, url, get::onSuccess, get::onFailed) {
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() {
+                return post.getParams();
+            }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Accept", "application/json");
+                return headers;
+            }
+        };
+
+        requestQueue.add(stringRequest);
     }
 
     public void postApi(String url, VolleyGet get, VolleyPost post) {
