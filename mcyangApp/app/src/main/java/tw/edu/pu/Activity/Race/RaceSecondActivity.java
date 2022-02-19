@@ -34,7 +34,7 @@ import tw.edu.pu.BeaconModel.BeaconController;
 import tw.edu.pu.DefaultSetting;
 import tw.edu.pu.R;
 import tw.edu.pu.RecyclerAdapter.RaceAdapter;
-import tw.edu.pu.RequestModel.RepeatHelper;
+import tw.edu.pu.Helper.RepeatHelper;
 import tw.edu.pu.StoredData.ShareData;
 import tw.edu.pu.ViewModel.RaceViewModel;
 

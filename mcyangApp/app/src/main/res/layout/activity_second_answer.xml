@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.Answer.SecondAnswerActivity">
+    tools:context=".Activity.Answer.AnswerSecondActivity">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/answerSecond_btn_Back"
@@ -89,13 +89,22 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textview.MaterialTextView
-            android:layout_width="175dp"
+            android:layout_width="110dp"
             android:layout_height="match_parent"
             android:background="@drawable/recyclerview_background"
             android:gravity="center"
             android:text="@string/answerSecond_Left"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:fontFamily="@font/noto_sans"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="130dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/recyclerview_background"
+            android:gravity="center"
+            android:text="@string/answerSecond_Mid"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -105,7 +114,6 @@
             android:background="@drawable/recyclerview_background"
             android:gravity="center"
             android:text="@string/answerSecond_Right"
-            android:fontFamily="@font/noto_sans"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textSize="18sp"
             android:textStyle="bold" />

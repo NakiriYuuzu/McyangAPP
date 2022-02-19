@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import tw.edu.pu.R;
 
-public class SecondAnswerActivity extends AppCompatActivity {
+public class AnswerSecondActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

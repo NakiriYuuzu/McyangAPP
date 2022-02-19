@@ -21,7 +21,7 @@ import java.nio.charset.StandardCharsets;
 import tw.edu.pu.ApiModel.VolleyApi;
 import tw.edu.pu.DefaultSetting;
 import tw.edu.pu.R;
-import tw.edu.pu.RequestModel.RequestHelper;
+import tw.edu.pu.Helper.RequestHelper;
 import tw.edu.pu.StoredData.ShareData;
 
 public class LoginActivity extends AppCompatActivity {

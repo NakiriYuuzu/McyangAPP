@@ -107,6 +107,7 @@
     <!--AnswerSecondActivity-->
     <string name="answerSecond_tv_Title">回答</string>
     <string name="answerSecond_Left">姓名</string>
+    <string name="answerSecond_Mid">回答</string>
     <string name="answerSecond_Right">答題</string>
     <string name="answerSecond_Button_Left">結束</string>
     <string name="answerSecond_Button_Right">下一題</string>

@@ -146,19 +146,19 @@ public class ShareData {
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    // TODO: RaceActivity
+    // TODO: AnswerActivity
     ///////////////////////////////////////////////////////////////////////////
 
-    public void saveRaceID(String raceID) {
+    public void saveAnswerID(String answerID) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(ShareVariables.RACE_ID, raceID);
+        editor.putString(ShareVariables.ANSWER_ID, answerID);
         editor.apply();
     }
 
-    public String getRaceID() {
+    public String getAnswerID() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
-        return preferences.getString(ShareVariables.RACE_ID, null);
+        return preferences.getString(ShareVariables.ANSWER_ID, null);
     }
 
     ///////////////////////////////////////////////////////////////////////////

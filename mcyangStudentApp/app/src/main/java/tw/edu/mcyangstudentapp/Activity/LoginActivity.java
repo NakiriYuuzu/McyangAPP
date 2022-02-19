@@ -21,7 +21,7 @@ import java.nio.charset.StandardCharsets;
 import tw.edu.mcyangstudentapp.ApiModel.VolleyApi;
 import tw.edu.mcyangstudentapp.DefaultSetting;
 import tw.edu.mcyangstudentapp.R;
-import tw.edu.mcyangstudentapp.RequestModel.RequestHelper;
+import tw.edu.mcyangstudentapp.Helper.RequestHelper;
 import tw.edu.mcyangstudentapp.StoredData.ShareData;
 
 public class LoginActivity extends AppCompatActivity {

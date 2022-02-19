@@ -66,6 +66,7 @@ public class RaceActivity extends AppCompatActivity {
                             }
 
                             shareData.saveDoc(inputText);
+                            tvInput.setText("");
                             Intent ii = new Intent(getApplicationContext(), RaceSecondActivity.class);
                             startActivity(ii);
                         }

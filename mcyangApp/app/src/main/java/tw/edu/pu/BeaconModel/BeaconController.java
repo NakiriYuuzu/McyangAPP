@@ -31,7 +31,7 @@ public class BeaconController {
     private final ShareData shareData;
 
     //Scan_Beacon
-    private final Region region = new Region("UniqueID", Identifier.parse(DefaultSetting.BEACON_UUID_STUDENT), null, null);
+    private Region region;
 
     //Broadcast_Beacon
     private final BeaconParser beaconParser = new BeaconParser()
@@ -42,12 +42,11 @@ public class BeaconController {
         shareData = new ShareData(activity);
     }
 
-    public void beaconInit() {
+    public void beaconInit(String url) {
         beaconManager = BeaconManager.getInstanceForApplication(activity);
-
+        this.region = new Region("UniqueID", Identifier.parse(url), null, null);
         //beacon AddStone m:0-3=4c000215 or alt beacon = m:2-3=0215
         beaconManager.getBeaconParsers().add(beaconParser);
-
         beaconManager.setForegroundScanPeriod(DEFAULT_FOREGROUND_SCAN_PERIOD);
     }
 
@@ -76,7 +75,7 @@ public class BeaconController {
         if (shareData.getMajor() != null && shareData.getMinor() != null) {
             Log.e(TAG, "Major: " + shareData.getMajor() + " Minor: " + shareData.getMinor());
             beacon = new Beacon.Builder()
-                    .setId1(DefaultSetting.BEACON_UUID_TEACHER)
+                    .setId1(DefaultSetting.BEACON_UUID_SIGN)
                     .setId2(shareData.getMajor())
                     .setId3(shareData.getMinor())
                     .setManufacturer(0x0118)
@@ -95,9 +94,9 @@ public class BeaconController {
         if (shareData.getMajor() != null && shareData.getRaceID() != null) {
             Log.e(TAG, "Major: " + shareData.getMajor() + " Minor: " + shareData.getRaceID());
             beacon = new Beacon.Builder()
-                    .setId1(DefaultSetting.BEACON_UUID_TEACHER)
+                    .setId1(DefaultSetting.BEACON_UUID_RACE)
                     .setId2(shareData.getMajor())
-                    .setId3(shareData.getMinor())
+                    .setId3(shareData.getRaceID())
                     .setManufacturer(0x0118)
                     .setTxPower(-79)
                     .setDataFields(Collections.singletonList(0L))

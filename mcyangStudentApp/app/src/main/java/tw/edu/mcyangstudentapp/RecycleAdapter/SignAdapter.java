@@ -42,18 +42,23 @@ public class SignAdapter extends RecyclerView.Adapter<SignAdapter.SignViewHolder
     VolleyApi volleyApi;
 
     private ArrayList<SignModel> signData;
+    private ArrayList<String> sign_ID;
 
-    public SignAdapter(Activity activity, ArrayList<SignModel> signModels) {
+    public SignAdapter(Activity activity, ArrayList<SignModel> signModels, ArrayList<String> signID) {
         this.activity = activity;
         this.signData = signModels;
+        this.sign_ID = signID;
+
         volleyApi = new VolleyApi(activity);
         status = new ClassID_Status(activity);
         shareData = new ShareData(activity);
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void updateSignAdapter(ArrayList<SignModel> signModels) {
+    public void updateSignAdapter(ArrayList<SignModel> signModels, ArrayList<String> signID) {
         this.signData = signModels;
+        this.sign_ID = signID;
+
         notifyDataSetChanged();
     }
 
@@ -75,7 +80,7 @@ public class SignAdapter extends RecyclerView.Adapter<SignAdapter.SignViewHolder
         holder.tvLeft.setText(signData.get(position).getMajor());
         holder.tvRight.setText(btmSheetTitle);
 
-        holder.btnEnter.setOnClickListener(v -> bottomSheet());
+        holder.btnEnter.setOnClickListener(v -> bottomSheet(position));
     }
 
     @Override
@@ -87,8 +92,10 @@ public class SignAdapter extends RecyclerView.Adapter<SignAdapter.SignViewHolder
     }
 
     @SuppressLint("SetTextI18n")
-    public void bottomSheet() {
+    public void bottomSheet(int position) {
         final BottomSheetDialog bsd = new BottomSheetDialog(activity, R.style.BottomSheetDialogTheme);
+
+        Log.e(TAG, "onClick: " + sign_ID.get(position));
 
         @SuppressLint("InflateParams")
         View view = LayoutInflater.from(activity).inflate(R.layout.layout_bottom_sheet, null);
@@ -114,7 +121,7 @@ public class SignAdapter extends RecyclerView.Adapter<SignAdapter.SignViewHolder
             }
         }, () -> {
             Map<String, String> params = new HashMap<>();
-            params.put("Sign_id", shareData.getMinor());
+            params.put("Sign_id", sign_ID.get(position));
             params.put("S_id", shareData.getStudentID());
             return params;
         }));

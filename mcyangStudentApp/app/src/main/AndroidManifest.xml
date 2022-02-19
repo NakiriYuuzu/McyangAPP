@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="tw.edu.mcyangstudentapp">
+    package="tw.edu.mcyangstudentapp" >
     <!-- Internet -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -28,12 +28,15 @@
         android:theme="@style/Theme.McyangStudentApp"
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="stateVisible|adjustResize"
-        tools:ignore="AllowBackup,UnusedAttribute">
+        tools:ignore="AllowBackup,UnusedAttribute" >
+        <activity
+            android:name=".Activity.Answer.AnswerSecondActivity"
+            android:exported="false" />
         <activity
             android:name=".Activity.LearningRecordActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.AnswerActivity"
+            android:name=".Activity.Answer.AnswerActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.Group.GroupMemberSecondActivity"
@@ -70,7 +73,7 @@
             android:name=".Activity.LoginActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity">
+            tools:ignore="LockedOrientationActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,4 +1,4 @@
-package tw.edu.pu.RequestModel;
+package tw.edu.mcyangstudentapp.Helper;
 
 import android.Manifest;
 import android.app.Activity;
@@ -22,7 +22,7 @@ import com.permissionx.guolindev.PermissionX;
 
 import org.altbeacon.bluetooth.BluetoothMedic;
 
-import tw.edu.pu.R;
+import tw.edu.mcyangstudentapp.R;
 
 public class RequestHelper {
 
@@ -121,7 +121,6 @@ public class RequestHelper {
             else
                 Log.e(TAG, networkInfo.getReason());
 
-        return internet;
+       return internet;
     }
-
 }

@@ -61,7 +61,17 @@
     <string name="race_btn_End">結束</string>
 
     <!--AnswerActivity-->
-    <string name="answer_tv_Title">開始問答</string>
+    <string name="answer_tv_Title">問題：</string>
+    <string name="answer_hint">請輸入答案</string>
+    <string name="answer_alert_Waiting">等待題目中</string>
+
+    <!--AnswerSecondActivity-->
+    <string name="answerSecond_Btn_Text">批改中</string>
+    <string name="answerSecond_Left">姓名</string>
+    <string name="answerSecond_Mid">回答</string>
+    <string name="answerSecond_Right">答題</string>
+    <string name="answerSecond_Button_Left">結束</string>
+    <string name="answerSecond_Button_Right">下一題</string>
 
     <!--BottomSheet-->
     <string name="bottom_sheet_Title">已選擇課程：</string>

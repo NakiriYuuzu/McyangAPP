@@ -26,6 +26,7 @@ public class VolleyApi {
                 get::onSuccess, get::onFailed);
 
         requestQueue.add(stringRequest);
+        requestQueue.getCache().clear();
     }
 
     public void postApi(String url, VolleyGet get, VolleyPost post) {

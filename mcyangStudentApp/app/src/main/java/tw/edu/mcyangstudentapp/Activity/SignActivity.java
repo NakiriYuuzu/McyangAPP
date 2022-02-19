@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 import tw.edu.mcyangstudentapp.ActivityModel.SignModel;
 import tw.edu.mcyangstudentapp.BeaconModel.BeaconController;
+import tw.edu.mcyangstudentapp.DefaultSetting;
 import tw.edu.mcyangstudentapp.R;
 import tw.edu.mcyangstudentapp.RecycleAdapter.SignAdapter;
 import tw.edu.mcyangstudentapp.StoredData.ShareData;
@@ -28,6 +29,7 @@ public class SignActivity extends AppCompatActivity {
     private static final String TAG = "SignActivity: ";
 
     ArrayList<SignModel> signModels;
+    ArrayList<String> sign_ID;
 
     ShapeableImageView btnBack;
     MaterialTextView tvNoData;
@@ -52,7 +54,7 @@ public class SignActivity extends AppCompatActivity {
         signViewModel = new ViewModelProvider(this).get(SignViewModel.class);
         signViewModel.getSignListObserver().observe(this, signModels -> {
             if (signModels != null)
-                signAdapter.updateSignAdapter(signModels);
+                signAdapter.updateSignAdapter(signModels, sign_ID);
         });
     }
 
@@ -70,13 +72,13 @@ public class SignActivity extends AppCompatActivity {
 
     private void startScanning() {
         beaconController.startScanning((beacons, region) -> {
-            Log.e(TAG, "startScanning: " + beacons.size() + " " + beacons);
+            Log.e(TAG, "startScanning: " + beacons.size());
             if (beacons.size() > 0) {
                 for (Beacon beacon : beacons)
-                    if (isBeaconExisted(beacon.getId2().toString()))
+                    if (isBeaconExisted(beacon.getId2().toString())) {
                         signModels.add(new SignModel(beacon.getId2().toString(), beacon.getId3().toString()));
-
-                Log.e(TAG, "signModels: " + signModels.size() + " " + signModels);
+                        sign_ID.add(beacon.getId3().toString());
+                    }
 
                 syncViewModel();
                 signViewModel.setSignList(signModels);
@@ -89,7 +91,7 @@ public class SignActivity extends AppCompatActivity {
     private void initRecycleView() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        signAdapter = new SignAdapter(this, signModels);
+        signAdapter = new SignAdapter(this, signModels, sign_ID);
         recyclerView.setAdapter(signAdapter);
     }
 
@@ -106,11 +108,12 @@ public class SignActivity extends AppCompatActivity {
         tvNoData = findViewById(R.id.sign_textView_NoFound);
 
         signModels = new ArrayList<>();
+        sign_ID = new ArrayList<>();
 
         shareData = new ShareData(this);
 
         beaconController = new BeaconController(this);
-        beaconController.beaconInit();
+        beaconController.beaconInit(DefaultSetting.BEACON_UUID_SIGN);
     }
 
     @Override

@@ -10,10 +10,11 @@ import android.widget.Toast;
 
 import com.google.android.material.card.MaterialCardView;
 
+import tw.edu.mcyangstudentapp.Activity.Answer.AnswerActivity;
 import tw.edu.mcyangstudentapp.Activity.Group.GroupActivity;
 import tw.edu.mcyangstudentapp.BeaconModel.BeaconController;
 import tw.edu.mcyangstudentapp.R;
-import tw.edu.mcyangstudentapp.RequestModel.RequestHelper;
+import tw.edu.mcyangstudentapp.Helper.RequestHelper;
 import tw.edu.mcyangstudentapp.StoredData.ShareData;
 
 public class MainActivity extends AppCompatActivity {

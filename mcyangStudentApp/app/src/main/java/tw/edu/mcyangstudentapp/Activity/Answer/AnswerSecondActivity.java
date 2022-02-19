@@ -1,4 +1,4 @@
-package tw.edu.mcyangstudentapp.Activity;
+package tw.edu.mcyangstudentapp.Activity.Answer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,24 +9,24 @@ import com.google.android.material.imageview.ShapeableImageView;
 
 import tw.edu.mcyangstudentapp.R;
 
-public class AnswerActivity extends AppCompatActivity {
+public class AnswerSecondActivity extends AppCompatActivity {
 
-    ShapeableImageView btn_Back;
+    ShapeableImageView btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_answer_acitivity);
+        setContentView(R.layout.activity_answer_second);
 
         initView();
         initButton();
     }
 
     private void initButton() {
-        btn_Back.setOnClickListener(v -> finish());
+        btnBack.setOnClickListener(v -> finish());
     }
 
     private void initView() {
-        btn_Back = findViewById(R.id.answer_btn_Back);
+        btnBack = findViewById(R.id.answerSecond_btn_Back);
     }
 }

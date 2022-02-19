@@ -13,5 +13,5 @@ public class ShareVariables {
     public static final String STUDENT_ID = "studentID";
     public static final String SIGN_SAVE_DATA = "SignData";
     public static final String SIGN_GET_DATA = "GetSignData";
-    public static final String RACE_ID = "R_id";
+    public static final String ANSWER_ID = "QuestionID";
 }

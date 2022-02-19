@@ -2,6 +2,7 @@ package tw.edu.pu.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,9 @@ import com.google.android.material.card.MaterialCardView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.nio.charset.StandardCharsets;
+
+import tw.edu.pu.Activity.Answer.AnswerActivity;
 import tw.edu.pu.Activity.Group.GroupActivity;
 import tw.edu.pu.Activity.Race.RaceActivity;
 import tw.edu.pu.Activity.Sign.SignActivity;
@@ -19,12 +23,12 @@ import tw.edu.pu.ApiModel.VolleyApi;
 import tw.edu.pu.BeaconModel.BeaconController;
 import tw.edu.pu.DefaultSetting;
 import tw.edu.pu.R;
-import tw.edu.pu.RequestModel.RequestHelper;
+import tw.edu.pu.Helper.RequestHelper;
 import tw.edu.pu.StoredData.ShareData;
 
 public class MainActivity extends AppCompatActivity {
 
-    MaterialCardView btnCreate, btnSign, btnGroup, btnRace, btnEndClass, btnSignOut;
+    MaterialCardView btnCreate, btnSign, btnGroup, btnRace, btnAnswer, btnEndClass, btnSignOut;
 
     VolleyApi volleyApi;
     ShareData shareData;
@@ -46,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void startScanning() {
         beaconController.startScanning((beacons, region) -> {
+            Log.e("startScanning: ", beacons.size() + "");
             if (beacons.size() > 0) {
                 toastStudent(beacons.iterator().next().getId2().toString());
             }
@@ -58,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(String result) {
                 JSONObject jsonObject;
                 try {
+                    byte[] text = result.getBytes(StandardCharsets.ISO_8859_1);
+                    result = new String(text);
                     jsonObject = new JSONObject(result);
                     String studentNames = jsonObject.getString("S_Name");
                     Toast.makeText(MainActivity.this, studentNames + "同學：提問中...", Toast.LENGTH_SHORT).show();
@@ -91,15 +98,18 @@ public class MainActivity extends AppCompatActivity {
             startActivity(ii);
         });
 
+        btnAnswer.setOnClickListener(v -> {
+            Intent ii = new Intent(this, AnswerActivity.class);
+            startActivity(ii);
+        });
+
         btnRace.setOnClickListener(v -> {
             Intent ii = new Intent(this, RaceActivity.class);
             startActivity(ii);
         });
 
 
-        btnEndClass.setOnClickListener(v -> {
-            shareData.cleanData();
-        });
+        btnEndClass.setOnClickListener(v -> shareData.cleanData());
 
         // FIXME: Add when sign out turn off auto login
         btnSignOut.setOnClickListener(v -> finish());
@@ -110,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
         btnSign = findViewById(R.id.main_btn_Sign);
         btnGroup = findViewById(R.id.main_btn_Group);
         btnRace = findViewById(R.id.main_btn_OpenQA);
+        btnAnswer = findViewById(R.id.main_btn_Answer);
         btnEndClass = findViewById(R.id.main_btn_EndClass);
         btnSignOut = findViewById(R.id.main_btn_SignOut);
 
@@ -117,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         shareData = new ShareData(this);
         requestHelper = new RequestHelper(this);
         beaconController = new BeaconController(this);
-        beaconController.beaconInit();
+        beaconController.beaconInit(DefaultSetting.BEACON_UUID_MAIN);
     }
 
     @Override

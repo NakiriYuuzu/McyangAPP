@@ -30,7 +30,7 @@ public class BeaconController {
     ShareData shareData;
 
     //Scan_Beacon
-    private final Region region = new Region("UniqueID", Identifier.parse(DefaultSetting.BEACON_UUID_TEACHER), null, null);
+    private Region region;
 
     //Broadcast_Beacon
     private final BeaconParser beaconParser = new BeaconParser()
@@ -41,7 +41,9 @@ public class BeaconController {
         shareData = new ShareData(activity);
     }
 
-    public void beaconInit() {
+    public void beaconInit(String url) {
+        this.region = new Region("UniqueID", Identifier.parse(url), null, null);
+
         beaconManager = BeaconManager.getInstanceForApplication(activity);
 
         //beacon AddStone m:0-3=4c000215 or alt beacon = m:2-3=0215
@@ -74,7 +76,7 @@ public class BeaconController {
 
     public void init_BroadcastBeacon() {
         beacon = new Beacon.Builder()
-                .setId1(DefaultSetting.BEACON_UUID_STUDENT)
+                .setId1(DefaultSetting.BEACON_UUID_MAIN)
                 .setId2(shareData.getStudentID())
                 .setId3("2")
                 .setManufacturer(0x0118)
