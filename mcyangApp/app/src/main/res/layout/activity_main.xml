@@ -120,7 +120,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/main_btn_OpenQA"
+            android:text="@string/main_btn_answer"
             android:textSize="20sp"
             android:textStyle="bold" />
 

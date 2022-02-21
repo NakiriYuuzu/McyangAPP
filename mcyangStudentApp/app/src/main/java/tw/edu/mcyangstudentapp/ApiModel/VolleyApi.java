@@ -29,6 +29,21 @@ public class VolleyApi {
         requestQueue.getCache().clear();
     }
 
+    public void getDomJudgeAPI(String url, VolleyGet get) {
+        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, get::onSuccess, get::onFailed) {
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Accept", "application/json");
+                headers.put("Authorization", "Basic czEwODI5Nzg6czEwODI5Nzg=");
+                return headers;
+            }
+        };
+
+        requestQueue.add(stringRequest);
+        requestQueue.getCache().clear();
+    }
+
     public void postApi(String url, VolleyGet get, VolleyPost post) {
         RequestQueue requestQueue = Volley.newRequestQueue(activity);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,

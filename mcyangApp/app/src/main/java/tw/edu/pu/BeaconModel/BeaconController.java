@@ -50,15 +50,6 @@ public class BeaconController {
         beaconManager.setForegroundScanPeriod(DEFAULT_FOREGROUND_SCAN_PERIOD);
     }
 
-    public void startScanning() {
-        beaconManager.addRangeNotifier((beacons, region) -> {
-            if (beacons.size() > 0)
-                Log.e(TAG,"" + beacons.iterator().next().getDistance());
-        });
-
-        beaconManager.startRangingBeacons(region);
-    }
-
     public void startScanning(BeaconModify beaconModify) {
         beaconManager.addRangeNotifier(beaconModify::modifyData);
 
@@ -72,49 +63,110 @@ public class BeaconController {
     }
 
     public void init_Sign_BroadcastBeacon() {
-        if (shareData.getMajor() != null && shareData.getMinor() != null) {
-            Log.e(TAG, "Major: " + shareData.getMajor() + " Minor: " + shareData.getMinor());
-            beacon = new Beacon.Builder()
-                    .setId1(DefaultSetting.BEACON_UUID_SIGN)
-                    .setId2(shareData.getMajor())
-                    .setId3(shareData.getMinor())
-                    .setManufacturer(0x0118)
-                    .setTxPower(-79)
-                    .setDataFields(Collections.singletonList(0L))
-                    .build();
+        try {
+            if (shareData.getMajor() != null && shareData.getMinor() != null) {
+                Log.e(TAG, "Major: " + shareData.getMajor() + " Minor: " + shareData.getMinor());
+                beacon = new Beacon.Builder()
+                        .setId1(DefaultSetting.BEACON_UUID_SIGN)
+                        .setId2(shareData.getMajor())
+                        .setId3(shareData.getMinor())
+                        .setManufacturer(0x0118)
+                        .setTxPower(-79)
+                        .setDataFields(Collections.singletonList(0L))
+                        .build();
 
-            beaconTransmitter = new BeaconTransmitter(activity, beaconParser);
-        }
-        else {
-            Toast.makeText(activity, "App 出現異常請重新啓動APP。", Toast.LENGTH_SHORT).show();
+                beaconTransmitter = new BeaconTransmitter(activity, beaconParser);
+            }
+            else {
+                if (shareData.getMajor() == null)
+                    Toast.makeText(activity, "請先點名后在開始廣播！", Toast.LENGTH_SHORT).show();
+                if (shareData.getQuestion_ID() == null)
+                    Toast.makeText(activity, "無法取得題目ID！", Toast.LENGTH_SHORT).show();
+            }
+
+        } catch (Exception e) {
+            if (shareData.getMajor() == null)
+                Toast.makeText(activity, "請先點名后在開始廣播！", Toast.LENGTH_SHORT).show();
+            if (shareData.getQuestion_ID() == null)
+                Toast.makeText(activity, "無法取得題目ID！", Toast.LENGTH_SHORT).show();
         }
     }
 
     public void init_Race_BroadcastBeacon() {
-        if (shareData.getMajor() != null && shareData.getRaceID() != null) {
-            Log.e(TAG, "Major: " + shareData.getMajor() + " Minor: " + shareData.getRaceID());
-            beacon = new Beacon.Builder()
-                    .setId1(DefaultSetting.BEACON_UUID_RACE)
-                    .setId2(shareData.getMajor())
-                    .setId3(shareData.getRaceID())
-                    .setManufacturer(0x0118)
-                    .setTxPower(-79)
-                    .setDataFields(Collections.singletonList(0L))
-                    .build();
+        try {
+            if (shareData.getMajor() != null && shareData.getRaceID() != null) {
+                Log.e(TAG, "Major: " + shareData.getMajor() + " Minor: " + shareData.getRaceID());
+                beacon = new Beacon.Builder()
+                        .setId1(DefaultSetting.BEACON_UUID_RACE)
+                        .setId2(shareData.getMajor())
+                        .setId3(shareData.getRaceID())
+                        .setManufacturer(0x0118)
+                        .setTxPower(-79)
+                        .setDataFields(Collections.singletonList(0L))
+                        .build();
 
-            beaconTransmitter = new BeaconTransmitter(activity, beaconParser);
+                beaconTransmitter = new BeaconTransmitter(activity, beaconParser);
+            } else {
+                if (shareData.getMajor() == null)
+                    Toast.makeText(activity, "請先點名后在開始廣播！", Toast.LENGTH_SHORT).show();
+                if (shareData.getQuestion_ID() == null)
+                    Toast.makeText(activity, "無法取得題目ID！", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            if (shareData.getMajor() == null)
+                Toast.makeText(activity, "請先點名后在開始廣播！", Toast.LENGTH_SHORT).show();
+            if (shareData.getQuestion_ID() == null)
+                Toast.makeText(activity, "無法取得題目ID！", Toast.LENGTH_SHORT).show();
         }
-        else {
-            Toast.makeText(activity, "App 出現異常請重新啓動APP。", Toast.LENGTH_SHORT).show();
+    }
+
+    public void init_Answer_BroadcastBeacon() {
+        try {
+            if (shareData.getMajor() != null && shareData.getQuestion_ID() != null) {
+                Log.e(TAG, "Major: " + shareData.getMajor() + " Minor: " + shareData.getRaceID());
+                beacon = new Beacon.Builder()
+                        .setId1(DefaultSetting.BEACON_UUID_ANSWER)
+                        .setId2(shareData.getMajor())
+                        .setId3(shareData.getQuestion_ID())
+                        .setManufacturer(0x0118)
+                        .setTxPower(-79)
+                        .setDataFields(Collections.singletonList(0L))
+                        .build();
+
+                beaconTransmitter = new BeaconTransmitter(activity, beaconParser);
+            }
+            else {
+                if (shareData.getMajor() == null)
+                    Toast.makeText(activity, "請先點名后在開始廣播！", Toast.LENGTH_SHORT).show();
+                if (shareData.getQuestion_ID() == null)
+                    Toast.makeText(activity, "無法取得題目ID！", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(activity, "無法打開beacon，請先點名后在操作！", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     public void start_BroadcastBeacon() {
-        beaconTransmitter.startAdvertising(beacon);
+        try {
+            beaconTransmitter.startAdvertising(beacon);
+        } catch (Exception e) {
+            if (shareData.getMajor() == null)
+                Toast.makeText(activity, "請先點名后在開始廣播！", Toast.LENGTH_SHORT).show();
+            if (shareData.getQuestion_ID() == null)
+                Toast.makeText(activity, "無法取得題目ID！", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void stop_BroadcastBeacon() {
-        beaconTransmitter.stopAdvertising();
+        try {
+            beaconTransmitter.stopAdvertising();
+        } catch (Exception e) {
+            if (shareData.getMajor() == null)
+                Toast.makeText(activity, "請先點名后在開始廣播！", Toast.LENGTH_SHORT).show();
+            if (shareData.getQuestion_ID() == null)
+                Toast.makeText(activity, "無法取得題目ID！", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public interface BeaconModify {

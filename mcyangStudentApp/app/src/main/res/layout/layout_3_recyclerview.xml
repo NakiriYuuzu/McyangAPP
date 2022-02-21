@@ -13,7 +13,7 @@
         tools:layout_editor_absoluteX="0dp">
 
         <LinearLayout
-            android:id="@+id/recyclerView_Button"
+            android:id="@+id/three_recyclerView_Button"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -21,19 +21,30 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/recycleView_tv_Left"
-                android:text="@string/create_recycleView_Left"
+                android:id="@+id/three_recycleView_tv_Left"
+                android:text=""
                 android:textSize="16sp"
                 android:textStyle="normal"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:background="@drawable/recyclerview_background"
-                android:layout_width="125dp"
+                android:layout_width="110dp"
                 android:layout_height="match_parent"
                 android:gravity="center" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/recycleView_tv_Right"
-                android:text="@string/create_recycleView_Right"
+                android:id="@+id/three_recycleView_tv_Mid"
+                android:text=""
+                android:textSize="16sp"
+                android:textStyle="normal"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:background="@drawable/recyclerview_background"
+                android:layout_width="130dp"
+                android:layout_height="match_parent"
+                android:gravity="center" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/three_recycleView_tv_Right"
+                android:text=""
                 android:textSize="16sp"
                 android:textStyle="normal"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"

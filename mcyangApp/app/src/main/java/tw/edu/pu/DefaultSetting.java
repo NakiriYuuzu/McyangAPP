@@ -18,5 +18,6 @@ public class DefaultSetting {
     public static final String URL_RACE_ANSWER = "http://120.110.115.128:8080/api/Race_Answer/";
     public static final String URL_ANSWER_TOPIC = "http://120.110.115.128:8080/api/QA_Topic/";
     public static final String URL_ANSWER_QUESTION = "http://120.110.115.128:8080/api/Question/";
+    public static final String URL_ANSWER_QUESTION_Q = "http://120.110.115.128:8080/api/Question_Q/";
     public static final String URL_ANSWER_MEMBER = "http://120.110.115.128:8080/api/Answer_Member/";
 }

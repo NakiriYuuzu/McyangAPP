@@ -99,6 +99,7 @@ public class Sign_Second_Activity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "開始廣播", Toast.LENGTH_SHORT).show();
                 beaconController.init_Sign_BroadcastBeacon();
                 beaconController.start_BroadcastBeacon();
+
                 checkedBeacon = true;
 
                 handler.postDelayed(runnable = () -> {
@@ -270,24 +271,6 @@ public class Sign_Second_Activity extends AppCompatActivity {
             tvNotFound.setVisibility(View.GONE);
         else
             tvNotFound.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (checkedBeacon)
-            beaconController.stop_BroadcastBeacon();
-
-        handler.removeCallbacks(runnable);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (checkedBeacon)
-            beaconController.stop_BroadcastBeacon();
-
-        handler.removeCallbacks(runnable);
     }
 
     @Override

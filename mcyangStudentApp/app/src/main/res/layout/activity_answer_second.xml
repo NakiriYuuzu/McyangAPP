@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:fontFamily="@font/noto_sans"
-        android:text="@string/answer_tv_Title"
+        android:text="@string/main_btn_Answer"
         android:textAppearance="?attr/title"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -34,7 +34,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/answerSecond_btn_Race"
+        android:id="@+id/answerSecond_btn_Enter"
         app:cardCornerRadius="1000dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

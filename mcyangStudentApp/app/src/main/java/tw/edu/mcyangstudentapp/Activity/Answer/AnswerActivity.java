@@ -2,6 +2,7 @@ package tw.edu.mcyangstudentapp.Activity.Answer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +21,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 import tw.edu.mcyangstudentapp.ApiModel.VolleyApi;
 import tw.edu.mcyangstudentapp.BeaconModel.BeaconController;
@@ -52,14 +55,14 @@ public class AnswerActivity extends AppCompatActivity {
 
     private void beaconScanning() {
         beaconController.startScanning((beacons, region) -> {
-            Log.e(TAG, "Scanning!" + beacons.size());
             if (beacons.size() > 0) {
                 for (Beacon beacon : beacons) {
                     String id = beacon.getId2().toString();
 
                     if (id.equals(shareData.getMajor())) {
                         beaconController.stopScanning();
-                        shareData.saveAnswerID(beacon.getId3().toString());
+                        shareData.saveQuestionID(beacon.getId3().toString());
+                        Log.e(TAG, "Major: " + shareData.getMajor() + "Minor: " + shareData.getQuestionID());
                         getQuestion();
                     }
                 }
@@ -68,22 +71,20 @@ public class AnswerActivity extends AppCompatActivity {
     }
 
     private void getQuestion() {
-        if (shareData.getAnswerID() != null)
-            volleyApi.getApi(DefaultSetting.URL_ANSWER_QUESTION + shareData.getAnswerID(), new VolleyApi.VolleyGet() {
+        if (shareData.getQuestionID() != null)
+            volleyApi.getApi(DefaultSetting.URL_ANSWER_QUESTION + shareData.getQuestionID(), new VolleyApi.VolleyGet() {
                 @Override
                 public void onSuccess(String result) {
                     Log.e(TAG, result);
                     try {
-                        JSONArray jsonArray = new JSONArray(result.getBytes(StandardCharsets.ISO_8859_1));
-                        JSONObject jsonObject;
+                        JSONArray jsonArray = new JSONArray(new String(result.getBytes(StandardCharsets.ISO_8859_1)));
 
                         for (int i = 0; i < jsonArray.length(); i++) {
-                            jsonObject = jsonArray.getJSONObject(i);
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
                             String questionDoc = jsonObject.getString("Q_doc");
                             tv_QuestionInfo.setText(questionDoc);
-                            card_Block.setVisibility(View.GONE);
                         }
-
+                        card_Block.setVisibility(View.INVISIBLE);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -98,15 +99,47 @@ public class AnswerActivity extends AppCompatActivity {
     }
 
     private void initButton() {
-        if (et_QuestionInput.getText() != null)
-            if (!et_QuestionInput.getText().toString().equals(""))
-                btn_Send.setOnClickListener(v -> {
-
-                });
-            else
-                Toast.makeText(this, "請輸入答案！", Toast.LENGTH_SHORT).show();
+        btn_Send.setOnClickListener(v -> {
+            if (et_QuestionInput.getText() != null)
+                if (!et_QuestionInput.getText().toString().equals(""))
+                    sendAnswer();
+                else
+                    Toast.makeText(this, "請輸入答案！", Toast.LENGTH_SHORT).show();
+        });
 
         btn_Back.setOnClickListener(v -> finish());
+    }
+
+    private void sendAnswer() {
+        volleyApi.postApi(DefaultSetting.URL_ANSWER_MEMBER, new VolleyApi.VolleyGet() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    byte[] text = result.getBytes(StandardCharsets.ISO_8859_1);
+                    result = new String(text);
+                    JSONObject jsonObject = new JSONObject(result);
+                    shareData.saveAnswerID(jsonObject.getString("Answer_id"));
+
+                    Intent ii = new Intent(getApplicationContext(), AnswerSecondActivity.class);
+                    startActivity(ii);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailed(VolleyError error) {
+                Toast.makeText(AnswerActivity.this, "Unable connect to server!", Toast.LENGTH_SHORT).show();
+            }
+        }, () -> {
+            Map<String, String> params = new HashMap<>();
+            params.put("Answer_doc", et_QuestionInput.getText() + "");
+            params.put("Answer", "false");
+            params.put("Q_id", shareData.getQuestionID());
+            params.put("S_id", shareData.getStudentID());
+            return params;
+        });
     }
 
     private void initView() {
@@ -122,5 +155,12 @@ public class AnswerActivity extends AppCompatActivity {
         beaconController = new BeaconController(this);
         beaconController.beaconInit(DefaultSetting.BEACON_UUID_ANSWER);
         beaconScanning();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        beaconController.stopScanning();
+
     }
 }

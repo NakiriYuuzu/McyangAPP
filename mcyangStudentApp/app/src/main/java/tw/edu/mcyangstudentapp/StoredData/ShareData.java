@@ -149,6 +149,18 @@ public class ShareData {
     // TODO: AnswerActivity
     ///////////////////////////////////////////////////////////////////////////
 
+    public void saveQuestionID(String questionID) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ShareVariables.QUESTION_ID, questionID);
+        editor.apply();
+    }
+
+    public String getQuestionID() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getString(ShareVariables.QUESTION_ID, null);
+    }
+
     public void saveAnswerID(String answerID) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = preferences.edit();
@@ -162,6 +174,34 @@ public class ShareData {
     }
 
     ///////////////////////////////////////////////////////////////////////////
+    // TODO: LearningRecordActivity
+    ///////////////////////////////////////////////////////////////////////////
+
+    public void saveDomJudgeStudentID(String studentID) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ShareVariables.DOM_JUDGE_STUDENT_ID, studentID);
+        editor.apply();
+    }
+
+    public String getDomJudgeStudentID() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getString(ShareVariables.DOM_JUDGE_STUDENT_ID, null);
+    }
+
+    public void saveDomJudgeCourseID(String CourseID) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ShareVariables.DOM_JUDGE_COURSE_ID, CourseID);
+        editor.apply();
+    }
+
+    public String getDomJudgeCourseID() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getString(ShareVariables.DOM_JUDGE_COURSE_ID, null);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
     // TODO: Other
     ///////////////////////////////////////////////////////////////////////////
 
@@ -170,5 +210,7 @@ public class ShareData {
         saveMinor(null);
         saveStudentName(null);
         saveStudentID(null);
+        saveQuestionID(null);
+        saveAnswerID(null);
     }
 }

@@ -222,6 +222,7 @@ public class RaceSecondActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "開始廣播", Toast.LENGTH_SHORT).show();
                 beaconController.init_Race_BroadcastBeacon();
                 beaconController.start_BroadcastBeacon();
+
                 checkedBeacon = true;
 
                 if (shareData.getRaceID() != null)

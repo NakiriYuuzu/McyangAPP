@@ -24,6 +24,7 @@
     <string name="main_btn_Sign">開始點名</string>
     <string name="main_btn_Group">分組討論</string>
     <string name="main_btn_OpenQA">開放搶答</string>
+    <string name="main_btn_answer">開始問答</string>
     <string name="main_btn_EndClass">結束課程</string>
     <string name="main_btn_SignOut">登出</string>
 
@@ -52,7 +53,7 @@
     <!--BottomSheet_Race-->
     <string name="bottom_sheet_race_Title">將該學生批改為正確？</string>
     <string name="bottom_sheet_race_names">姓名：</string>
-    <string name="bottom_sheet_race_detail">狀況：</string>
+    <string name="bottom_sheet_race_detail">回答：</string>
 
     <!--SignSecondActivity-->
     <string name="signSecond_tv_Title">點名</string>

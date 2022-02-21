@@ -20,4 +20,12 @@ public class DefaultSetting {
     public static final String URL_ANSWER_TOPIC = "http://120.110.115.128:8080/api/QA_Topic/";
     public static final String URL_ANSWER_QUESTION = "http://120.110.115.128:8080/api/Question/";
     public static final String URL_ANSWER_MEMBER = "http://120.110.115.128:8080/api/Answer_Member/";
+
+
+    //FIXME:Url for DomJudge Api
+    public static final String URL_DOM_JUDGE = "http://120.110.114.104/domjudge/api/v4/";
+    public static final String DOM_JUDGE_CONTESTS = "contests";
+    public static final String URL_DOM_JUDGE_USERS = "http://120.110.114.104/domjudge/api/v4/users";
+    public static final String DOM_JUDGE_SCOREBOARD = "http://120.110.114.104/domjudge/api/v4/contests/";
+    public static final String URL_DOM_JUDGE_PROBLEMS = "http://120.110.114.104/domjudge/team/problems/";
 }

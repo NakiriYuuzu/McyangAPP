@@ -118,7 +118,7 @@ public class RaceActivity extends AppCompatActivity {
             public void onFailed(VolleyError error) {
                 Log.e(TAG, "onFailed: " + error);
             }
-        }, (VolleyApi.VolleyPost) () -> {
+        }, () -> {
             Map<String, String> params = new HashMap<>();
             params.put("Answer", "false");
             params.put("R_id", raceID);

@@ -65,7 +65,7 @@ public class SignAdapter extends RecyclerView.Adapter<SignAdapter.SignViewHolder
     @NonNull
     @Override
     public SignViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_sign_recycle, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_2_recyclerview, parent, false);
         return new SignViewHolder(view);
     }
 

@@ -12,6 +12,7 @@ import com.google.android.material.card.MaterialCardView;
 
 import tw.edu.mcyangstudentapp.Activity.Answer.AnswerActivity;
 import tw.edu.mcyangstudentapp.Activity.Group.GroupActivity;
+import tw.edu.mcyangstudentapp.Activity.LearningRecord.LearningRecordActivity;
 import tw.edu.mcyangstudentapp.BeaconModel.BeaconController;
 import tw.edu.mcyangstudentapp.R;
 import tw.edu.mcyangstudentapp.Helper.RequestHelper;

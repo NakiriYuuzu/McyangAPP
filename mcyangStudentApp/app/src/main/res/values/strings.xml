@@ -73,6 +73,19 @@
     <string name="answerSecond_Button_Left">結束</string>
     <string name="answerSecond_Button_Right">下一題</string>
 
+    <!--LearningRecordActivity-->
+    <string name="learningRecord_AutoText_Text">請選擇題庫</string>
+    <string name="learningRecord_Hint">請輸入學號</string>
+    <string name="learningRecord_btn_Send">送出</string>
+    <string name="learningRecord_btn_verification">驗證</string>
+
+    <!--LearningRecord2Activity-->
+    <string name="learningRecord2_btn_Back">返回目錄</string>
+    <string name="learningRecord2_No_Data">查無資料</string>
+    <string name="learningRecord2_Left">題目</string>
+    <string name="learningRecord2_Mid">答題狀況</string>
+    <string name="learningRecord2_Right">答題次數</string>
+
     <!--BottomSheet-->
     <string name="bottom_sheet_Title">已選擇課程：</string>
     <string name="bottom_sheet_Names">請輸入姓名</string>

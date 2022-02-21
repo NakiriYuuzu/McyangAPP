@@ -30,6 +30,9 @@
         android:windowSoftInputMode="stateVisible|adjustResize"
         tools:ignore="AllowBackup,UnusedAttribute">
         <activity
+            android:name=".Activity.Answer.AnswerSecondActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.Answer.AnswerActivity"
             android:exported="false" />
         <activity
