@@ -39,7 +39,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
-        android:background="@drawable/linear_layout_background"
+        android:background="@drawable/rounded_corner"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="@string/group_tv_Title_1"
+            android:text="@string/group_tv_Title_CurrentTeam"
             android:textAlignment="center"
             android:textAppearance="?attr/title"
             android:textSize="20sp"
@@ -59,10 +59,10 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="30dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="5dp"
             app:boxCornerRadiusBottomEnd="15dp"
             app:boxCornerRadiusBottomStart="15dp"
             app:boxCornerRadiusTopEnd="15dp"
@@ -78,8 +78,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/noto_sans"
                 android:inputType="none"
-                android:text="@string/group_hint_Title_1"
-                android:textColor="#33691E"
+                android:text="@string/group_hint_Title_ChooseCurrentTeam"
                 android:textSize="16sp"
                 tools:ignore="LabelFor" />
 
@@ -95,17 +94,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@drawable/linear_layout_background2"
+        android:background="@drawable/rounded_corner"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         tools:layout_editor_absoluteX="75dp">
 
         <TextView
-            android:text="@string/group_tv_Title_2"
+            android:text="@string/group_tv_Title_NewTeam"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textAlignment="center"
             android:textAppearance="?attr/title"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -115,8 +114,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="30dp"
+            android:hint="@string/group_tv_Title_Description"
             app:boxCornerRadiusBottomEnd="15dp"
             app:boxCornerRadiusBottomStart="15dp"
             app:boxCornerRadiusTopEnd="15dp"
@@ -128,7 +128,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/group_input_info"
+                android:id="@+id/group_input_Description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/noto_sans"
@@ -137,30 +137,19 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:text="@string/group_tv_Title_3"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:textAppearance="?attr/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginEnd="30dp"
-            android:hint="@string/group_et_Title_3"
+            android:hint="@string/group_tv_Title_TeamCount"
             app:boxCornerRadiusBottomEnd="15dp"
             app:boxCornerRadiusBottomStart="15dp"
             app:boxCornerRadiusTopEnd="15dp"
             app:boxCornerRadiusTopStart="15dp"
-            app:counterEnabled="true"
-            app:counterMaxLength="30"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -175,31 +164,20 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:text="@string/group_tv_Title_4"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:textAppearance="?attr/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="30dp"
-            android:layout_marginBottom="10dp"
-            android:hint="@string/group_et_Title_4"
+            android:layout_marginBottom="15dp"
+            android:hint="@string/group_tv_Title_PeopleCount"
             app:boxCornerRadiusBottomEnd="15dp"
             app:boxCornerRadiusBottomStart="15dp"
             app:boxCornerRadiusTopEnd="15dp"
             app:boxCornerRadiusTopStart="15dp"
-            app:counterEnabled="true"
-            app:counterMaxLength="30"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -225,6 +203,7 @@
         android:layout_marginEnd="120dp"
         android:text="@string/group_btn_Enter"
         android:textStyle="bold"
+        app:cornerRadius="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

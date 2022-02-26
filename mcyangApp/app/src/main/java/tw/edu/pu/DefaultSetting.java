@@ -20,4 +20,7 @@ public class DefaultSetting {
     public static final String URL_ANSWER_QUESTION = "http://120.110.115.128:8080/api/Question/";
     public static final String URL_ANSWER_QUESTION_Q = "http://120.110.115.128:8080/api/Question_Q/";
     public static final String URL_ANSWER_MEMBER = "http://120.110.115.128:8080/api/Answer_Member/";
+    public static final String URL_GROUP_TEAM = "http://120.110.115.128:8080/api/Team/";
+    public static final String URL_GROUP_TEAM_MEMBER = "http://120.110.115.128:8080/api/Team_Member/";
+    public static final String URL_GROUP_TEAM_DESCRIPTION = "http://120.110.115.128:8080/api/Team_Desc/";
 }

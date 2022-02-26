@@ -63,14 +63,13 @@
     <string name="signSecond_notification_NoData">目前暫無學生資料。</string>
 
     <!--GroupActivity-->
-    <string name="group_tv_Title">搶答</string>
-    <string name="group_tv_Title_1">選擇既有分組</string>
-    <string name="group_hint_Title_1">選擇組別</string>
-    <string name="group_tv_Title_2">新增分組說明</string>
-    <string name="group_tv_Title_3">組數</string>
-    <string name="group_tv_Title_4">每組人數</string>
-    <string name="group_et_Title_3">5組</string>
-    <string name="group_et_Title_4">5人</string>
+    <string name="group_tv_Title">分組討論</string>
+    <string name="group_tv_Title_CurrentTeam">選擇既有分組</string>
+    <string name="group_hint_Title_ChooseCurrentTeam">選擇組別</string>
+    <string name="group_tv_Title_NewTeam">新增分組</string>
+    <string name="group_tv_Title_Description">説明</string>
+    <string name="group_tv_Title_TeamCount">組數</string>
+    <string name="group_tv_Title_PeopleCount">人數</string>
     <string name="group_btn_Enter">確認</string>
 
     <!--GroupSecondActivity-->

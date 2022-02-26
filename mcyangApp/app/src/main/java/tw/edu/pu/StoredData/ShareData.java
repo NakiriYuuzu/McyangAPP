@@ -198,4 +198,20 @@ public class ShareData {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         return preferences.getString(ShareVariables.QUESTION_ID, null);
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Todo: GroupActivity
+    ///////////////////////////////////////////////////////////////////////////
+
+    public void saveDesc_ID(String desc_ID) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ShareVariables.DESC_ID, desc_ID);
+        editor.apply();
+    }
+
+    public String getDesc_ID() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getString(ShareVariables.DESC_ID, null);
+    }
 }

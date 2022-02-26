@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.android.volley.VolleyError;
 import com.google.android.material.card.MaterialCardView;
@@ -22,6 +23,7 @@ import tw.edu.pu.Activity.Sign.SignActivity;
 import tw.edu.pu.ApiModel.VolleyApi;
 import tw.edu.pu.BeaconModel.BeaconController;
 import tw.edu.pu.DefaultSetting;
+import tw.edu.pu.Helper.CustomViewHelper;
 import tw.edu.pu.R;
 import tw.edu.pu.Helper.RequestHelper;
 import tw.edu.pu.StoredData.ShareData;
@@ -29,7 +31,9 @@ import tw.edu.pu.StoredData.ShareData;
 public class MainActivity extends AppCompatActivity {
 
     MaterialCardView btnCreate, btnSign, btnGroup, btnRace, btnAnswer, btnEndClass, btnSignOut;
+    ConstraintLayout constraintLayout;
 
+    CustomViewHelper customViewHelper;
     VolleyApi volleyApi;
     ShareData shareData;
     RequestHelper requestHelper;
@@ -67,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     result = new String(text);
                     jsonObject = new JSONObject(result);
                     String studentNames = jsonObject.getString("S_Name");
-                    Toast.makeText(MainActivity.this, studentNames + "同學：提問中...", Toast.LENGTH_SHORT).show();
+                    customViewHelper.showSnackBar(constraintLayout, studentNames + "同學：提問中...");
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -80,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private void initButton() {
         btnCreate.setOnClickListener(v -> {
@@ -116,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        constraintLayout = findViewById(R.id.main_fragment_container);
         btnCreate = findViewById(R.id.main_btn_Create);
         btnSign = findViewById(R.id.main_btn_Sign);
         btnGroup = findViewById(R.id.main_btn_Group);
@@ -127,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
         volleyApi = new VolleyApi(this);
         shareData = new ShareData(this);
         requestHelper = new RequestHelper(this);
+        customViewHelper = new CustomViewHelper(this);
         beaconController = new BeaconController(this);
         beaconController.beaconInit(DefaultSetting.BEACON_UUID_MAIN);
     }

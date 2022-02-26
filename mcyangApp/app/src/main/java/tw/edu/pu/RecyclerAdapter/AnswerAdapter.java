@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.VolleyError;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
@@ -64,7 +65,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerView
         }
 
         if (answerModels.get(position).getAnswer().equals("false"))
-            holder.tvRight.setText("錯誤");
+            holder.tvRight.setText("");
         else
             holder.tvRight.setText("正確");
 
@@ -74,6 +75,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerView
         holder.btnEnter.setOnClickListener(v -> bottomSheet(position));
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private void bottomSheet(int position) {
         final BottomSheetDialog bsd = new BottomSheetDialog(activity, R.style.BottomSheetDialogTheme);
 
@@ -87,29 +89,41 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerView
         tvDetail.setText(answerModels.get(position).getDoc());
 
         view.findViewById(R.id.bottom_sheet_Race_btn_Send).setOnClickListener(v ->
-                volleyApi.putApi(DefaultSetting.URL_ANSWER_MEMBER + answerModels.get(position).getAnswer_ID() + "/", new VolleyApi.VolleyGet() {
-            @Override
-            public void onSuccess(String result) {
-                Toast.makeText(activity, "批改完成!", Toast.LENGTH_SHORT).show();
-                answerModels.get(position).setAnswer("正確");
-                updateAnswerAdapter(answerModels);
-                bsd.dismiss();
-            }
+            new MaterialAlertDialogBuilder(activity, R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog)
+                    .setBackground(activity.getResources().getDrawable(R.drawable.rounded_corner))
+                    .setTitle("確定批改該學生？")
+                    .setPositiveButton("確認", (dialogInterface, i) -> {
+                        volleyApi.putApi(DefaultSetting.URL_ANSWER_MEMBER + answerModels.get(position).getAnswer_ID() + "/", new VolleyApi.VolleyGet() {
+                            @Override
+                            public void onSuccess(String result) {
+                                Toast.makeText(activity, "批改完成!", Toast.LENGTH_SHORT).show();
+                                answerModels.get(position).setAnswer("正確");
+                                updateAnswerAdapter(answerModels);
+                                bsd.dismiss();
+                            }
 
-            @Override
-            public void onFailed(VolleyError error) {
-                Toast.makeText(activity, "無法連接伺服器，請稍後再嘗試。", Toast.LENGTH_SHORT).show();
-                bsd.dismiss();
-            }
+                            @Override
+                            public void onFailed(VolleyError error) {
+                                Toast.makeText(activity, "無法連接伺服器，請稍後再嘗試。", Toast.LENGTH_SHORT).show();
+                                bsd.dismiss();
+                            }
 
-        }, () -> {
-            Map<String, String> params = new HashMap<>();
-            params.put("Answer_doc", answerModels.get(position).getDoc());
-            params.put("Answer", "true");
-            params.put("Q_id", answerModels.get(position).getQuestion_ID());
-            params.put("S_id", answerModels.get(position).getSid());
-          return params;
-        }));
+                        }, () -> {
+                            Map<String, String> params = new HashMap<>();
+                            params.put("Answer_doc", answerModels.get(position).getDoc());
+                            params.put("Answer", "true");
+                            params.put("Q_id", answerModels.get(position).getQuestion_ID());
+                            params.put("S_id", answerModels.get(position).getSid());
+                            return params;
+                        });
+                        dialogInterface.dismiss();
+                    })
+                .setNegativeButton("取消", (dialogInterface, i) -> {
+                    dialogInterface.dismiss();
+                    bsd.dismiss();
+                })
+                .show()
+        );
 
         bsd.setContentView(view);
         bsd.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);

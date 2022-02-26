@@ -23,4 +23,5 @@ public class ShareVariables {
 
     //FIXME: AnswerActivity
     public static final String QUESTION_ID = "Q_id";
+    public static final String DESC_ID = "Desc_id";
 }

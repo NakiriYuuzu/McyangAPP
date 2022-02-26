@@ -104,7 +104,7 @@ public class RaceSecondActivity extends AppCompatActivity {
                         String name = jsonObject.getString("S_Name");
 
                         if (isExisted_StudentData(name)) {
-                            raceModels.add(new RaceModel(String.valueOf(count), name, "錯誤"));
+                            raceModels.add(new RaceModel(String.valueOf(count), name, ""));
                             count ++;
                         }
 
