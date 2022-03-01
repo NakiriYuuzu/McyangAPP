@@ -30,6 +30,8 @@ public class ShareData {
     public void cleanData() {
         saveMajor(null);
         saveMinor(null);
+        saveQuestion_ID(null);
+        saveRaceID(null);
         saveCourseID(null);
     }
 
@@ -95,6 +97,18 @@ public class ShareData {
     public String getID() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         return preferences.getString(ShareVariables.ID, null);
+    }
+
+    public void saveUserNames(String userName) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ShareVariables.USERNAME, userName);
+        editor.apply();
+    }
+
+    public String getUserNames() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getString(ShareVariables.USERNAME, null);
     }
 
     ///////////////////////////////////////////////////////////////////////////

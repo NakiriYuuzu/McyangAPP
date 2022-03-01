@@ -20,6 +20,7 @@ import java.util.Map;
 
 import tw.edu.pu.ApiModel.VolleyApi;
 import tw.edu.pu.DefaultSetting;
+import tw.edu.pu.Helper.CustomViewHelper;
 import tw.edu.pu.R;
 import tw.edu.pu.StoredData.ShareData;
 
@@ -33,6 +34,7 @@ public class RaceActivity extends AppCompatActivity {
 
     VolleyApi volleyApi;
     ShareData shareData;
+    CustomViewHelper viewHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class RaceActivity extends AppCompatActivity {
 
         initView();
         initButton();
+        viewHelper.setupUI(findViewById(R.id.activity_race));
     }
 
     private void initButton() {
@@ -103,6 +106,7 @@ public class RaceActivity extends AppCompatActivity {
 
         volleyApi = new VolleyApi(this);
         shareData = new ShareData(this);
+        viewHelper = new CustomViewHelper(this);
 
         if (shareData.getCourseID() != null)
             Log.e(TAG, shareData.getCourseID());

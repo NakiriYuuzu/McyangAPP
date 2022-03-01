@@ -74,8 +74,6 @@ public class SignAdapter extends RecyclerView.Adapter<SignAdapter.SignViewHolder
         Log.e(TAG, " adapter size: " + signData.size());
 
         btmSheetTitle = status.getClassNames(signData.get(position).getMajor());
-        shareData.saveMajor(signData.get(position).getMajor());
-        shareData.saveMinor(signData.get(position).getMinor());
 
         holder.tvLeft.setText(signData.get(position).getMajor());
         holder.tvRight.setText(btmSheetTitle);
@@ -108,8 +106,9 @@ public class SignAdapter extends RecyclerView.Adapter<SignAdapter.SignViewHolder
             @Override
             public void onSuccess(String result) {
                 Toast.makeText(activity, "簽到完成！", Toast.LENGTH_SHORT).show();
-                Intent ii = new Intent(activity, MainActivity.class);
-                activity.startActivity(ii);
+                shareData.saveMajor(signData.get(position).getMajor());
+                shareData.saveMinor(signData.get(position).getMinor());
+                activity.finish();
                 bsd.dismiss();
             }
 

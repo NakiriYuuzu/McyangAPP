@@ -23,13 +23,14 @@ import java.util.ArrayList;
 
 import tw.edu.mcyangstudentapp.ApiModel.VolleyApi;
 import tw.edu.mcyangstudentapp.DefaultSetting;
+import tw.edu.mcyangstudentapp.Helper.CustomViewHelper;
 import tw.edu.mcyangstudentapp.R;
 import tw.edu.mcyangstudentapp.StoredData.ShareData;
 
 public class LearningRecordActivity extends AppCompatActivity {
 
     private static final String TAG = "LearningRecord: ";
-    private boolean isExistStudentID = false, isSelected = false;
+    private boolean isExistStudentID = false, isSelected = false, isVerification = false;
     private ArrayList<String> topic;
     private ArrayList<String> topicID;
 
@@ -38,10 +39,11 @@ public class LearningRecordActivity extends AppCompatActivity {
     ShapeableImageView btnBack;
     TextInputEditText et_StudentID;
     AutoCompleteTextView autoText_Course;
-    MaterialButton btn_Enter, btn_Verification;
+    MaterialButton btn_Enter;
 
     ShareData shareData;
     VolleyApi volleyApi;
+    CustomViewHelper viewHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,7 @@ public class LearningRecordActivity extends AppCompatActivity {
 
         initView();
         initButton();
+        viewHelper.setupUI(findViewById(R.id.activity_learning));
     }
 
     private void initAutoTextData() {
@@ -97,28 +100,28 @@ public class LearningRecordActivity extends AppCompatActivity {
             Toast.makeText(this, "選擇：" + item, Toast.LENGTH_SHORT).show();
         });
 
-        btn_Verification.setOnClickListener(v -> {
-            if (et_StudentID.getText() != null)
-                if (!et_StudentID.getText().toString().equals("")) {
-                    String id = et_StudentID.getText().toString();
-                    if (id.length() < 11)
-                        checkStudentID(id);
-                    else
-                        Toast.makeText(this, "學號過長！", Toast.LENGTH_SHORT).show();
-
-                } else
-                    Toast.makeText(this, "請輸入學號！", Toast.LENGTH_SHORT).show();
-        });
-
         btn_Enter.setOnClickListener(v -> {
-            if (isExistStudentID && isSelected) {
-                Intent ii = new Intent(this, LearningRecord2Activity.class);
-                startActivity(ii);
+            if (!isVerification) {
+                if (et_StudentID.getText() != null)
+                    if (!et_StudentID.getText().toString().equals("")) {
+                        String id = et_StudentID.getText().toString();
+                        if (id.length() < 11)
+                            checkStudentID(id);
+                        else
+                            Toast.makeText(this, "學號過長！", Toast.LENGTH_SHORT).show();
+
+                    } else
+                        Toast.makeText(this, "請輸入學號！", Toast.LENGTH_SHORT).show();
             } else {
-                if (!isExistStudentID)
-                    Toast.makeText(this, "學號還未驗證, 請在發送多一次！", Toast.LENGTH_SHORT).show();
-                if (!isSelected)
-                    Toast.makeText(this, "請選擇題庫！", Toast.LENGTH_SHORT).show();
+                if (isExistStudentID && isSelected) {
+                    Intent ii = new Intent(this, LearningRecord2Activity.class);
+                    startActivity(ii);
+                } else {
+                    if (!isExistStudentID)
+                        Toast.makeText(this, "學號還未驗證, 請在發送多一次！", Toast.LENGTH_SHORT).show();
+                    if (!isSelected)
+                        Toast.makeText(this, "請選擇題庫！", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -137,9 +140,12 @@ public class LearningRecordActivity extends AppCompatActivity {
                         String userNames = jsonObject.getString("username");
 
                         if (studentID.equals(userNames)) {
+                            isVerification = true;
                             isExistStudentID = true;
+                            btn_Enter.setText(R.string.learningRecord_btn_Send);
                             shareData.saveDomJudgeStudentID(userNames);
                             Log.e(TAG, "Input: " + studentID + " | API: " + userNames);
+                            Toast.makeText(LearningRecordActivity.this, "學號驗證成功！", Toast.LENGTH_SHORT).show();
                             return;
                         }
                     }
@@ -168,13 +174,13 @@ public class LearningRecordActivity extends AppCompatActivity {
         et_StudentID = findViewById(R.id.learningRecord_studentID);
         autoText_Course = findViewById(R.id.learningRecord_Course);
         btn_Enter = findViewById(R.id.learningRecord_btn_Enter);
-        btn_Verification = findViewById(R.id.learningRecord_btn_verification);
 
         topic = new ArrayList<>();
         topicID = new ArrayList<>();
 
         shareData = new ShareData(this);
         volleyApi = new VolleyApi(this);
+        viewHelper = new CustomViewHelper(this);
 
         initAutoTextData();
         recoverData();

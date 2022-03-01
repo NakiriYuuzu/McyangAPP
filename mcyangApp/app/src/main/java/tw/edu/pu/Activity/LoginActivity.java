@@ -20,6 +20,7 @@ import java.nio.charset.StandardCharsets;
 
 import tw.edu.pu.ApiModel.VolleyApi;
 import tw.edu.pu.DefaultSetting;
+import tw.edu.pu.Helper.CustomViewHelper;
 import tw.edu.pu.R;
 import tw.edu.pu.Helper.RequestHelper;
 import tw.edu.pu.StoredData.ShareData;
@@ -34,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     MaterialButton btn_SignIn;
     CheckBox btn_rememberMe;
 
+    CustomViewHelper customViewHelper;
     RequestHelper requestHelper;
     VolleyApi volleyApi;
     ShareData shareData;
@@ -44,21 +46,17 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         initView();
-        initData();
+        requestHelper.flushBluetooth();
+
         if (requestHelper.checkInternet_Enabled()) {
             initButton();
             autoLogin();
+            customViewHelper.setupUI(findViewById(R.id.login_activity_view));
+
         } else {
             Toast.makeText(getApplicationContext(), R.string.tag_NoInternet, Toast.LENGTH_SHORT).show();
             new Handler().postDelayed(this::finish, 3000);
         }
-    }
-
-    private void initData() {
-        shareData.saveCourseID(null);
-        shareData.saveMajor(null);
-        shareData.saveMinor(null);
-        shareData.saveID(null);
     }
 
     private void autoLogin() {
@@ -75,9 +73,10 @@ public class LoginActivity extends AppCompatActivity {
                             String api_Password = jsonObject.getString("T_Password");
 
                             if (shareData.getPassword().equals(api_Password)) {
-                                Log.e(TAG, jsonObject.getString("T_id"));
                                 shareData.saveID(jsonObject.getString("T_id"));
+                                shareData.saveUserNames(jsonObject.getString("T_Name") + "老師");
                                 Intent ii = new Intent(getApplicationContext(), MainActivity.class);
+                                ii.putExtra("check", true);
                                 startActivity(ii);
 
                             } else {
@@ -127,10 +126,11 @@ public class LoginActivity extends AppCompatActivity {
                                     shareData.savePassword(pass);
                                 }
 
-                                Log.e(TAG, jsonObject.getString("T_id"));
                                 shareData.saveID(jsonObject.getString("T_id"));
+                                shareData.saveUserNames(jsonObject.getString("T_Name") + "老師");
 
                                 Intent ii = new Intent(getApplicationContext(), MainActivity.class);
+                                ii.putExtra("check", true);
                                 startActivity(ii);
 
                             } else {
@@ -176,6 +176,7 @@ public class LoginActivity extends AppCompatActivity {
         btn_SignIn = findViewById(R.id.login_btn_signIn);
         btn_rememberMe = findViewById(R.id.login_checkBox_rememberMe);
 
+        customViewHelper = new CustomViewHelper(this);
         requestHelper = new RequestHelper(this);
         volleyApi = new VolleyApi(this);
         shareData = new ShareData(this);

@@ -27,6 +27,7 @@ import java.util.Map;
 import tw.edu.mcyangstudentapp.ApiModel.VolleyApi;
 import tw.edu.mcyangstudentapp.BeaconModel.BeaconController;
 import tw.edu.mcyangstudentapp.DefaultSetting;
+import tw.edu.mcyangstudentapp.Helper.CustomViewHelper;
 import tw.edu.mcyangstudentapp.R;
 import tw.edu.mcyangstudentapp.StoredData.ShareData;
 
@@ -41,6 +42,7 @@ public class AnswerActivity extends AppCompatActivity {
     ShapeableImageView btn_Back;
 
     BeaconController beaconController;
+    CustomViewHelper viewHelper;
     VolleyApi volleyApi;
     ShareData shareData;
 
@@ -51,6 +53,7 @@ public class AnswerActivity extends AppCompatActivity {
 
         initView();
         initButton();
+        viewHelper.setupUI(findViewById(R.id.activity_answer));
     }
 
     private void beaconScanning() {
@@ -64,6 +67,8 @@ public class AnswerActivity extends AppCompatActivity {
                         shareData.saveQuestionID(beacon.getId3().toString());
                         Log.e(TAG, "Major: " + shareData.getMajor() + "Minor: " + shareData.getQuestionID());
                         getQuestion();
+                    } else {
+                        Toast.makeText(this, "課程不匹配。。。", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -151,6 +156,7 @@ public class AnswerActivity extends AppCompatActivity {
 
         shareData = new ShareData(this);
         volleyApi = new VolleyApi(this);
+        viewHelper = new CustomViewHelper(this);
 
         beaconController = new BeaconController(this);
         beaconController.beaconInit(DefaultSetting.BEACON_UUID_ANSWER);

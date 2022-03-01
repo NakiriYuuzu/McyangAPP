@@ -20,6 +20,7 @@ import java.nio.charset.StandardCharsets;
 
 import tw.edu.mcyangstudentapp.ApiModel.VolleyApi;
 import tw.edu.mcyangstudentapp.DefaultSetting;
+import tw.edu.mcyangstudentapp.Helper.CustomViewHelper;
 import tw.edu.mcyangstudentapp.R;
 import tw.edu.mcyangstudentapp.Helper.RequestHelper;
 import tw.edu.mcyangstudentapp.StoredData.ShareData;
@@ -33,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     MaterialButton btn_SignIn;
     CheckBox btn_rememberMe;
 
+    CustomViewHelper customViewHelper;
     RequestHelper requestHelper;
     VolleyApi volleyApi;
     ShareData shareData;
@@ -43,22 +45,17 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         initView();
+        requestHelper.flushBluetooth();
 
         if (requestHelper.checkInternet_Enabled()) {
-            initData();
             initButton();
             autoLogin();
+            customViewHelper.setupUI(findViewById(R.id.activity_main_view));
+
         } else {
             Toast.makeText(getApplicationContext(), R.string.tag_NoInternet, Toast.LENGTH_SHORT).show();
             new Handler().postDelayed(this::finish, 3000);
         }
-    }
-
-    private void initData() {
-        shareData.saveMajor("");
-        shareData.saveMinor("");
-        shareData.saveStudentID("");
-        shareData.saveStudentName("");
     }
 
     private void autoLogin() {
@@ -73,12 +70,13 @@ public class LoginActivity extends AppCompatActivity {
                             Log.e(TAG, result);
                             JSONObject jsonObject = new JSONObject(result);
                             String api_Password = jsonObject.getString("S_Password");
-                            shareData.saveStudentName(jsonObject.getString("S_Name"));
+                            shareData.saveStudentName(jsonObject.getString("S_Name") + "同學");
                             shareData.saveStudentID(jsonObject.getString("S_id"));
                             Log.e(TAG, "sid: " + shareData.getStudentID() + " |Names: " + shareData.getStudentNames());
 
                             if (shareData.getLoginPassword().equals(api_Password)) {
                                 Intent ii = new Intent(getApplicationContext(), MainActivity.class);
+                                ii.putExtra("check", true);
                                 startActivity(ii);
 
                             } else
@@ -120,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
                             Log.e(TAG, result);
                             JSONObject jsonObject = new JSONObject(result);
                             String api_Password = jsonObject.getString("S_Password");
-                            shareData.saveStudentID(jsonObject.getString("S_Name"));
+                            shareData.saveStudentName(jsonObject.getString("S_Name") + "同學");
                             shareData.saveStudentID(jsonObject.getString("S_id"));
                             Log.e(TAG, "sid: " + shareData.getStudentID() + " |Names: " + shareData.getStudentNames());
 
@@ -131,6 +129,7 @@ public class LoginActivity extends AppCompatActivity {
                                 }
 
                                 Intent ii = new Intent(getApplicationContext(), MainActivity.class);
+                                ii.putExtra("check", true);
                                 startActivity(ii);
 
                             } else {
@@ -174,9 +173,12 @@ public class LoginActivity extends AppCompatActivity {
         btn_SignIn = findViewById(R.id.login_btn_signIn);
         btn_rememberMe = findViewById(R.id.login_checkBox_rememberMe);
 
+        customViewHelper = new CustomViewHelper(this);
         requestHelper = new RequestHelper(this);
         volleyApi = new VolleyApi(this);
         shareData = new ShareData(this);
+
+        shareData.saveStudentID(null);
     }
 
 }

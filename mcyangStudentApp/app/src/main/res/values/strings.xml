@@ -17,7 +17,7 @@
     <string name="login_btn_Login">登入</string>
 
     <!--MainActivity_UI-->
-    <string name="main_text_Title">學生APP</string>
+    <string name="main_text_Title">您好,</string>
     <string name="main_btn_Sign">開始簽到</string>
     <string name="main_btn_Qa">開始搶答</string>
     <string name="main_btn_Answer">開始問答</string>
@@ -77,7 +77,7 @@
     <string name="learningRecord_AutoText_Text">請選擇題庫</string>
     <string name="learningRecord_Hint">請輸入學號</string>
     <string name="learningRecord_btn_Send">送出</string>
-    <string name="learningRecord_btn_verification">驗證</string>
+    <string name="learningRecord_btn_verification">驗證學號</string>
 
     <!--LearningRecord2Activity-->
     <string name="learningRecord2_btn_Back">返回目錄</string>
@@ -91,5 +91,8 @@
     <string name="bottom_sheet_Names">請輸入姓名</string>
     <string name="bottom_sheet_ID">請輸入學號</string>
     <string name="bottom_sheet_Button">送出</string>
+
+    <!--Snackbar-->
+    <string name="btn_Enter">確認</string>
 
 </resources>

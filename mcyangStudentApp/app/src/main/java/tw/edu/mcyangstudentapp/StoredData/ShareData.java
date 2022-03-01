@@ -209,7 +209,6 @@ public class ShareData {
         saveMajor(null);
         saveMinor(null);
         saveStudentName(null);
-        saveStudentID(null);
         saveQuestionID(null);
         saveAnswerID(null);
     }

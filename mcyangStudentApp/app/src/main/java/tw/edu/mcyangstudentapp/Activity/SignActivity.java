@@ -96,10 +96,7 @@ public class SignActivity extends AppCompatActivity {
     }
 
     private void initButton() {
-        btnBack.setOnClickListener(v -> {
-            finish();
-            beaconController.stopScanning();
-        });
+        btnBack.setOnClickListener(v -> finish());
     }
 
     private void initView() {

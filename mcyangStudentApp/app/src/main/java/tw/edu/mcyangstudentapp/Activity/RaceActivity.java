@@ -2,7 +2,6 @@ package tw.edu.mcyangstudentapp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -85,11 +84,7 @@ public class RaceActivity extends AppCompatActivity {
                 Toast.makeText(this, "此題目還在執行中請稍後。", Toast.LENGTH_SHORT).show();
         });
 
-        btnEnd.setOnClickListener(v -> {
-            Intent ii = new Intent(this, MainActivity.class);
-            ii.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(ii);
-        });
+        btnEnd.setOnClickListener(v -> finish());
 
         btnBack.setOnClickListener(v -> finish());
     }

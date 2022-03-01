@@ -9,6 +9,7 @@ public class ShareVariables {
     public static final String ACCOUNT = "Account";
     public static final String PASSWORD = "Password";
     public static final String ID = "ID";
+    public static final String USERNAME = "T_Name";
 
     // FIXME: CreateActivity
     public static final String CREATE_SAVE_LEFT_DATA = "createData";

@@ -19,7 +19,8 @@
     <string name="login_btn_Login">登入</string>
 
     <!--MainActivity_UI-->
-    <string name="main_text_Title">老師端APP</string>
+    <string name="main_text_Title">您好，</string>
+    <string name="main_text_Users">老師端APP</string>
     <string name="main_btn_Create">創建課程</string>
     <string name="main_btn_Sign">開始點名</string>
     <string name="main_btn_Group">分組討論</string>
@@ -27,6 +28,8 @@
     <string name="main_btn_answer">開始問答</string>
     <string name="main_btn_EndClass">結束課程</string>
     <string name="main_btn_SignOut">登出</string>
+    <string name="main_btn_beaconBtn_off">開始接收</string>
+    <string name="main_btn_beaconBtn_on">停止接收</string>
 
     <!--CreateActivity-->
     <string name="create_Title">創建課程</string>

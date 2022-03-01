@@ -14,7 +14,7 @@
         android:layout_marginTop="25dp"
         android:background="@android:color/transparent"
         android:src="@drawable/ic_baseline_arrow_back_24"
-        android:tint="#7ea6e0"
+        android:tint="@color/green"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -82,11 +82,11 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="125dp"
+        android:layout_marginTop="30dp"
         android:layout_marginRight="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/answerSecond_btn_Back">
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="110dp"
@@ -123,7 +123,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/answerSecond_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="350dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -150,15 +150,15 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/answerSecond_btn_Finish"
-        android:layout_width="150dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="30dp"
         android:layout_marginBottom="30dp"
         android:text="@string/answerSecond_Button_Left"
         android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:cornerRadius="10dp"
+        app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -166,15 +166,15 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/answerSecond_btn_NextPage"
-        android:layout_width="150dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="15dp"
+        android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
         android:text="@string/answerSecond_Button_Right"
         android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:cornerRadius="10dp"
+        app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
