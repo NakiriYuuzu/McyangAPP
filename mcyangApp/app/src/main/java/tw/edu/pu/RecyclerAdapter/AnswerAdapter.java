@@ -27,7 +27,6 @@ import tw.edu.pu.DefaultSetting;
 import tw.edu.pu.R;
 
 public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerViewHolder> {
-
     ArrayList<AnswerModel> answerModels;
 
     Activity activity;

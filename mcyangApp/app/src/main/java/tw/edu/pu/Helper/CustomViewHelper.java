@@ -36,7 +36,24 @@ public class CustomViewHelper {
         snackbarLayout.setPadding(0, 0, 0, 0);
         MaterialTextView textView = view.findViewById(R.id.custom_snack_bar_text);
         textView.setText(text);
-        (view.findViewById(R.id.custom_snack_bar_button)).setOnClickListener(v -> snackbar.dismiss());
+        (view.findViewById(R.id.custom_snack_bar_button)).setOnClickListener(view1 -> snackbar.dismiss());
+
+        snackbarLayout.addView(view, 0);
+        snackbar.show();
+    }
+
+    public void showSnackBar(ConstraintLayout constraintLayout, String text, SnackBarListener snackBarListener) {
+        Snackbar snackbar = Snackbar.make(constraintLayout, "", Snackbar.LENGTH_INDEFINITE);
+
+        @SuppressLint("InflateParams")
+        View view = activity.getLayoutInflater().inflate(R.layout.custom_snackbar, null);
+
+        snackbar.getView().setBackgroundColor(Color.TRANSPARENT);
+        Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
+        snackbarLayout.setPadding(0, 0, 0, 0);
+        MaterialTextView textView = view.findViewById(R.id.custom_snack_bar_text);
+        textView.setText(text);
+        (view.findViewById(R.id.custom_snack_bar_button)).setOnClickListener(view1 -> snackBarListener.onClick(view1, snackbar));
 
         snackbarLayout.addView(view, 0);
         snackbar.show();
@@ -80,5 +97,9 @@ public class CustomViewHelper {
     public interface AlertListener {
         void onPositive(DialogInterface dialogInterface, int i);
         void onNegative(DialogInterface dialogInterface, int i);
+    }
+
+    public interface SnackBarListener {
+        void onClick(View view, Snackbar snackbar);
     }
 }

@@ -3,7 +3,6 @@ package tw.edu.pu.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,12 +28,13 @@ import tw.edu.pu.ApiModel.VolleyApi;
 import tw.edu.pu.BeaconModel.BeaconController;
 import tw.edu.pu.DefaultSetting;
 import tw.edu.pu.Helper.CustomViewHelper;
+import tw.edu.pu.Helper.RepeatHelper;
 import tw.edu.pu.R;
 import tw.edu.pu.Helper.RequestHelper;
 import tw.edu.pu.StoredData.ShareData;
 
 public class MainActivity extends AppCompatActivity {
-
+    boolean onClicked = false;
     boolean isScanning = false;
     boolean isAfterLogin = false;
 
@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     VolleyApi volleyApi;
     ShareData shareData;
+    RepeatHelper repeatHelper;
     RequestHelper requestHelper;
     CustomViewHelper customViewHelper;
     BeaconController beaconController;
@@ -63,10 +64,25 @@ public class MainActivity extends AppCompatActivity {
 
         tv_TeacherNames.setText(shareData.getUserNames());
         btnGroup.setEnabled(false);
-        if (getIntent().getBooleanExtra("check", isAfterLogin))
-            checkStatus();
 
+        checkLogin();
         initButton();
+    }
+
+    private void checkLogin() {
+        String teacherID = getIntent().getStringExtra("id");
+        isAfterLogin = getIntent().getBooleanExtra("check", isAfterLogin);
+
+        if (teacherID.equals(shareData.getID())) {
+            if (isAfterLogin)
+                checkStatus();
+        } else {
+            shareData.cleanData();
+            shareData.saveID(teacherID);
+            beforeSign();
+        }
+
+        Log.e("SID: ", shareData.getID() + " | " + teacherID);
     }
 
     private void checkStatus() {
@@ -93,10 +109,6 @@ public class MainActivity extends AppCompatActivity {
         if (studentRequest.size() > 0)
             for (int i = 0; i < studentRequest.size(); i++)
                 if (id2.equals(studentRequest.get(i))) {
-                    new Handler().postDelayed(() -> {
-                        if (studentRequest.size() > 0)
-                            studentRequest.remove(0);
-                    }, 10000);
                     isExist = false;
                     break;
                 }
@@ -130,39 +142,45 @@ public class MainActivity extends AppCompatActivity {
 
     private void startScanning() {
         beaconController.startScanning((beacons, region) -> {
-            Log.e("startScanning: ", beacons.size() + "");
             if (beacons.size() > 0) {
                 String major = beacons.iterator().next().getId2().toString();
-                if (is_Existed(major)) {
+                if (is_Existed(major))
                     studentRequest.add(major);
-                    toastStudent(major);
-                }
             }
         });
     }
 
-    private void toastStudent(String major) {
-        volleyApi.getApi(DefaultSetting.URL_STUDENT + major, new VolleyApi.VolleyGet() {
-            @Override
-            public void onSuccess(String result) {
-                JSONObject jsonObject;
-                try {
-                    byte[] text = result.getBytes(StandardCharsets.ISO_8859_1);
-                    result = new String(text);
-                    jsonObject = new JSONObject(result);
-                    String studentNames = jsonObject.getString("S_Name");
-                    customViewHelper.showSnackBar(constraintLayout, studentNames + "同學：提問中...");
+    private void toastStudent() {
+        Log.e("ToastStudent: ", studentRequest.toString());
+        if (studentRequest.size() > 0) {
+            onClicked = true;
+            volleyApi.getApi(DefaultSetting.URL_STUDENT + studentRequest.get(0), new VolleyApi.VolleyGet() {
+                @Override
+                public void onSuccess(String result) {
+                    JSONObject jsonObject;
+                    try {
+                        byte[] text = result.getBytes(StandardCharsets.ISO_8859_1);
+                        result = new String(text);
+                        jsonObject = new JSONObject(result);
+                        String studentNames = jsonObject.getString("S_Name");
+                        customViewHelper.showSnackBar(constraintLayout, studentNames + "同學：提問中...", (view, snackbar) -> {
+                            if (studentRequest.size() > 0)
+                                studentRequest.remove(0);
+                            onClicked = false;
+                            snackbar.dismiss();
+                        });
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailed(VolleyError error) {
-                customViewHelper.showSnackBar(constraintLayout, "同學提問中，無法查詢該同學的名稱！");
-            }
-        });
+                @Override
+                public void onFailed(VolleyError error) {
+                    customViewHelper.showSnackBar(constraintLayout, "同學提問中，無法查詢該同學的名稱！");
+                }
+            });
+        }
     }
 
     private void initButton() {
@@ -210,11 +228,13 @@ public class MainActivity extends AppCompatActivity {
             if (isScanning) {
                 isScanning = false;
                 beaconController.stopScanning();
+                repeatHelper.stop();
                 tv_beaconBTN.setText(R.string.main_btn_beaconBtn_off);
                 btnReceive.setCardBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_red_dark));
             } else {
                 isScanning = true;
                 startScanning();
+                repeatHelper.start(2000);
                 tv_beaconBTN.setText(R.string.main_btn_beaconBtn_on);
                 btnReceive.setCardBackgroundColor(ContextCompat.getColor(this, R.color.green));
             }
@@ -241,6 +261,12 @@ public class MainActivity extends AppCompatActivity {
 
         volleyApi = new VolleyApi(this);
         shareData = new ShareData(this);
+
+        repeatHelper = new RepeatHelper(() -> {
+            if (!onClicked)
+                toastStudent();
+        });
+
         requestHelper = new RequestHelper(this);
         customViewHelper = new CustomViewHelper(this);
         beaconController = new BeaconController(this);
@@ -251,6 +277,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         afterSign();
+        tv_TeacherNames.setText(shareData.getUserNames());
     }
 
     @Override

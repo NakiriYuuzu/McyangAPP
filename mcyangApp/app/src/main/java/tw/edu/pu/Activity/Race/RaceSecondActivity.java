@@ -1,20 +1,20 @@
 package tw.edu.pu.Activity.Race;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
 
@@ -50,7 +50,8 @@ public class RaceSecondActivity extends AppCompatActivity {
     ArrayList<String> raceListID;
 
     ShapeableImageView btnBack;
-    MaterialTextView btn_Open, btn_Close, tvNotFound;
+    MaterialCardView btnBeacon;
+    MaterialTextView tvNotFound, tvBeacon;
     MaterialButton btnNext, btnEnd;
     RecyclerView recyclerView;
 
@@ -60,9 +61,6 @@ public class RaceSecondActivity extends AppCompatActivity {
     RaceViewModel raceViewModel;
     RepeatHelper repeatHelper;
     BeaconController beaconController;
-
-    Handler handler = new Handler(Looper.getMainLooper());
-    Runnable runnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,31 +213,27 @@ public class RaceSecondActivity extends AppCompatActivity {
     }
 
     private void initButton() {
-        btn_Open.setOnClickListener(v -> {
-            if (checkedBeacon)
-                Toast.makeText(getApplicationContext(), "已開始廣播！", Toast.LENGTH_SHORT).show();
-            else {
-                Toast.makeText(getApplicationContext(), "開始廣播", Toast.LENGTH_SHORT).show();
+        btnBeacon.setOnClickListener(v -> {
+            if (checkedBeacon) {
+                checkedBeacon = false;
+                beaconController.stop_BroadcastBeacon();
+                repeatHelper.stop();
+                tvBeacon.setText("開放搶答");
+                btnBeacon.setCardBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_red_dark));
+                Toast.makeText(getApplicationContext(), "關閉廣播", Toast.LENGTH_SHORT).show();
+
+            } else {
+                checkedBeacon = true;
                 beaconController.init_Race_BroadcastBeacon();
                 beaconController.start_BroadcastBeacon();
 
-                checkedBeacon = true;
-
                 if (shareData.getRaceID() != null)
                     repeatHelper.start(2000);
+
+                tvBeacon.setText("停止搶答");
+                btnBeacon.setCardBackgroundColor(ContextCompat.getColor(this, R.color.green));
+                Toast.makeText(getApplicationContext(), "開始廣播", Toast.LENGTH_SHORT).show();
             }
-        });
-
-        btn_Close.setOnClickListener(v -> {
-            if (checkedBeacon) {
-                Toast.makeText(getApplicationContext(), "關閉廣播", Toast.LENGTH_SHORT).show();
-                beaconController.stop_BroadcastBeacon();
-                checkedBeacon = false;
-
-                handler.removeCallbacks(runnable);
-
-            } else
-                Toast.makeText(getApplicationContext(), "已關閉廣播！", Toast.LENGTH_SHORT).show();
         });
 
         btnNext.setOnClickListener(v -> {
@@ -262,12 +256,12 @@ public class RaceSecondActivity extends AppCompatActivity {
 
     private void initView() {
         btnBack = findViewById(R.id.raceSecond_btn_Back);
-        btn_Open = findViewById(R.id.raceSecond_btn_BeaconOn);
-        btn_Close = findViewById(R.id.raceSecond_btn_BeaconOff);
         btnNext = findViewById(R.id.raceSecond_btn_Next);
         btnEnd = findViewById(R.id.raceSecond_btn_Enter);
         tvNotFound = findViewById(R.id.raceSecond_textView_NotFound);
         recyclerView = findViewById(R.id.raceSecond_recycleView);
+        btnBeacon = findViewById(R.id.raceSecond_btn_Beacon);
+        tvBeacon = findViewById(R.id.raceSecond_tv_Beacon);
 
         beaconController = new BeaconController(this);
 

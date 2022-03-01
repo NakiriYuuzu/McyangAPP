@@ -11,6 +11,7 @@ public class DefaultSetting {
     public final static String URL_LOGIN = "http://120.110.115.128:8080/api/TeacherLogin/";
     public final static String URL_STUDENT = "http://120.110.115.128:8080/api/Student/";
     public final static String URL_COURSE = "http://120.110.115.128:8080/api/CourseCreate/";
+    public static final String URL_COURSE_RECORD = "http://120.110.115.128:8080/api/CourseRecord/";
     public final static String URL_SIGN = "http://120.110.115.128:8080/api/Sign/";
     public final static String URL_SIGN_RECORD = "http://120.110.115.128:8080/api/SignRecord/";
     public static final String URL_RACE_LIST_R = "http://120.110.115.128:8080/api/Race_List_R/";

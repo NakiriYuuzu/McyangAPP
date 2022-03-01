@@ -33,50 +33,43 @@
         app:srcCompat="@drawable/ic_baseline_arrow_back_24"
         tools:ignore="ImageContrastCheck" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/signSecond_tv_totalPPL"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text=""
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signSecond_btn_Back" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:background="@drawable/recyclerview_background"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/signSecond_btn_beaconBtn"
+        android:layout_width="100dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="15dp"
+        app:cardBackgroundColor="#E91E63"
+        app:cardCornerRadius="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/signSecond_tv_beacon"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/main_btn_beaconBtn_off"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/signSecond_btn_BeaconOn"
-                android:text="@string/default_Beacon_Open"
-                android:textStyle="bold"
-                android:textColor="#4CAF50"
-                android:textAppearance="?attr/textAppearanceSubtitle2"
-                android:background="@drawable/recyclerview_background"
-                android:padding="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:background="@drawable/recyclerview_background"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/signSecond_btn_BeaconOff"
-                android:text="@string/default_Beacon_Close"
-                android:textStyle="bold"
-                android:textColor="#E91E63"
-                android:background="@drawable/recyclerview_background"
-                android:padding="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-    </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
     <LinearLayout
         android:id="@+id/signSecond_recyclerview_Title"
@@ -114,7 +107,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/signSecond_recycleView"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="350dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         app:layout_constraintEnd_toEndOf="parent"

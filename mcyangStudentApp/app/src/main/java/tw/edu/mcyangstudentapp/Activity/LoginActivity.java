@@ -69,21 +69,21 @@ public class LoginActivity extends AppCompatActivity {
                             result = new String(text);
                             Log.e(TAG, result);
                             JSONObject jsonObject = new JSONObject(result);
+                            String student_ID = jsonObject.getString("S_id");
                             String api_Password = jsonObject.getString("S_Password");
                             shareData.saveStudentName(jsonObject.getString("S_Name") + "同學");
-                            shareData.saveStudentID(jsonObject.getString("S_id"));
-                            Log.e(TAG, "sid: " + shareData.getStudentID() + " |Names: " + shareData.getStudentNames());
 
                             if (shareData.getLoginPassword().equals(api_Password)) {
                                 Intent ii = new Intent(getApplicationContext(), MainActivity.class);
                                 ii.putExtra("check", true);
+                                ii.putExtra("studentID", student_ID);
                                 startActivity(ii);
 
                             } else
                                 Log.e(TAG, "AutoLogin: failed.");
 
                         } catch (JSONException e) {
-                            e.printStackTrace();
+                            Log.e("autoLogin", "onSuccess");
                         }
                     }
 
@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
         } catch (Exception e) {
-            Log.e(TAG, e.toString());
+            Log.e("autoLogin", "Problem");
         }
     }
 
@@ -117,10 +117,9 @@ public class LoginActivity extends AppCompatActivity {
                             result = new String(text);
                             Log.e(TAG, result);
                             JSONObject jsonObject = new JSONObject(result);
+                            String student_ID = jsonObject.getString("S_id");
                             String api_Password = jsonObject.getString("S_Password");
                             shareData.saveStudentName(jsonObject.getString("S_Name") + "同學");
-                            shareData.saveStudentID(jsonObject.getString("S_id"));
-                            Log.e(TAG, "sid: " + shareData.getStudentID() + " |Names: " + shareData.getStudentNames());
 
                             if (pass.equals(api_Password)) {
                                 if (btn_rememberMe.isChecked()) {
@@ -130,6 +129,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 Intent ii = new Intent(getApplicationContext(), MainActivity.class);
                                 ii.putExtra("check", true);
+                                ii.putExtra("studentID", student_ID);
                                 startActivity(ii);
 
                             } else {
@@ -138,13 +138,13 @@ public class LoginActivity extends AppCompatActivity {
                             }
 
                         } catch (JSONException e) {
-                            e.printStackTrace();
+                            Log.e("loginFunction", "onSuccess");
                         }
                     }
 
                     @Override
                     public void onFailed(VolleyError error) {
-                        Log.e(TAG, error.toString());
+                        Log.e("loginFunction", "onFailed");
                         Toast.makeText(getApplicationContext(), "查無此賬號，請重新輸入！", Toast.LENGTH_SHORT).show();
                         editText_Acc.setText("");
                         editText_Pass.setText("");
@@ -177,8 +177,6 @@ public class LoginActivity extends AppCompatActivity {
         requestHelper = new RequestHelper(this);
         volleyApi = new VolleyApi(this);
         shareData = new ShareData(this);
-
-        shareData.saveStudentID(null);
     }
 
 }

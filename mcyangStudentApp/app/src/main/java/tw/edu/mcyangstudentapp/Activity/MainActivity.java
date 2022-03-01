@@ -42,15 +42,31 @@ public class MainActivity extends AppCompatActivity {
 
         initView();
 
+        tvNames.setText(shareData.getStudentNames());
         requestHelper.requestGPSPermission();
         requestHelper.checkGPS_Enabled();
         requestHelper.requestBluetooth();
 
-        tvNames.setText(shareData.getStudentNames());
         btn_Group.setEnabled(false);
-        if (getIntent().getBooleanExtra("check", isAfterLogin))
-            checkStatus();
+
+        checkLogin();
         initButton();
+    }
+
+    private void checkLogin() {
+        String studentID = getIntent().getStringExtra("studentID");
+        isAfterLogin = getIntent().getBooleanExtra("check", isAfterLogin);
+
+        if (studentID.equals(shareData.getStudentID())) {
+            if (isAfterLogin)
+                checkStatus();
+        } else {
+            shareData.cleanData();
+            shareData.saveStudentID(studentID);
+            beforeSign();
+        }
+
+        Log.e("SID: ", shareData.getStudentID() + " | " + studentID);
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -120,34 +136,35 @@ public class MainActivity extends AppCompatActivity {
 
         btn_Question.setOnClickListener(v ->
                 viewHelper.showAlertBuilder("我要提問", "是否要向老師提出問題?", "確認", "取消", new CustomViewHelper.AlertListener() {
-            @Override
-            public void onPositive(DialogInterface dialogInterface, int i) {
-                if (!beaconChecked) {
-                    beaconChecked = true;
-                    beaconController.start_BroadcastBeacon();
-                    Log.e("initButton: ", "01");
+                    @Override
+                    public void onPositive(DialogInterface dialogInterface, int i) {
+                        if (!beaconChecked) {
+                            beaconChecked = true;
+                            beaconController.init_BroadcastBeacon();
+                            beaconController.start_BroadcastBeacon();
+                            Log.e("initButton: ", "01");
 
-                    new Handler().postDelayed(() -> {
-                        beaconController.stop_BroadcastBeacon();
-                        Log.e("initButton: ", "02");
+                            new Handler().postDelayed(() -> {
+                                beaconController.stop_BroadcastBeacon();
+                                Log.e("initButton: ", "02");
 
-                        new Handler().postDelayed(() -> {
-                            beaconChecked = false;
-                            Log.e("initButton: ", "03");
-                        }, 30000);
+                                new Handler().postDelayed(() -> {
+                                    beaconChecked = false;
+                                    Log.e("initButton: ", "03");
+                                }, 30000);
 
-                    }, 10000);
-                } else
-                    Toast.makeText(getApplicationContext(), "30秒後在嘗試。", Toast.LENGTH_SHORT).show();
+                            }, 10000);
+                        } else
+                            Toast.makeText(getApplicationContext(), "30秒後在嘗試。", Toast.LENGTH_SHORT).show();
 
-                dialogInterface.dismiss();
-            }
+                        dialogInterface.dismiss();
+                    }
 
-            @Override
-            public void onNegative(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        }));
+                    @Override
+                    public void onNegative(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                }));
 
         btn_Answer.setOnClickListener(v -> {
             Intent ii = new Intent(getApplicationContext(), AnswerActivity.class);
@@ -160,19 +177,19 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btn_EndClass.setOnClickListener(v ->
-            viewHelper.showAlertBuilder("結束課程", "是否要結束課程？", "確認", "取消", new CustomViewHelper.AlertListener() {
-                @Override
-                public void onPositive(DialogInterface dialogInterface, int i) {
-                    shareData.cleanData();
-                    beforeSign();
-                    dialogInterface.dismiss();
-                }
+                viewHelper.showAlertBuilder("結束課程", "是否要結束課程？", "確認", "取消", new CustomViewHelper.AlertListener() {
+                    @Override
+                    public void onPositive(DialogInterface dialogInterface, int i) {
+                        shareData.cleanData();
+                        beforeSign();
+                        dialogInterface.dismiss();
+                    }
 
-                @Override
-                public void onNegative(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                }
-            })
+                    @Override
+                    public void onNegative(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                })
         );
 
         btn_SignOut.setOnClickListener(v -> finish());
@@ -188,7 +205,6 @@ public class MainActivity extends AppCompatActivity {
         viewHelper = new CustomViewHelper(this);
 
         beaconController = new BeaconController(this);
-        beaconController.init_BroadcastBeacon();
 
         btn_Sign = findViewById(R.id.main_btn_Sign);
         btn_Group = findViewById(R.id.main_btn_Group);
@@ -205,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         afterSign();
+        tvNames.setText(shareData.getStudentNames());
     }
 
     @Override

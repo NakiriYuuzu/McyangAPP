@@ -73,10 +73,11 @@ public class LoginActivity extends AppCompatActivity {
                             String api_Password = jsonObject.getString("T_Password");
 
                             if (shareData.getPassword().equals(api_Password)) {
-                                shareData.saveID(jsonObject.getString("T_id"));
+                                String id = jsonObject.getString("T_id");
                                 shareData.saveUserNames(jsonObject.getString("T_Name") + "老師");
                                 Intent ii = new Intent(getApplicationContext(), MainActivity.class);
                                 ii.putExtra("check", true);
+                                ii.putExtra("id", id);
                                 startActivity(ii);
 
                             } else {
@@ -126,11 +127,12 @@ public class LoginActivity extends AppCompatActivity {
                                     shareData.savePassword(pass);
                                 }
 
-                                shareData.saveID(jsonObject.getString("T_id"));
+                                String id = jsonObject.getString("T_id");
                                 shareData.saveUserNames(jsonObject.getString("T_Name") + "老師");
 
                                 Intent ii = new Intent(getApplicationContext(), MainActivity.class);
                                 ii.putExtra("check", true);
+                                ii.putExtra("id", id);
                                 startActivity(ii);
 
                             } else {

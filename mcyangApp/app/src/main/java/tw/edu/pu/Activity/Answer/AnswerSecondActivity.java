@@ -1,6 +1,7 @@
 package tw.edu.pu.Activity.Answer;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
 
@@ -37,12 +39,13 @@ import tw.edu.pu.ViewModel.AnswerViewModel;
 public class AnswerSecondActivity extends AppCompatActivity {
 
     private static final String TAG = "AnswerSecond: ";
-    boolean isActive = false;
+    boolean checkedBeacon = false;
 
     ArrayList<AnswerModel> answerModels;
 
     ShapeableImageView btnBack;
-    MaterialTextView btnStart, btnEnd, tv_NotFound;
+    MaterialCardView btnBeacon;
+    MaterialTextView tv_NotFound, tvBeacon;
     MaterialButton btnFinish, btnNext;
     RecyclerView recyclerView;
 
@@ -82,26 +85,23 @@ public class AnswerSecondActivity extends AppCompatActivity {
     }
 
     private void initButton() {
-        btnStart.setOnClickListener(v -> {
-            if (!isActive) {
-                Toast.makeText(this, "開始廣播", Toast.LENGTH_SHORT).show();
-                beaconController.start_BroadcastBeacon();
-                repeatHelper.start(2000);
-                isActive = true;
-
-            } else {
-                Toast.makeText(this, "已開始廣播！", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        btnEnd.setOnClickListener(v -> {
-            if (isActive) {
-                Toast.makeText(this, "關閉廣播", Toast.LENGTH_SHORT).show();
+        btnBeacon.setOnClickListener(v -> {
+            if (checkedBeacon) {
+                checkedBeacon = false;
                 beaconController.stop_BroadcastBeacon();
                 repeatHelper.stop();
-                isActive = false;
+                tvBeacon.setText("開放答題");
+                btnBeacon.setCardBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_red_dark));
+                Toast.makeText(getApplicationContext(), "關閉廣播", Toast.LENGTH_SHORT).show();
+
             } else {
-                Toast.makeText(this, "廣播已關閉！", Toast.LENGTH_SHORT).show();
+                checkedBeacon = true;
+                beaconController.init_Answer_BroadcastBeacon();
+                beaconController.start_BroadcastBeacon();
+                repeatHelper.start(2000);
+                tvBeacon.setText("停止答題");
+                btnBeacon.setCardBackgroundColor(ContextCompat.getColor(this, R.color.green));
+                Toast.makeText(getApplicationContext(), "開始廣播", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -122,11 +122,11 @@ public class AnswerSecondActivity extends AppCompatActivity {
 
     private void initView() {
         btnBack = findViewById(R.id.answerSecond_btn_Back);
-        btnStart = findViewById(R.id.answerSecond_btn_BeaconOn);
-        btnEnd = findViewById(R.id.answerSecond_btn_BeaconOff);
+        btnBeacon = findViewById(R.id.answerSecond_btn_Beacon);
         btnFinish = findViewById(R.id.answerSecond_btn_Finish);
         btnNext = findViewById(R.id.answerSecond_btn_NextPage);
         tv_NotFound = findViewById(R.id.answerSecond_textView_NotFound);
+        tvBeacon = findViewById(R.id.answerSecond_tv_Beacon);
         recyclerView = findViewById(R.id.answerSecond_recyclerview);
 
         answerModels = new ArrayList<>();
@@ -182,7 +182,7 @@ public class AnswerSecondActivity extends AppCompatActivity {
 
                     JSONObject jsonObject = new JSONObject(result);
                     String names = jsonObject.getString("S_Name");
-                    answerModels.add(new AnswerModel(id, doc, answer, sid, names, qid));
+                    answerModels.add(0, new AnswerModel(id, doc, answer, sid, names, qid));
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -219,7 +219,7 @@ public class AnswerSecondActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (isActive) {
+        if (checkedBeacon) {
             beaconController.stop_BroadcastBeacon();
             repeatHelper.stop();
         }
