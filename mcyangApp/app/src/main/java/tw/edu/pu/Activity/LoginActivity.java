@@ -68,7 +68,6 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             byte[] text = result.getBytes(StandardCharsets.ISO_8859_1);
                             result = new String(text);
-                            Log.e(TAG, result);
                             JSONObject jsonObject = new JSONObject(result);
                             String api_Password = jsonObject.getString("T_Password");
 
@@ -77,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                                 shareData.saveUserNames(jsonObject.getString("T_Name") + "老師");
                                 Intent ii = new Intent(getApplicationContext(), MainActivity.class);
                                 ii.putExtra("check", true);
-                                ii.putExtra("id", id);
+                                ii.putExtra("teacherID", id);
                                 startActivity(ii);
 
                             } else {
@@ -117,7 +116,6 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             byte[] text = result.getBytes(StandardCharsets.ISO_8859_1);
                             result = new String(text);
-                            Log.e(TAG, result);
                             JSONObject jsonObject = new JSONObject(result);
                             String api_Password = jsonObject.getString("T_Password");
 
@@ -128,11 +126,12 @@ public class LoginActivity extends AppCompatActivity {
                                 }
 
                                 String id = jsonObject.getString("T_id");
+                                Log.e(TAG, "onSuccess: " + id);
                                 shareData.saveUserNames(jsonObject.getString("T_Name") + "老師");
 
                                 Intent ii = new Intent(getApplicationContext(), MainActivity.class);
                                 ii.putExtra("check", true);
-                                ii.putExtra("id", id);
+                                ii.putExtra("teacherID", id);
                                 startActivity(ii);
 
                             } else {

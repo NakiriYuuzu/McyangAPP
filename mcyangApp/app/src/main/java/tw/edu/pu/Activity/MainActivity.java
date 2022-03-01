@@ -70,8 +70,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkLogin() {
-        String teacherID = getIntent().getStringExtra("id");
+        String teacherID = getIntent().getStringExtra("teacherID");
         isAfterLogin = getIntent().getBooleanExtra("check", isAfterLogin);
+
+        Log.e("SID: ", shareData.getID() + " | " + teacherID);
+
+        if (teacherID == null) {
+            return;
+        }
 
         if (teacherID.equals(shareData.getID())) {
             if (isAfterLogin)
@@ -81,8 +87,6 @@ public class MainActivity extends AppCompatActivity {
             shareData.saveID(teacherID);
             beforeSign();
         }
-
-        Log.e("SID: ", shareData.getID() + " | " + teacherID);
     }
 
     private void checkStatus() {
@@ -144,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
         beaconController.startScanning((beacons, region) -> {
             if (beacons.size() > 0) {
                 String major = beacons.iterator().next().getId2().toString();
+                Log.e("beacon", beacons.size() + "");
                 if (is_Existed(major))
                     studentRequest.add(major);
             }

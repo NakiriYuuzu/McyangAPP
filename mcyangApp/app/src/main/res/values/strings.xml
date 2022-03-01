@@ -115,4 +115,12 @@
     <string name="answerSecond_Button_Left">結束</string>
     <string name="answerSecond_Button_Right">下一題</string>
 
+    <!--btn-->
+    <string name="btn_StartRace">開放搶答</string>
+    <string name="btn_StartAnswer">開放答題</string>
+    <string name="btn_StartSign">開放簽到</string>
+    <string name="btn_StopRace">停止搶答</string>
+    <string name="btn_StopAnswer">停止答題</string>
+    <string name="btn_StopSign">停止簽到</string>
+
 </resources>

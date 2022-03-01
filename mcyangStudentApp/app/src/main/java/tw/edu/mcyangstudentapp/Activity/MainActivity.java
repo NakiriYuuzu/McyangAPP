@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
 
         initView();
 
-        tvNames.setText(shareData.getStudentNames());
         requestHelper.requestGPSPermission();
         requestHelper.checkGPS_Enabled();
         requestHelper.requestBluetooth();
@@ -57,16 +56,22 @@ public class MainActivity extends AppCompatActivity {
         String studentID = getIntent().getStringExtra("studentID");
         isAfterLogin = getIntent().getBooleanExtra("check", isAfterLogin);
 
+        if (studentID == null)
+            return;
+
         if (studentID.equals(shareData.getStudentID())) {
-            if (isAfterLogin)
+            if (isAfterLogin) {
                 checkStatus();
+                tvNames.setText(shareData.getStudentNames());
+            }
         } else {
             shareData.cleanData();
             shareData.saveStudentID(studentID);
+            tvNames.setText(shareData.getStudentNames());
             beforeSign();
         }
 
-        Log.e("SID: ", shareData.getStudentID() + " | " + studentID);
+        Log.e("SID: ", shareData.getStudentID() + " | " + studentID + " | " + shareData.getStudentNames());
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")

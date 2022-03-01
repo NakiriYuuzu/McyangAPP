@@ -67,7 +67,6 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             byte[] text = result.getBytes(StandardCharsets.ISO_8859_1);
                             result = new String(text);
-                            Log.e(TAG, result);
                             JSONObject jsonObject = new JSONObject(result);
                             String student_ID = jsonObject.getString("S_id");
                             String api_Password = jsonObject.getString("S_Password");
@@ -115,7 +114,6 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             byte[] text = result.getBytes(StandardCharsets.ISO_8859_1);
                             result = new String(text);
-                            Log.e(TAG, result);
                             JSONObject jsonObject = new JSONObject(result);
                             String student_ID = jsonObject.getString("S_id");
                             String api_Password = jsonObject.getString("S_Password");

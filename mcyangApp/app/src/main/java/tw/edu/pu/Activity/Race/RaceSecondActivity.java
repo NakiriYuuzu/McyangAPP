@@ -218,7 +218,7 @@ public class RaceSecondActivity extends AppCompatActivity {
                 checkedBeacon = false;
                 beaconController.stop_BroadcastBeacon();
                 repeatHelper.stop();
-                tvBeacon.setText("開放搶答");
+                tvBeacon.setText(R.string.btn_StartRace);
                 btnBeacon.setCardBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_red_dark));
                 Toast.makeText(getApplicationContext(), "關閉廣播", Toast.LENGTH_SHORT).show();
 
@@ -230,7 +230,7 @@ public class RaceSecondActivity extends AppCompatActivity {
                 if (shareData.getRaceID() != null)
                     repeatHelper.start(2000);
 
-                tvBeacon.setText("停止搶答");
+                tvBeacon.setText(R.string.btn_StopRace);
                 btnBeacon.setCardBackgroundColor(ContextCompat.getColor(this, R.color.green));
                 Toast.makeText(getApplicationContext(), "開始廣播", Toast.LENGTH_SHORT).show();
             }

@@ -129,7 +129,7 @@ public class Sign_Second_Activity extends AppCompatActivity {
                 checkedBeacon = false;
                 beaconController.stop_BroadcastBeacon();
                 repeatHelper.stop();
-                tvBeacon.setText("開放簽到");
+                tvBeacon.setText(R.string.btn_StartSign);
                 btnBeacon.setCardBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_red_dark));
                 Toast.makeText(getApplicationContext(), "關閉廣播", Toast.LENGTH_SHORT).show();
 
@@ -138,7 +138,7 @@ public class Sign_Second_Activity extends AppCompatActivity {
                 beaconController.init_Sign_BroadcastBeacon();
                 beaconController.start_BroadcastBeacon();
                 repeatHelper.start(2000);
-                tvBeacon.setText("停止簽到");
+                tvBeacon.setText(R.string.btn_StopSign);
                 btnBeacon.setCardBackgroundColor(ContextCompat.getColor(this, R.color.green));
                 Toast.makeText(getApplicationContext(), "開始廣播", Toast.LENGTH_SHORT).show();
             }

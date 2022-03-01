@@ -2,6 +2,7 @@ package tw.edu.pu.RecyclerAdapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import java.util.Map;
 import tw.edu.pu.ActivityModel.RaceModel;
 import tw.edu.pu.ApiModel.VolleyApi;
 import tw.edu.pu.DefaultSetting;
+import tw.edu.pu.Helper.CustomViewHelper;
 import tw.edu.pu.R;
 import tw.edu.pu.StoredData.ShareData;
 
@@ -34,6 +36,7 @@ public class RaceAdapter extends RecyclerView.Adapter<RaceAdapter.RaceViewHolder
 
     Activity activity;
 
+    CustomViewHelper customViewHelper;
     ShareData shareData;
     VolleyApi volleyApi;
 
@@ -46,6 +49,7 @@ public class RaceAdapter extends RecyclerView.Adapter<RaceAdapter.RaceViewHolder
 
         shareData = new ShareData(activity);
         volleyApi = new VolleyApi(activity);
+        customViewHelper = new CustomViewHelper(activity);
     }
 
     @NonNull
@@ -82,9 +86,22 @@ public class RaceAdapter extends RecyclerView.Adapter<RaceAdapter.RaceViewHolder
                 volleyApi.putApi(DefaultSetting.URL_RACE_LIST + url, new VolleyApi.VolleyGet() {
                     @Override
                     public void onSuccess(String result) {
-                        Toast.makeText(activity, "批改完成！", Toast.LENGTH_SHORT).show();
-                        raceModels.get(position).setRaceCorrect("正確");
-                        bsd.dismiss();
+                        customViewHelper.showAlertBuilder("再次確認", "確定要將這位學生批改為正確？", new CustomViewHelper.AlertListener() {
+                            @Override
+                            public void onPositive(DialogInterface dialogInterface, int i) {
+                                Toast.makeText(activity, "批改完成！", Toast.LENGTH_SHORT).show();
+                                raceModels.get(position).setRaceCorrect("正確");
+                                updateCreateAdapter(raceModels);
+                                bsd.dismiss();
+                                dialogInterface.dismiss();
+                            }
+
+                            @Override
+                            public void onNegative(DialogInterface dialogInterface, int i) {
+                                bsd.dismiss();
+                                dialogInterface.dismiss();
+                            }
+                        });
                     }
 
                     @Override
@@ -112,6 +129,12 @@ public class RaceAdapter extends RecyclerView.Adapter<RaceAdapter.RaceViewHolder
             return this.raceModels.size();
         else
             return 0;
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void updateCreateAdapter(ArrayList<RaceModel> raceModels) {
+        this.raceModels = raceModels;
+        notifyDataSetChanged();
     }
 
     @SuppressLint("NotifyDataSetChanged")
