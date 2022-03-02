@@ -208,7 +208,6 @@ public class ShareData {
     public void cleanData() {
         saveMajor(null);
         saveMinor(null);
-        saveStudentName(null);
         saveQuestionID(null);
         saveAnswerID(null);
     }

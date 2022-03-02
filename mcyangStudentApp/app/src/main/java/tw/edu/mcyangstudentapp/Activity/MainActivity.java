@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initView();
+        Log.e("onCreate: ", shareData.getStudentNames());
 
         requestHelper.requestGPSPermission();
         requestHelper.checkGPS_Enabled();
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private void checkLogin() {
         String studentID = getIntent().getStringExtra("studentID");
         isAfterLogin = getIntent().getBooleanExtra("check", isAfterLogin);
+        tvNames.setText(shareData.getStudentNames());
 
         if (studentID == null)
             return;
@@ -62,12 +64,10 @@ public class MainActivity extends AppCompatActivity {
         if (studentID.equals(shareData.getStudentID())) {
             if (isAfterLogin) {
                 checkStatus();
-                tvNames.setText(shareData.getStudentNames());
             }
         } else {
             shareData.cleanData();
             shareData.saveStudentID(studentID);
-            tvNames.setText(shareData.getStudentNames());
             beforeSign();
         }
 
@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void beforeSign() {
+        tvNames.setText(shareData.getStudentNames());
         btn_Sign.setEnabled(true);
         btn_Sign.setCardBackgroundColor(ContextCompat.getColor(this, R.color.blue));
         btn_Qa.setEnabled(false);
@@ -108,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void afterSign() {
+        tvNames.setText(shareData.getStudentNames());
         if (shareData.getMajor() != null) {
             btn_Sign.setEnabled(false);
             btn_Sign.setCardBackgroundColor(ContextCompat.getColor(this, R.color.grey));
@@ -226,19 +228,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         afterSign();
-        tvNames.setText(shareData.getStudentNames());
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        if (beaconChecked)
-            beaconController.stop_BroadcastBeacon();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
         if (beaconChecked)
             beaconController.stop_BroadcastBeacon();
     }
