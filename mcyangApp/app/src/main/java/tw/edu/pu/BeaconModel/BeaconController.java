@@ -1,6 +1,7 @@
 package tw.edu.pu.BeaconModel;
 
 import android.app.Activity;
+import android.bluetooth.le.AdvertiseSettings;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -76,6 +77,8 @@ public class BeaconController {
                         .build();
 
                 beaconTransmitter = new BeaconTransmitter(activity, beaconParser);
+                beaconTransmitter.setAdvertiseTxPowerLevel(AdvertiseSettings.ADVERTISE_TX_POWER_HIGH);
+                beaconTransmitter.setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY);
             }
             else {
                 if (shareData.getMajor() == null)
@@ -106,6 +109,8 @@ public class BeaconController {
                         .build();
 
                 beaconTransmitter = new BeaconTransmitter(activity, beaconParser);
+                beaconTransmitter.setAdvertiseTxPowerLevel(AdvertiseSettings.ADVERTISE_TX_POWER_HIGH);
+                beaconTransmitter.setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY);
             } else {
                 if (shareData.getMajor() == null)
                     Toast.makeText(activity, "請先點名后在開始廣播！", Toast.LENGTH_SHORT).show();
@@ -129,11 +134,13 @@ public class BeaconController {
                         .setId2(shareData.getMajor())
                         .setId3(shareData.getQuestion_ID())
                         .setManufacturer(0x0118)
-                        .setTxPower(-79)
+                        .setTxPower(-69)
                         .setDataFields(Collections.singletonList(0L))
                         .build();
 
                 beaconTransmitter = new BeaconTransmitter(activity, beaconParser);
+                beaconTransmitter.setAdvertiseTxPowerLevel(AdvertiseSettings.ADVERTISE_TX_POWER_HIGH);
+                beaconTransmitter.setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY);
             }
             else {
                 if (shareData.getMajor() == null)
@@ -144,7 +151,62 @@ public class BeaconController {
         } catch (Exception e) {
             Toast.makeText(activity, "無法打開beacon，請先點名后在操作！", Toast.LENGTH_SHORT).show();
         }
+    }
 
+    public void init_GroupSecond_BroadcastBeacon() {
+        try {
+            if (shareData.getMajor() != null && shareData.getDesc_ID() != null) {
+                Log.e(TAG, "Major: " + shareData.getMajor() + " Minor: " + shareData.getDesc_ID());
+                beacon = new Beacon.Builder()
+                        .setId1(DefaultSetting.BEACON_UUID_GROUP)
+                        .setId2(shareData.getMajor())
+                        .setId3(shareData.getDesc_ID())
+                        .setManufacturer(0x0118)
+                        .setTxPower(-79)
+                        .setDataFields(Collections.singletonList(0L))
+                        .build();
+
+                beaconTransmitter = new BeaconTransmitter(activity, beaconParser);
+                beaconTransmitter.setAdvertiseTxPowerLevel(AdvertiseSettings.ADVERTISE_TX_POWER_HIGH);
+                beaconTransmitter.setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY);
+            }
+            else {
+                if (shareData.getMajor() == null)
+                    Toast.makeText(activity, "請先點名后在開始廣播！", Toast.LENGTH_SHORT).show();
+                if (shareData.getQuestion_ID() == null)
+                    Toast.makeText(activity, "無法取得群組ID！", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(activity, "無法打開beacon，請先點名后在操作！", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void init_GroupThird_BroadcastBeacon() {
+        try {
+            if (shareData.getMajor() != null && shareData.getDesc_ID() != null) {
+                Log.e(TAG, "Major: " + shareData.getMajor() + " Minor: " + shareData.getDesc_ID());
+                beacon = new Beacon.Builder()
+                        .setId1(DefaultSetting.BEACON_UUID_TEAM)
+                        .setId2(shareData.getMajor())
+                        .setId3(shareData.getDesc_ID())
+                        .setManufacturer(0x0118)
+                        .setTxPower(-79)
+                        .setDataFields(Collections.singletonList(0L))
+                        .build();
+
+                beaconTransmitter = new BeaconTransmitter(activity, beaconParser);
+                beaconTransmitter.setAdvertiseTxPowerLevel(AdvertiseSettings.ADVERTISE_TX_POWER_HIGH);
+                beaconTransmitter.setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY);
+            }
+            else {
+                if (shareData.getMajor() == null)
+                    Toast.makeText(activity, "請先點名后在開始廣播！", Toast.LENGTH_SHORT).show();
+                if (shareData.getQuestion_ID() == null)
+                    Toast.makeText(activity, "無法取得群組ID！", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(activity, "無法打開beacon，請先點名后在操作！", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void start_BroadcastBeacon() {

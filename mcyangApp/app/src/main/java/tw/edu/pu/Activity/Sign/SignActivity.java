@@ -2,6 +2,7 @@ package tw.edu.pu.Activity.Sign;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 
 import tw.edu.pu.ApiModel.VolleyApi;
 import tw.edu.pu.DefaultSetting;
+import tw.edu.pu.Helper.CustomViewHelper;
 import tw.edu.pu.R;
 import tw.edu.pu.StoredData.ShareData;
 
@@ -42,6 +44,7 @@ public class SignActivity extends AppCompatActivity {
 
     ShareData shareData;
     VolleyApi volleyApi;
+    CustomViewHelper viewHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,27 @@ public class SignActivity extends AppCompatActivity {
 
         initView();
         initButton();
+        checkSignID();
+    }
+
+    private void checkSignID() {
+        if (shareData.getCourseID() != null) {
+            viewHelper.showAlertBuilder("繼續點名", "請問要開放補點給同學？", new CustomViewHelper.AlertListener() {
+                @Override
+                public void onPositive(DialogInterface dialogInterface, int i) {
+                    shareData.saveMajor(shareData.getCourseID());
+                    Intent ii = new Intent(getApplicationContext(), Sign_Second_Activity.class);
+                    ii.putExtra("isResume", true);
+                    startActivity(ii);
+                    dialogInterface.dismiss();
+                }
+
+                @Override
+                public void onNegative(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+        }
     }
 
     private void initButton() {
@@ -112,6 +136,7 @@ public class SignActivity extends AppCompatActivity {
     private void initView() {
         shareData = new ShareData(this);
         volleyApi = new VolleyApi(this);
+        viewHelper = new CustomViewHelper(this);
 
         initData();
         arrayAdapter = new ArrayAdapter<>(this, R.layout.dropdown_item, coursesName);

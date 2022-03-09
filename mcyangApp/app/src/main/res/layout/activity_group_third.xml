@@ -10,7 +10,7 @@
         android:id="@+id/groupThird_btn_Back"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="25dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="25dp"
         android:background="@android:color/transparent"
         android:src="@drawable/ic_baseline_arrow_back_24"
@@ -32,50 +32,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/groupThird_btn_beaconBtn"
+        android:layout_width="100dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="35dp"
         android:layout_marginEnd="15dp"
+        app:cardBackgroundColor="#E91E63"
+        app:cardCornerRadius="25dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.card.MaterialCardView
-            android:background="@drawable/recyclerview_background"
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/groupThird_tv_beacon"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/btn_StartBroadcast"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/groupThird_btn_BeaconOn"
-                android:text="@string/default_Beacon_Open"
-                android:textStyle="bold"
-                android:textColor="#4CAF50"
-                android:textAppearance="?attr/textAppearanceSubtitle2"
-                android:background="@drawable/recyclerview_background"
-                android:padding="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:background="@drawable/recyclerview_background"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/groupThird_btn_BeaconOff"
-                android:text="@string/default_Beacon_Close"
-                android:textStyle="bold"
-                android:textColor="#E91E63"
-                android:background="@drawable/recyclerview_background"
-                android:padding="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-    </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
     <LinearLayout
         android:id="@+id/groupThird_recyclerview_Title"
@@ -89,7 +67,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textview.MaterialTextView
-            android:layout_width="125dp"
+            android:layout_width="110dp"
             android:layout_height="match_parent"
             android:background="@drawable/recyclerview_background"
             android:gravity="center"
@@ -100,7 +78,7 @@
             android:textStyle="bold" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:layout_width="120dp"
+            android:layout_width="130dp"
             android:layout_height="match_parent"
             android:background="@drawable/recyclerview_background"
             android:gravity="center"
@@ -126,7 +104,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/groupThird_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="350dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -155,14 +133,14 @@
         android:id="@+id/groupThird_btn_NextPage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="110dp"
-        android:layout_marginRight="110dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:layout_marginBottom="30dp"
         android:text="@string/groupThird_btn_Enter"
         android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:cornerRadius="10dp"
+        app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

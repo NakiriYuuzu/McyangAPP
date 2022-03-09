@@ -79,7 +79,7 @@
     <string name="groupSecond_recycleView_title_Left">點選</string>
     <string name="groupSecond_recycleView_title_Right">隊長後選</string>
     <string name="groupSecond_notification_NoData">目前暫無資料。</string>
-    <string name="groupSecond_btn_NextPage">已選擇0位隊長</string>
+    <string name="groupSecond_btn_NextPage">完成選擇隊長</string>
 
     <!--GroupThirdActivity-->
     <string name="groupThird_recycleView_Left">組別</string>
@@ -122,5 +122,7 @@
     <string name="btn_StopRace">停止搶答</string>
     <string name="btn_StopAnswer">停止答題</string>
     <string name="btn_StopSign">停止簽到</string>
+    <string name="btn_StartBroadcast">開始廣播</string>
+    <string name="btn_StopBroadcast">停止廣播</string>
 
 </resources>

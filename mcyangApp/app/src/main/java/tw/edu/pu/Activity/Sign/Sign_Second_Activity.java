@@ -44,6 +44,7 @@ public class Sign_Second_Activity extends AppCompatActivity {
     public static final String TAG = "SignSecondActivity: ";
 
     boolean checkedBeacon = false;
+    boolean isResume = false;
     String signID;
 
     ArrayList<SignModel> signList;
@@ -69,7 +70,15 @@ public class Sign_Second_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_second);
 
         initView();
-        signCreated();
+
+        isResume = getIntent().getBooleanExtra("isResume", isResume);
+
+        if (!isResume)
+            signCreated();
+        else
+            if (shareData.getSignID() != null)
+                shareData.saveMinor(shareData.getSignID());
+
         initSignData();
         initButton();
         initRecyclerView();
@@ -186,6 +195,7 @@ public class Sign_Second_Activity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(result);
                     signID = jsonObject.getString("Sign_id");
                     shareData.saveMinor(signID);
+                    shareData.saveSignID(signID);
                     Log.e(TAG, "signCreated: " + signID);
 
                 } catch (JSONException e) {
@@ -206,7 +216,7 @@ public class Sign_Second_Activity extends AppCompatActivity {
     }
 
     private void initData() {
-        volleyApi.getApi(DefaultSetting.URL_SIGN_RECORD + signID, new VolleyApi.VolleyGet() {
+        volleyApi.getApi(DefaultSetting.URL_SIGN_RECORD + shareData.getSignID(), new VolleyApi.VolleyGet() {
             @Override
             public void onSuccess(String result) {
                 try {

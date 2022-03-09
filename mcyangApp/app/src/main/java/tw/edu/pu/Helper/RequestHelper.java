@@ -15,6 +15,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -48,7 +49,7 @@ public class RequestHelper {
                         }
                     });
         } else {
-            Toast.makeText(activity , "您的手機無法使用該應用...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, "您的手機無法使用該應用...", Toast.LENGTH_SHORT).show();
             activity.finish();
         }
     }
@@ -71,6 +72,16 @@ public class RequestHelper {
 
         if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
             Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             activity.startActivity(enableBluetooth);
         }
     }
@@ -118,8 +129,6 @@ public class RequestHelper {
         if (networkInfo != null)
             if (networkInfo.isConnected())
                 internet = true;
-            else
-                Log.e(TAG, networkInfo.getReason());
 
         return internet;
     }

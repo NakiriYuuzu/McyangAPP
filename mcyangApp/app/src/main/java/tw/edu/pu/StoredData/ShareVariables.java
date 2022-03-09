@@ -17,6 +17,7 @@ public class ShareVariables {
 
     //FixMe: LoginActivity
     public static final String COURSE_ID = "cid";
+    public static final String SIGN_ID = "sid";
 
     //FIXME: RaceActivity
     public static final String RACE_DOC = "DOC";
@@ -24,5 +25,11 @@ public class ShareVariables {
 
     //FIXME: AnswerActivity
     public static final String QUESTION_ID = "Q_id";
+
+    //FIXME: GroupActivity
     public static final String DESC_ID = "Desc_id";
+    public static final String TEAM_ID = "Team_id";
+    public static final String REMOVE_TEAM_ID = "remove_team_id";
+    public static final String GROUP_SECOND = "groupSeconds";
+    public static final String GROUP_MEMBER = "groupMember";
 }

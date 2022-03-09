@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         requestHelper.requestBluetooth();
 
         tv_TeacherNames.setText(shareData.getUserNames());
-        btnGroup.setEnabled(false);
+        btnGroup.setEnabled(true);
 
         checkLogin();
         initButton();
@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onPositive(DialogInterface dialogInterface, int i) {
                     shareData.cleanData();
+                    shareData.saveCourseID(null);
                     beforeSign();
                     dialogInterface.dismiss();
                 }
@@ -133,8 +134,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void afterSign() {
         if (shareData.getMajor() != null) {
-            btnSign.setEnabled(false);
-            btnSign.setCardBackgroundColor(ContextCompat.getColor(this, R.color.grey));
             btnEndClass.setEnabled(true);
             btnEndClass.setCardBackgroundColor(ContextCompat.getColor(this, R.color.green));
             btnRace.setEnabled(true);
@@ -219,6 +218,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPositive(DialogInterface dialogInterface, int i) {
                 shareData.cleanData();
+                shareData.saveCourseID(null);
                 beforeSign();
                 dialogInterface.dismiss();
             }

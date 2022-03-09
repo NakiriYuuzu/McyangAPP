@@ -51,8 +51,14 @@ public class GroupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_group);
 
         initView();
+        cleanData();
         syncData();
         initButton();
+    }
+
+    private void cleanData() {
+        shareData.saveGroupSecond(null);
+        shareData.saveTeam_ID(null);
     }
 
     private void syncData() {
@@ -91,6 +97,7 @@ public class GroupActivity extends AppCompatActivity {
         btn_Enter.setOnClickListener(v -> {
             if (isSelected_CurrentGroup) {
                 shareData.saveDesc_ID(groupID.get(selected));
+                Log.e(TAG, groupID.get(selected) + " | " + shareData.getDesc_ID());
                 Intent ii = new Intent(getApplicationContext(), GroupSecondActivity.class);
                 startActivity(ii);
 

@@ -13,6 +13,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import tw.edu.pu.ActivityModel.CreateModel;
+import tw.edu.pu.ActivityModel.GroupMemberModel;
+import tw.edu.pu.ActivityModel.GroupSecondModel;
 
 public class ShareData {
     private static final String TAG = "ShareData: ";
@@ -32,7 +34,6 @@ public class ShareData {
         saveMinor(null);
         saveQuestion_ID(null);
         saveRaceID(null);
-        saveCourseID(null);
     }
 
     public void saveMajor(String major) {
@@ -169,6 +170,18 @@ public class ShareData {
         return preferences.getString(ShareVariables.COURSE_ID, null);
     }
 
+    public void saveSignID(String id) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ShareVariables.SIGN_ID, id);
+        editor.apply();
+    }
+
+    public String getSignID() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getString(ShareVariables.SIGN_ID, null);
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // Todo: RaceActivity
     ///////////////////////////////////////////////////////////////////////////
@@ -227,5 +240,97 @@ public class ShareData {
     public String getDesc_ID() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         return preferences.getString(ShareVariables.DESC_ID, null);
+    }
+
+    public void saveTeam_ID(ArrayList<String> teamID) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        Gson gson = new Gson();
+        String json = gson.toJson(teamID);
+
+        editor.putString(ShareVariables.TEAM_ID, json);
+        editor.apply();
+    }
+
+    public ArrayList<String> getTeam_ID() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        Gson gson = new Gson();
+        ArrayList<String> teamID;
+        String json = preferences.getString(ShareVariables.TEAM_ID, null);
+        Type type = new TypeToken<ArrayList<String>>() {}.getType();
+
+        teamID = gson.fromJson(json, type);
+
+        return teamID;
+    }
+
+    public void saveRemoveTeam_ID(ArrayList<String> teamID) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        Gson gson = new Gson();
+        String json = gson.toJson(teamID);
+
+        editor.putString(ShareVariables.REMOVE_TEAM_ID, json);
+        editor.apply();
+    }
+
+    public ArrayList<String> getRemoveTeam_ID() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        Gson gson = new Gson();
+        ArrayList<String> teamID;
+        String json = preferences.getString(ShareVariables.REMOVE_TEAM_ID, null);
+        Type type = new TypeToken<ArrayList<String>>() {}.getType();
+
+        teamID = gson.fromJson(json, type);
+
+        return teamID;
+    }
+
+    public void saveGroupSecond(ArrayList<GroupSecondModel> groupSeconds) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        Gson gson = new Gson();
+        String json = gson.toJson(groupSeconds);
+
+        editor.putString(ShareVariables.GROUP_SECOND, json);
+        editor.apply();
+    }
+
+    public ArrayList<GroupSecondModel> getGroupSecond() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        Gson gson = new Gson();
+        ArrayList<GroupSecondModel> groupSeconds;
+        String json = preferences.getString(ShareVariables.GROUP_SECOND, null);
+        Type type = new TypeToken<ArrayList<GroupSecondModel>>() {}.getType();
+
+        groupSeconds = gson.fromJson(json, type);
+
+        return groupSeconds;
+    }
+
+    public void saveGroupMember(ArrayList<GroupMemberModel> groupMemberList) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        Gson gson = new Gson();
+        String json = gson.toJson(groupMemberList);
+
+        editor.putString(ShareVariables.GROUP_MEMBER, json);
+        editor.apply();
+    }
+
+    public ArrayList<GroupMemberModel> getGroupMember() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        Gson gson = new Gson();
+        ArrayList<GroupMemberModel> groupMemberList;
+        String json = preferences.getString(ShareVariables.GROUP_MEMBER, null);
+        Type type = new TypeToken<ArrayList<GroupMemberModel>>() {}.getType();
+
+        groupMemberList = gson.fromJson(json, type);
+
+        return groupMemberList;
     }
 }
