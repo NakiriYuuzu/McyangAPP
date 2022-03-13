@@ -2,9 +2,25 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.LoginActivity">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/materialTextView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:text="@string/app_name"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/outlinedTextField_Account"
@@ -12,10 +28,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+        android:layout_marginTop="100dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="200dp"
         android:layout_marginEnd="30dp"
-        android:hint="@string/text_Account"
+        android:hint="@string/login_text_Account"
         app:boxCornerRadiusBottomEnd="15dp"
         app:boxCornerRadiusBottomStart="15dp"
         app:boxCornerRadiusTopEnd="15dp"
@@ -24,12 +40,13 @@
         app:counterMaxLength="30"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/materialTextView4">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/login_input_acc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textNoSuggestions"
             android:fontFamily="@font/noto_sans"
             android:textSize="16sp" />
 
@@ -44,7 +61,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="30dp"
-        android:hint="@string/text_Password"
+        android:hint="@string/login_text_Password"
         app:boxCornerRadiusBottomEnd="15dp"
         app:boxCornerRadiusBottomStart="15dp"
         app:boxCornerRadiusTopEnd="15dp"
@@ -74,7 +91,7 @@
         android:layout_marginEnd="30dp"
         android:checked="false"
         android:fontFamily="@font/noto_sans"
-        android:text="@string/toggle_RememberMe"
+        android:text="@string/login_toggle_RememberMe"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/outlinedTextField_Pass" />
@@ -89,9 +106,10 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="30dp"
         android:fontFamily="@font/noto_sans"
-        android:text="@string/btn_Login"
+        android:text="@string/login_btn_Login"
         android:textSize="16sp"
         app:cornerRadius="20dp"
+        app:backgroundTint="@color/blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_checkBox_rememberMe" />

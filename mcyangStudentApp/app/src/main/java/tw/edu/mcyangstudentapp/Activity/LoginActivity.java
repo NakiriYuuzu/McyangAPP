@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.Toast;
@@ -12,14 +13,19 @@ import com.android.volley.VolleyError;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.nio.charset.StandardCharsets;
+
 import tw.edu.mcyangstudentapp.ApiModel.VolleyApi;
 import tw.edu.mcyangstudentapp.DefaultSetting;
+import tw.edu.mcyangstudentapp.Helper.CustomViewHelper;
 import tw.edu.mcyangstudentapp.R;
-import tw.edu.mcyangstudentapp.RequestModel.RequestHelper;
+import tw.edu.mcyangstudentapp.Helper.RequestHelper;
 import tw.edu.mcyangstudentapp.StoredData.ShareData;
 
 public class LoginActivity extends AppCompatActivity {
-
     private static final String TAG = "LoginActivity: ";
 
     private boolean loginBtnChecked = true;
@@ -28,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     MaterialButton btn_SignIn;
     CheckBox btn_rememberMe;
 
+    CustomViewHelper customViewHelper;
     RequestHelper requestHelper;
     VolleyApi volleyApi;
     ShareData shareData;
@@ -38,38 +45,56 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         initView();
-        requestHelper.checkInternet_Enabled();
-        initButton();
-        autoLogin();
+        requestHelper.flushBluetooth();
+
+        if (requestHelper.checkInternet_Enabled()) {
+            initButton();
+            autoLogin();
+            customViewHelper.setupUI(findViewById(R.id.activity_main_view));
+
+        } else {
+            Toast.makeText(getApplicationContext(), R.string.tag_NoInternet, Toast.LENGTH_SHORT).show();
+            new Handler().postDelayed(this::finish, 3000);
+        }
     }
 
     private void autoLogin() {
         try {
-            if (shareData.getAccount() != null && shareData.getPassword() != null) {
-                volleyApi.postApi(DefaultSetting.URL_LOGIN, shareData.getAccount(), shareData.getPassword(), new VolleyApi.VolleyGet() {
+            if (shareData.getLoginAccount() != null && shareData.getLoginPassword() != null) {
+                volleyApi.getApi(DefaultSetting.URL_LOGIN + shareData.getLoginAccount(), new VolleyApi.VolleyGet() {
                     @Override
                     public void onSuccess(String result) {
-                        Intent ii = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(ii);
+                        try {
+                            byte[] text = result.getBytes(StandardCharsets.ISO_8859_1);
+                            result = new String(text);
+                            JSONObject jsonObject = new JSONObject(result);
+                            String student_ID = jsonObject.getString("S_id");
+                            String api_Password = jsonObject.getString("S_Password");
+                            shareData.saveStudentName(jsonObject.getString("S_Name") + "同學");
+
+                            if (shareData.getLoginPassword().equals(api_Password)) {
+                                Intent ii = new Intent(getApplicationContext(), MainActivity.class);
+                                ii.putExtra("check", true);
+                                ii.putExtra("studentID", student_ID);
+                                startActivity(ii);
+
+                            } else
+                                Log.e(TAG, "AutoLogin: failed.");
+
+                        } catch (JSONException e) {
+                            Log.e("autoLogin", "onSuccess");
+                        }
                     }
 
                     @Override
                     public void onFailed(VolleyError error) {
-                        try {
-                            shareData.saveAccount("");
-                            shareData.savePassword("");
-                            Toast.makeText(getApplicationContext(), "自動登入失敗，請重新輸入...", Toast.LENGTH_SHORT).show();
-
-                        } catch (Exception e) {
-                            Log.e(TAG, e.toString());
-                        }
+                        Log.e(TAG, error.toString());
                     }
                 });
             }
 
         } catch (Exception e) {
-            Log.e(TAG, e.toString());
-
+            Log.e("autoLogin", "Problem");
         }
     }
 
@@ -81,38 +106,46 @@ public class LoginActivity extends AppCompatActivity {
             pass = editText_Pass.getText().toString();
 
             if (id.equals("") || pass.equals(""))
-                Toast.makeText(this, "請輸入賬號和密碼！", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.tag_NoInput, Toast.LENGTH_SHORT).show();
             else {
-                //For API
-                volleyApi.postApi(DefaultSetting.URL_LOGIN, id, pass, new VolleyApi.VolleyGet() {
+                volleyApi.getApi(DefaultSetting.URL_LOGIN + id, new VolleyApi.VolleyGet() {
                     @Override
                     public void onSuccess(String result) {
                         try {
-                            if (btn_rememberMe.isChecked()) {
-                                shareData.saveAccount(id);
-                                shareData.savePassword(pass);
+                            byte[] text = result.getBytes(StandardCharsets.ISO_8859_1);
+                            result = new String(text);
+                            JSONObject jsonObject = new JSONObject(result);
+                            String student_ID = jsonObject.getString("S_id");
+                            String api_Password = jsonObject.getString("S_Password");
+                            shareData.saveStudentName(jsonObject.getString("S_Name") + "同學");
+
+                            if (pass.equals(api_Password)) {
+                                if (btn_rememberMe.isChecked()) {
+                                    shareData.saveLoginAccount(id);
+                                    shareData.saveLoginPassword(pass);
+                                }
+
+                                Intent ii = new Intent(getApplicationContext(), MainActivity.class);
+                                ii.putExtra("check", true);
+                                ii.putExtra("studentID", student_ID);
+                                startActivity(ii);
+
+                            } else {
+                                Toast.makeText(getApplicationContext(), "密碼錯誤，請重新輸入密碼！", Toast.LENGTH_SHORT).show();
+                                editText_Pass.setText("");
                             }
 
-                            Intent ii = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(ii);
-
-                        } catch (Exception e) {
-                            Log.e(TAG, e.toString());
+                        } catch (JSONException e) {
+                            Log.e("loginFunction", "onSuccess");
                         }
                     }
 
                     @Override
                     public void onFailed(VolleyError error) {
-                        try {
-                            if (error.networkResponse.statusCode == 401)
-                                Toast.makeText(getApplicationContext(), "登入失敗，賬號密碼錯誤！", Toast.LENGTH_SHORT).show();
-
-                        } catch (Exception e) {
-                            Log.e(TAG, e.toString());
-                            Toast.makeText(getApplicationContext(), "連接伺服器失敗，請稍後嘗試。", Toast.LENGTH_SHORT).show();
-                        }
-
-                        clearFunction();
+                        Log.e("loginFunction", "onFailed");
+                        Toast.makeText(getApplicationContext(), "查無此賬號，請重新輸入！", Toast.LENGTH_SHORT).show();
+                        editText_Acc.setText("");
+                        editText_Pass.setText("");
                     }
                 });
             }
@@ -122,19 +155,13 @@ public class LoginActivity extends AppCompatActivity {
         btn_SignIn.setEnabled(true);
     }
 
-    private void clearFunction() {
-        editText_Acc.setText("");
-        editText_Pass.setText("");
-    }
-
     private void initButton() {
         btn_SignIn.setOnClickListener(v -> {
             if (loginBtnChecked) {
                 loginBtnChecked = false;
                 btn_SignIn.setEnabled(false);
                 loginFunction();
-            } else
-                Toast.makeText(this, "登入中，請稍後...", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
@@ -144,8 +171,10 @@ public class LoginActivity extends AppCompatActivity {
         btn_SignIn = findViewById(R.id.login_btn_signIn);
         btn_rememberMe = findViewById(R.id.login_checkBox_rememberMe);
 
+        customViewHelper = new CustomViewHelper(this);
         requestHelper = new RequestHelper(this);
         volleyApi = new VolleyApi(this);
         shareData = new ShareData(this);
     }
+
 }

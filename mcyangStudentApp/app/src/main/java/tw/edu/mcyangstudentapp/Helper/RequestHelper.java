@@ -1,4 +1,4 @@
-package tw.edu.pu.RequestModel;
+package tw.edu.mcyangstudentapp.Helper;
 
 import android.Manifest;
 import android.app.Activity;
@@ -11,11 +11,11 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
-import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -23,7 +23,7 @@ import com.permissionx.guolindev.PermissionX;
 
 import org.altbeacon.bluetooth.BluetoothMedic;
 
-import tw.edu.pu.R;
+import tw.edu.mcyangstudentapp.R;
 
 public class RequestHelper {
 
@@ -31,7 +31,11 @@ public class RequestHelper {
 
     private final Activity activity;
 
-    public void requestBasicPermission() {
+    public RequestHelper(Activity activity) {
+        this.activity = activity;
+    }
+
+    public void requestGPSPermission() {
         if (Build.VERSION.SDK_INT > 23) {
             PermissionX.init((FragmentActivity) activity)
                     .permissions(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -45,13 +49,9 @@ public class RequestHelper {
                         }
                     });
         } else {
-            Toast.makeText(activity , "您的手機無法使用該應用...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, "您的手機無法使用該應用...", Toast.LENGTH_SHORT).show();
             activity.finish();
         }
-    }
-
-    public RequestHelper(Activity activity) {
-        this.activity = activity;
     }
 
     public void requestBluetooth() {
@@ -72,6 +72,16 @@ public class RequestHelper {
 
         if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
             Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             activity.startActivity(enableBluetooth);
         }
     }
@@ -104,21 +114,22 @@ public class RequestHelper {
 
         if (!gps_enabled || !network_enabled) {
             new MaterialAlertDialogBuilder(activity)
-                    .setMessage(R.string.request_Gps_Not_Enabled)
+                    .setMessage(R.string.tag_request_Gps_Not_Enabled)
                     .setPositiveButton("確認", (dialogInterface, i) -> activity.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)))
                     .setNegativeButton("取消", null)
                     .show();
         }
     }
 
-    public void checkInternet_Enabled() {
+    public boolean checkInternet_Enabled() {
+        boolean internet = false;
         ConnectivityManager cm = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
 
         if (networkInfo != null)
-            if (!networkInfo.isConnected()) {
-                Toast.makeText(activity, "偵測到沒網絡，請麻煩打開網絡。", Toast.LENGTH_SHORT).show();
-                new Handler().postDelayed(activity::finish, 3000);
-            }
+            if (networkInfo.isConnected())
+                internet = true;
+
+       return internet;
     }
 }

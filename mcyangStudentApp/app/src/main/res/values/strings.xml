@@ -2,21 +2,97 @@
     <!--Default-->
     <string name="app_name">Mcyang學生APP</string>
 
+    <!--TAG-->
+    <string name="tag_NoInput">請輸入賬號和密碼！</string>
+    <string name="tag_NoInternet">偵測無網絡，請打開網絡在重試。</string>
+    <string name="tag_request_Gps_Not_Enabled">偵測GPS未打開，請麻煩打開GPS之後在使用APP。</string>
+    <string name="tag_Login">登入中，請稍後…</string>
+    <string name="tag_LoginFailed">登入失敗，賬號密碼錯誤！</string>
+    <string name="tag_ServerFailed">連接伺服器失敗，請稍後嘗試。</string>
+
     <!--LoginActivity-->
-    <string name="text_Account">賬號</string>
-    <string name="text_Password">密碼</string>
-    <string name="toggle_RememberMe">記住我</string>
-    <string name="btn_Login">登入</string>
+    <string name="login_text_Account">賬號</string>
+    <string name="login_text_Password">密碼</string>
+    <string name="login_toggle_RememberMe">記住我</string>
+    <string name="login_btn_Login">登入</string>
 
     <!--MainActivity_UI-->
-    <string name="main_text_Title">學生APP</string>
+    <string name="main_text_Title">您好,</string>
     <string name="main_btn_Sign">開始簽到</string>
     <string name="main_btn_Qa">開始搶答</string>
+    <string name="main_btn_Answer">開始問答</string>
     <string name="main_btn_Group">選組討論</string>
     <string name="main_btn_EndClass">結束課程</string>
     <string name="main_btn_SignOut">登出</string>
     <string name="main_btn_Question">我要提問</string>
+    <string name="main_btn_LearningRecord">學習歷程</string>
 
-    <!--MainActivity_Code-->
-    <string name="request_Gps_Not_Enabled">偵測GPS未打開，請麻煩打開GPS之後在使用APP。</string>
+    <!--SignActivity-->
+    <string name="sign_title">簽到</string>
+    <string name="sign_recycleView_Left">課程編號</string>
+    <string name="sign_recycleView_Right">課程名稱</string>
+    <string name="sign_textview_NoData">暫無資料，請等待老師廣播。</string>
+
+    <!--GroupActivity-->
+    <string name="group_btn_Leader">我要當隊長</string>
+    <string name="group_btn_member">我要當組員</string>
+
+    <!--GroupLeaderActivity-->
+    <string name="groupLeader_recyclerView_Left">隊伍ID</string>
+    <string name="groupLeader_recyclerView_Right">隊長名稱</string>
+    <string name="groupLeader_Notification">老師選擇中，請稍後</string>
+    <string name="groupLeader_Button">完成</string>
+
+    <!--GroupMemberActivity-->
+    <string name="groupMember_recyclerView_Left">點選</string>
+    <string name="groupMember_recyclerView_Right">隊長</string>
+    <string name="groupMember_Notification">目前暫無資料</string>
+    <string name="groupMember_Button">選擇組別</string>
+
+    <!--GroupMemberSecondActivity-->
+    <string name="groupMemberSecond_recyclerView_Left">組別</string>
+    <string name="groupMemberSecond_recyclerView_Right">姓名</string>
+    <string name="groupMemberSecond_Notification">目前暫無資料</string>
+    <string name="groupMemberSecond_Button">完成組隊</string>
+
+    <!--RaceActivity-->
+    <string name="race_tv_Title">搶答</string>
+    <string name="race_btn_Next">下一題</string>
+    <string name="race_btn_End">結束</string>
+
+    <!--AnswerActivity-->
+    <string name="answer_tv_Title">問題：</string>
+    <string name="answer_hint">請輸入答案</string>
+    <string name="answer_alert_Waiting">等待題目中</string>
+
+    <!--AnswerSecondActivity-->
+    <string name="answerSecond_Btn_Text">批改中</string>
+    <string name="answerSecond_Left">姓名</string>
+    <string name="answerSecond_Mid">回答</string>
+    <string name="answerSecond_Right">答題</string>
+    <string name="answerSecond_Button_Left">結束</string>
+    <string name="answerSecond_Button_Right">下一題</string>
+
+    <!--LearningRecordActivity-->
+    <string name="learningRecord_AutoText_Text">請選擇題庫</string>
+    <string name="learningRecord_Hint">請輸入學號</string>
+    <string name="learningRecord_btn_Send">送出</string>
+    <string name="learningRecord_btn_verification">驗證學號</string>
+
+    <!--LearningRecord2Activity-->
+    <string name="learningRecord2_btn_Back">返回目錄</string>
+    <string name="learningRecord2_No_Data">查無資料</string>
+    <string name="learningRecord2_Left">題目</string>
+    <string name="learningRecord2_Mid">答題狀況</string>
+    <string name="learningRecord2_Right">答題次數</string>
+
+    <!--BottomSheet-->
+    <string name="bottom_sheet_Title">已選擇課程：</string>
+    <string name="bottom_sheet_Names">請輸入姓名</string>
+    <string name="bottom_sheet_ID">請輸入學號</string>
+    <string name="bottom_sheet_Button">送出</string>
+
+    <!--Snackbar-->
+    <string name="btn_Enter">確認</string>
+
 </resources>

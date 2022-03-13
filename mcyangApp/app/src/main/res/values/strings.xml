@@ -1,19 +1,128 @@
 <resources>
     <!--Default-->
-    <string name="app_name">McyangTeacherApp</string>
+    <string name="app_name">Mcyang老師APP</string>
+    <string name="default_Beacon_Open">Open</string>
+    <string name="default_Beacon_Close">Close</string>
+
+    <!--TAG-->
+    <string name="tag_NoInput">請輸入賬號和密碼！</string>
+    <string name="tag_NoInternet">偵測無網絡，請打開網絡在重試。</string>
+    <string name="tag_request_Gps_Not_Enabled">偵測GPS未打開，請麻煩打開GPS之後在使用APP。</string>
+    <string name="tag_Login">登入中，請稍後…</string>
+    <string name="tag_LoginFailed">登入失敗，賬號密碼錯誤！</string>
+    <string name="tag_ServerFailed">連接伺服器失敗，請稍後嘗試。</string>
 
     <!--LoginActivity-->
-    <string name="text_Account">賬號</string>
-    <string name="text_Password">密碼</string>
-    <string name="toggle_RememberMe">記住我</string>
-    <string name="btn_Login">登入</string>
+    <string name="login_text_Account">賬號</string>
+    <string name="login_text_Password">密碼</string>
+    <string name="login_toggle_RememberMe">記住我</string>
+    <string name="login_btn_Login">登入</string>
 
     <!--MainActivity_UI-->
-    <string name="main_text_Title">主功能</string>
-    <string name="main_btn_Sign">點名功能</string>
-    <string name="main_btn_Qa">搶答功能</string>
-    <string name="main_btn_Check">查看功能</string>
+    <string name="main_text_Title">您好，</string>
+    <string name="main_text_Users">老師端APP</string>
+    <string name="main_btn_Create">創建課程</string>
+    <string name="main_btn_Sign">開始點名</string>
+    <string name="main_btn_Group">分組討論</string>
+    <string name="main_btn_OpenQA">開放搶答</string>
+    <string name="main_btn_answer">開始問答</string>
+    <string name="main_btn_EndClass">結束課程</string>
+    <string name="main_btn_SignOut">登出</string>
+    <string name="main_btn_beaconBtn_off">開始接收</string>
+    <string name="main_btn_beaconBtn_on">停止接收</string>
 
-    <!--MainActivity_Code-->
-    <string name="request_Gps_Not_Enabled">偵測GPS未打開，請麻煩打開GPS之後在使用APP。</string>
+    <!--CreateActivity-->
+    <string name="create_Title">創建課程</string>
+    <string name="create_recycleView_Left">課程編號</string>
+    <string name="create_recycleView_Right">課程名稱</string>
+    <string name="create_textview_NoData">暫無資料，請老師新增資料。</string>
+    <string name="create_btn_Enter">新增</string>
+
+    <!--SignActivity-->
+    <string name="sign_tv_Title">選擇課程</string>
+    <string name="sign_btn_Enter">確認</string>
+
+    <string-array name="sign_example_course">
+        <item>離散數學</item>
+        <item>程式設計</item>
+        <item>資訊入門</item>
+    </string-array>
+
+    <!--BottomSheet-->
+    <string name="bottom_sheet_Title">已選擇課程：</string>
+    <string name="bottom_sheet_ClassName">請輸入課程名稱：</string>
+    <string name="bottom_sheet_Button">送出</string>
+
+    <!--BottomSheet_Race-->
+    <string name="bottom_sheet_race_Title">將該學生批改為正確？</string>
+    <string name="bottom_sheet_race_names">姓名：</string>
+    <string name="bottom_sheet_race_detail">回答：</string>
+
+    <!--SignSecondActivity-->
+    <string name="signSecond_tv_Title">點名</string>
+    <string name="signSecond_tv_Left">出缺席</string>
+    <string name="signSecond_tv_Right">姓名</string>
+    <string name="signSecond_btn_Finish">完成點名</string>
+    <string name="signSecond_notification_NoData">目前暫無學生資料。</string>
+
+    <!--GroupActivity-->
+    <string name="group_tv_Title">分組討論</string>
+    <string name="group_tv_Title_CurrentTeam">選擇既有分組</string>
+    <string name="group_hint_Title_ChooseCurrentTeam">選擇組別</string>
+    <string name="group_tv_Title_NewTeam">新增分組</string>
+    <string name="group_tv_Title_Description">説明</string>
+    <string name="group_tv_Title_TeamCount">組數</string>
+    <string name="group_tv_Title_PeopleCount">人數</string>
+    <string name="group_btn_Enter">確認</string>
+
+    <!--GroupSecondActivity-->
+    <string name="groupSecond_recycleView_title_Left">點選</string>
+    <string name="groupSecond_recycleView_title_Right">隊長後選</string>
+    <string name="groupSecond_notification_NoData">目前暫無資料。</string>
+    <string name="groupSecond_btn_NextPage">完成選擇隊長</string>
+
+    <!--GroupThirdActivity-->
+    <string name="groupThird_recycleView_Left">組別</string>
+    <string name="groupThird_recycleView_Mid">隊長</string>
+    <string name="groupThird_recycleView_Right">組員數</string>
+    <string name="groupThird_btn_Enter">完成組隊</string>
+
+    <!--RaceActivity-->
+    <string name="race_tv_Title">搶答</string>
+    <string name="race_tv_textHint">新增搶答説明:</string>
+    <string name="race_et_textHint">請輸入搶答説明</string>
+    <string name="race_btn_startRace">開始搶答</string>
+
+    <!--RaceSecondActivity-->
+    <string name="raceSecond_tv_Title">搶答</string>
+    <string name="raceSecond_tv_Left">搶答順序</string>
+    <string name="raceSecond_tv_mid">姓名</string>
+    <string name="raceSecond_tv_Right">答題</string>
+    <string name="raceSecond_btn_next">下一題</string>
+    <string name="raceSecond_btn_Finish">結束</string>
+    <string name="raceSecond_notification_NoData">目前暫無資料。</string>
+
+    <!--AnswerActivity-->
+    <string name="answer_tv_Title">回答</string>
+    <string name="answer_autoText_SelectedBank">選擇題庫</string>
+    <string name="answer_autoText_SelectedQuestion">選擇題目</string>
+
+    <!--AnswerSecondActivity-->
+    <string name="answerSecond_tv_Title">回答</string>
+    <string name="answerSecond_Left">姓名</string>
+    <string name="answerSecond_Mid">回答</string>
+    <string name="answerSecond_Right">答題</string>
+    <string name="answerSecond_Button_Left">結束</string>
+    <string name="answerSecond_Button_Right">下一題</string>
+
+    <!--btn-->
+    <string name="btn_StartRace">開放搶答</string>
+    <string name="btn_StartAnswer">開放答題</string>
+    <string name="btn_StartSign">開放簽到</string>
+    <string name="btn_StopRace">停止搶答</string>
+    <string name="btn_StopAnswer">停止答題</string>
+    <string name="btn_StopSign">停止簽到</string>
+    <string name="btn_StartBroadcast">開始廣播</string>
+    <string name="btn_StopBroadcast">停止廣播</string>
+
 </resources>

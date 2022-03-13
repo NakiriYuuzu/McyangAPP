@@ -1,6 +1,7 @@
 package tw.edu.pu.ApiModel;
 
 import android.app.Activity;
+import androidx.annotation.Nullable;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -8,56 +9,103 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class VolleyApi {
+    private final RequestQueue requestQueue;
 
-    private final String TAG = "Volley Debug: ";
-    private Activity activity;
-    private String url;
-
-    public VolleyApi() {
-
+    public VolleyApi(Activity activity) {
+        this.requestQueue = Volley.newRequestQueue(activity);
     }
 
-    public VolleyApi(Activity activity, String url) {
-        this.activity = activity;
-        this.url = url;
-    }
-
-    public void getApi() {
-        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+    public void getApi(String url, VolleyGet get) {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-        response -> {
-            //function response
-            try {
+                get::onSuccess, get::onFailed);
 
-            }catch (Exception e) {
+        requestQueue.add(stringRequest);
+        requestQueue.getCache().clear();
+    }
 
+    public void putApi(String url, VolleyGet get, VolleyPost post) {
+//        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+        StringRequest stringRequest = new StringRequest(Request.Method.PUT, url, get::onSuccess, get::onFailed) {
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() {
+                return post.getParams();
             }
-        }, error -> {
-            //function error
-        });
+
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Accept", "application/json");
+                return headers;
+            }
+        };
 
         requestQueue.add(stringRequest);
     }
 
-    public void postApi() {
-        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+    public void postApi(String url, VolleyGet get, VolleyPost post) {
+//        RequestQueue requestQueue = Volley.newRequestQueue(activity);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-        response -> {
+                get::onSuccess, get::onFailed) {
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() {
+                return post.getParams();
+            }
 
-        }, error -> {
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Accept", "application/json");
+                // headers.put("Authorization", "Bearer" + " " + getToken());
+                return headers;
+            }
+        };
 
-        });
+        requestQueue.add(stringRequest);
     }
 
-    public interface VolleyGetBack {
+    public void api(int request, String url, VolleyGet get) {
+//        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+        StringRequest stringRequest = new StringRequest(request, url,
+                get::onSuccess, get::onFailed) {
+        };
+
+        requestQueue.add(stringRequest);
+    }
+
+    public void api(int request, String url, VolleyGet get, VolleyPost post) {
+//        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+        StringRequest stringRequest = new StringRequest(request, url,
+                get::onSuccess, get::onFailed) {
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() {
+                return post.getParams();
+            }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Accept", "application/json");
+                // headers.put("Authorization", "Bearer" + " " + getToken());
+                return headers;
+            }
+        };
+
+        requestQueue.add(stringRequest);
+    }
+
+    public interface VolleyGet {
         void onSuccess(String result);
-        void onError(VolleyError error);
+        void onFailed(VolleyError error);
     }
 
-    public interface VolleyPostBack {
+    public interface VolleyPost {
         Map<String, String> getParams();
     }
 }
