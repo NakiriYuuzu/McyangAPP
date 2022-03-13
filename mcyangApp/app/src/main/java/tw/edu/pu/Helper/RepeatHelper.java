@@ -33,8 +33,8 @@ public class RepeatHelper {
         handler.postDelayed(runnable, timer);
     }
 
-    public void start(int timer) {
-        this.timer = timer;
+    public void start(int time) {
+        this.timer = time;
         started = true;
         handler.postDelayed(runnable, timer);
     }

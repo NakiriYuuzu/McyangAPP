@@ -15,7 +15,7 @@ public class RepeatHelper {
             try {
                 newRunner.newRunner();
                 if (started)
-                    start();
+                    start(timer);
 
             } catch (ExceptionInInitializerError | Exception e) {
                 e.printStackTrace();
@@ -28,13 +28,8 @@ public class RepeatHelper {
         handler.removeCallbacks(runnable);
     }
 
-    public void start() {
-        started = true;
-        handler.postDelayed(runnable, timer);
-    }
-
-    public void start(int timer) {
-        this.timer = timer;
+    public void start(int time) {
+        this.timer = time;
         started = true;
         handler.postDelayed(runnable, timer);
     }

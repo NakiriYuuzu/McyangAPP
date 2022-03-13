@@ -25,6 +25,7 @@ import java.util.Map;
 
 import tw.edu.pu.ApiModel.VolleyApi;
 import tw.edu.pu.DefaultSetting;
+import tw.edu.pu.Helper.CustomViewHelper;
 import tw.edu.pu.R;
 import tw.edu.pu.StoredData.ShareData;
 
@@ -42,6 +43,7 @@ public class GroupActivity extends AppCompatActivity {
     TextInputEditText et_Info, et_groupCount, et_peopleCount;
     MaterialButton btn_Enter;
 
+    CustomViewHelper viewHelper;
     VolleyApi volleyApi;
     ShareData shareData;
 
@@ -54,6 +56,7 @@ public class GroupActivity extends AppCompatActivity {
         cleanData();
         syncData();
         initButton();
+        viewHelper.setupUI(findViewById(R.id.group_activity));
     }
 
     private void cleanData() {
@@ -160,5 +163,6 @@ public class GroupActivity extends AppCompatActivity {
 
         volleyApi = new VolleyApi(this);
         shareData = new ShareData(this);
+        viewHelper = new CustomViewHelper(this);
     }
 }

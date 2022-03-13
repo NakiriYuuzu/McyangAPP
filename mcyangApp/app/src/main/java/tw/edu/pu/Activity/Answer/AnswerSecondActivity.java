@@ -154,10 +154,8 @@ public class AnswerSecondActivity extends AppCompatActivity {
                         String sid = jsonObject.getString("S_id");
                         String qid = jsonObject.getString("Q_id");
 
-                        if (qid.equals(shareData.getQuestion_ID())) {
-                            if (isExisted_answerData(id))
-                                getStudentID(id, doc, answer, sid, qid);
-                        }
+                        if (qid.equals(shareData.getQuestion_ID()))
+                            getStudentID(id, doc, answer, sid, qid);
                     }
 
                 } catch (JSONException e) {
@@ -182,7 +180,9 @@ public class AnswerSecondActivity extends AppCompatActivity {
 
                     JSONObject jsonObject = new JSONObject(result);
                     String names = jsonObject.getString("S_Name");
-                    answerModels.add(0, new AnswerModel(id, doc, answer, sid, names, qid));
+
+                    if (isExisted_answerData(id))
+                        answerModels.add(0, new AnswerModel(id, doc, answer, sid, names, qid));
 
                 } catch (JSONException e) {
                     e.printStackTrace();

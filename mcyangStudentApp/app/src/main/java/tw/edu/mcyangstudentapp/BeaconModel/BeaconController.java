@@ -1,7 +1,6 @@
 package tw.edu.mcyangstudentapp.BeaconModel;
 
 import android.app.Activity;
-import android.util.Log;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconManager;
@@ -17,8 +16,6 @@ import tw.edu.mcyangstudentapp.DefaultSetting;
 import tw.edu.mcyangstudentapp.StoredData.ShareData;
 
 public class BeaconController {
-
-    private static final String TAG = "RangingActivity";
 
     private static final long DEFAULT_FOREGROUND_SCAN_PERIOD = 1000L;
 
@@ -49,18 +46,6 @@ public class BeaconController {
         //beacon AddStone m:0-3=4c000215 or alt beacon = m:2-3=0215
         beaconManager.getBeaconParsers().add(beaconParser);
         beaconManager.setForegroundScanPeriod(DEFAULT_FOREGROUND_SCAN_PERIOD);
-    }
-
-    public void startScanning() {
-        beaconManager.addRangeNotifier((beacons, region) -> {
-            if (beacons.size() > 0) {
-                Log.e(TAG, "The first beacon I see is about " + beacons.iterator().next().getDistance() + " meters away, id = " + beacons.iterator().next().getId1());
-            } else {
-                Log.e(TAG, "Nothing Here!");
-            }
-        });
-
-        beaconManager.startRangingBeacons(region);
     }
 
     public void startScanning(BeaconModify beaconModify) {
@@ -97,9 +82,5 @@ public class BeaconController {
 
     public interface BeaconModify {
         void modifyData(Collection<Beacon> beacons, Region region);
-    }
-
-    public interface BeaconSimulator {
-        void beaconSimulator();
     }
 }

@@ -11,14 +11,12 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Request;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
 
+import tw.edu.pu.ActivityModel.GroupMemberModel;
 import tw.edu.pu.ActivityModel.GroupThirdModel;
-import tw.edu.pu.ApiModel.VolleyApi;
-import tw.edu.pu.DefaultSetting;
 import tw.edu.pu.Helper.CustomViewHelper;
 import tw.edu.pu.R;
 import tw.edu.pu.StoredData.ShareData;
@@ -51,17 +49,27 @@ public class GroupThirdAdapter extends RecyclerView.Adapter<GroupThirdAdapter.Gr
 
         holder.btnEnter.setOnClickListener(v -> {
             CustomViewHelper viewHelper = new CustomViewHelper(activity);
-            VolleyApi volleyApi = new VolleyApi(activity);
 
-            viewHelper.showAlertBuilder(groupModels.get(position).getLeaderName() + "的組員信息", "", new CustomViewHelper.AlertListener() {
+            int i = 1;
+            StringBuilder text = new StringBuilder();
+
+            String teamID = groupModels.get(position).getTeamID();
+            for (GroupMemberModel groupMemberModel : shareData.getGroupMember()) {
+                if (groupMemberModel.getTeamID().equals(teamID)) {
+                    text.append(i).append(": ").append(groupMemberModel.getMemberName()).append("\n");
+                    i++;
+                }
+            }
+
+            viewHelper.showAlertBuilder(groupModels.get(position).getLeaderName() + "的組員信息", text.toString(), new CustomViewHelper.AlertListener() {
                 @Override
                 public void onPositive(DialogInterface dialogInterface, int i) {
-
+                    dialogInterface.dismiss();
                 }
 
                 @Override
                 public void onNegative(DialogInterface dialogInterface, int i) {
-
+                    dialogInterface.dismiss();
                 }
             });
         });

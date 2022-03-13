@@ -47,8 +47,6 @@ public class MainActivity extends AppCompatActivity {
         requestHelper.checkGPS_Enabled();
         requestHelper.requestBluetooth();
 
-        btn_Group.setEnabled(false);
-
         checkLogin();
         initButton();
     }
@@ -71,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
             beforeSign();
         }
 
-        Log.e("SID: ", shareData.getStudentID() + " | " + studentID + " | " + shareData.getStudentNames());
+        Log.e("SID: ", shareData.getStudentID() + " | " + studentID + " | " + shareData.getStudentNames() + " | CourseID: " + shareData.getMajor());
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -98,6 +96,8 @@ public class MainActivity extends AppCompatActivity {
         tvNames.setText(shareData.getStudentNames());
         btn_Sign.setEnabled(true);
         btn_Sign.setCardBackgroundColor(ContextCompat.getColor(this, R.color.blue));
+        btn_Group.setEnabled(false);
+        btn_Group.setCardBackgroundColor(ContextCompat.getColor(this, R.color.grey));
         btn_Qa.setEnabled(false);
         btn_Qa.setCardBackgroundColor(ContextCompat.getColor(this, R.color.grey));
         btn_Answer.setEnabled(false);
@@ -113,6 +113,8 @@ public class MainActivity extends AppCompatActivity {
         if (shareData.getMajor() != null) {
             btn_Sign.setEnabled(false);
             btn_Sign.setCardBackgroundColor(ContextCompat.getColor(this, R.color.grey));
+            btn_Group.setEnabled(true);
+            btn_Group.setCardBackgroundColor(ContextCompat.getColor(this, R.color.blue));
             btn_Qa.setEnabled(true);
             btn_Qa.setCardBackgroundColor(ContextCompat.getColor(this, R.color.blue));
             btn_Answer.setEnabled(true);

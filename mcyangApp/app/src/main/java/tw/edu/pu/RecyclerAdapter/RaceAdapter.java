@@ -83,12 +83,12 @@ public class RaceAdapter extends RecyclerView.Adapter<RaceAdapter.RaceViewHolder
         String url = "/" + raceList_ID.get(position) + "/";
 
         view.findViewById(R.id.bottom_sheet_Race_btn_Send).setOnClickListener(v ->
-                volleyApi.putApi(DefaultSetting.URL_RACE_LIST + url, new VolleyApi.VolleyGet() {
+                customViewHelper.showAlertBuilder("再次確認", "確定要將這位學生批改為正確？", new CustomViewHelper.AlertListener() {
                     @Override
-                    public void onSuccess(String result) {
-                        customViewHelper.showAlertBuilder("再次確認", "確定要將這位學生批改為正確？", new CustomViewHelper.AlertListener() {
+                    public void onPositive(DialogInterface dialogInterface, int i) {
+                        volleyApi.putApi(DefaultSetting.URL_RACE_LIST + url, new VolleyApi.VolleyGet() {
                             @Override
-                            public void onPositive(DialogInterface dialogInterface, int i) {
+                            public void onSuccess(String result) {
                                 Toast.makeText(activity, "批改完成！", Toast.LENGTH_SHORT).show();
                                 raceModels.get(position).setRaceCorrect("正確");
                                 updateCreateAdapter(raceModels);
@@ -97,25 +97,26 @@ public class RaceAdapter extends RecyclerView.Adapter<RaceAdapter.RaceViewHolder
                             }
 
                             @Override
-                            public void onNegative(DialogInterface dialogInterface, int i) {
+                            public void onFailed(VolleyError error) {
+                                Toast.makeText(activity, "無法連接伺服器，請稍後再嘗試。", Toast.LENGTH_SHORT).show();
                                 bsd.dismiss();
-                                dialogInterface.dismiss();
                             }
+                        }, () -> {
+                            Map<String, String> params = new HashMap<>();
+                            params.put("Answer", "true");
+                            params.put("R_id", shareData.getRaceID());
+                            params.put("S_id", sid.get(position));
+                            return params;
                         });
                     }
 
                     @Override
-                    public void onFailed(VolleyError error) {
-                        Toast.makeText(activity, "無法連接伺服器，請稍後再嘗試。", Toast.LENGTH_SHORT).show();
+                    public void onNegative(DialogInterface dialogInterface, int i) {
                         bsd.dismiss();
+                        dialogInterface.dismiss();
                     }
-                }, () -> {
-                    Map<String, String> params = new HashMap<>();
-                    params.put("Answer", "true");
-                    params.put("R_id", shareData.getRaceID());
-                    params.put("S_id", sid.get(position));
-                    return params;
                 })
+
         );
 
         bsd.setContentView(view);

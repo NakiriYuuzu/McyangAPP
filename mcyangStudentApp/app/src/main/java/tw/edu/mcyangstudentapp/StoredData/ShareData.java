@@ -1,10 +1,8 @@
 package tw.edu.mcyangstudentapp.StoredData;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -12,14 +10,11 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-import tw.edu.mcyangstudentapp.ActivityModel.SignModel;
+import tw.edu.mcyangstudentapp.ActivityModel.SubMemberModel;
 
 public class ShareData {
-    private static final String TAG = "ShareData: ";
 
     private final Activity activity;
-
-    private ArrayList<SignModel> signModels;
 
     public ShareData(Activity activity) {
         this.activity = activity;
@@ -107,44 +102,6 @@ public class ShareData {
         return preferences.getString(ShareVariables.MINOR, null);
     }
 
-    public void sign_saveData(ArrayList<SignModel> signModels) {
-        this.signModels = signModels;
-
-        if (signModels.size() == 0)
-            Log.e(TAG, "No Data Can Save!");
-
-        SharedPreferences sharedPreferences = activity.getSharedPreferences(ShareVariables.SIGN_SAVE_DATA, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        Gson gson = new Gson();
-        String json = gson.toJson(signModels);
-
-        editor.putString(ShareVariables.SIGN_GET_DATA, json);
-        editor.apply();
-    }
-
-    public ArrayList<SignModel> sign_getData() {
-        if (activity != null) {
-            SharedPreferences sharedPreferences = activity.getSharedPreferences(ShareVariables.SIGN_SAVE_DATA, Context.MODE_PRIVATE);
-
-            Gson gson = new Gson();
-            String json = sharedPreferences.getString(ShareVariables.SIGN_GET_DATA, null);
-
-            Type type = new TypeToken<ArrayList<SignModel>>() {
-            }.getType();
-
-            signModels = gson.fromJson(json, type);
-
-
-            if (signModels == null)
-                signModels = new ArrayList<>();
-            else
-                Log.e(TAG, signModels.get(0).getMajor());
-        }
-
-        return signModels;
-    }
-
     ///////////////////////////////////////////////////////////////////////////
     // TODO: AnswerActivity
     ///////////////////////////////////////////////////////////////////////////
@@ -199,6 +156,45 @@ public class ShareData {
     public String getDomJudgeCourseID() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         return preferences.getString(ShareVariables.DOM_JUDGE_COURSE_ID, null);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // TODO: GroupActivity
+    ///////////////////////////////////////////////////////////////////////////
+
+    public void saveGroup_ID(String group_ID) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ShareVariables.GROUP_ID, group_ID);
+        editor.apply();
+    }
+
+    public String getGroup_ID() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getString(ShareVariables.GROUP_ID, null);
+    }
+
+    public void saveTeam_ID(ArrayList<SubMemberModel> teamID) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        Gson gson = new Gson();
+        String json = gson.toJson(teamID);
+
+        editor.putString(ShareVariables.TEAM_ID, json);
+        editor.apply();
+    }
+
+    public ArrayList<SubMemberModel> getTeam_ID() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        Gson gson = new Gson();
+        ArrayList<SubMemberModel> teamID;
+        String json = preferences.getString(ShareVariables.TEAM_ID, null);
+        Type type = new TypeToken<ArrayList<SubMemberModel>>() {}.getType();
+
+        teamID = gson.fromJson(json, type);
+
+        return teamID;
     }
 
     ///////////////////////////////////////////////////////////////////////////

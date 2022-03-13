@@ -38,13 +38,13 @@
     <string name="group_btn_member">我要當組員</string>
 
     <!--GroupLeaderActivity-->
-    <string name="groupLeader_recyclerView_Left">人數</string>
-    <string name="groupLeader_recyclerView_Right">名稱</string>
+    <string name="groupLeader_recyclerView_Left">隊伍ID</string>
+    <string name="groupLeader_recyclerView_Right">隊長名稱</string>
     <string name="groupLeader_Notification">老師選擇中，請稍後</string>
     <string name="groupLeader_Button">完成</string>
 
     <!--GroupMemberActivity-->
-    <string name="groupMember_recyclerView_Left">組別</string>
+    <string name="groupMember_recyclerView_Left">點選</string>
     <string name="groupMember_recyclerView_Right">隊長</string>
     <string name="groupMember_Notification">目前暫無資料</string>
     <string name="groupMember_Button">選擇組別</string>

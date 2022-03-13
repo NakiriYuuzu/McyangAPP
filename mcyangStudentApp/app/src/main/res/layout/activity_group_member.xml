@@ -26,7 +26,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginTop="25dp"
         android:background="@android:color/transparent"
-        android:tint="#7ea6e0"
+        android:tint="@color/blue"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_arrow_back_24"
@@ -37,20 +37,20 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="125dp"
+        android:layout_marginTop="30dp"
         android:layout_marginRight="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/groupMember_btn_Back">
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="125dp"
             android:layout_height="match_parent"
             android:background="@drawable/recyclerview_background"
+            android:fontFamily="@font/noto_sans"
             android:gravity="center"
             android:text="@string/groupMember_recyclerView_Left"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:fontFamily="@font/noto_sans"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -58,9 +58,9 @@
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:background="@drawable/recyclerview_background"
+            android:fontFamily="@font/noto_sans"
             android:gravity="center"
             android:text="@string/groupMember_recyclerView_Right"
-            android:fontFamily="@font/noto_sans"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -70,7 +70,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/groupMember_recycleView"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="350dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -87,7 +87,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:gravity="center_horizontal"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         android:visibility="visible"
@@ -100,14 +100,15 @@
         android:id="@+id/groupMember_btn_Enter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="30dp"
         android:text="@string/groupMember_Button"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="120dp"
-        android:layout_marginRight="120dp"
+        app:cornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/groupMember_recycleView" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -129,8 +129,6 @@ public class RequestHelper {
         if (networkInfo != null)
             if (networkInfo.isConnected())
                 internet = true;
-            else
-                Log.e(TAG, networkInfo.getReason());
 
        return internet;
     }

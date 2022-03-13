@@ -9,11 +9,14 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import tw.edu.mcyangstudentapp.R;
+import tw.edu.mcyangstudentapp.StoredData.ShareData;
 
 public class GroupActivity extends AppCompatActivity {
 
     ShapeableImageView btnBack;
     MaterialButton btnLeader, btnMember;
+
+    ShareData shareData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +25,7 @@ public class GroupActivity extends AppCompatActivity {
 
         initView();
         initButton();
+        shareData.saveTeam_ID(null);
     }
 
     private void initButton() {
@@ -41,5 +45,7 @@ public class GroupActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.group_btn_Back);
         btnLeader = findViewById(R.id.group_btn_Leader);
         btnMember = findViewById(R.id.group_btn_member);
+
+        shareData = new ShareData(this);
     }
 }

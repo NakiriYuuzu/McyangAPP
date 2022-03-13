@@ -17,4 +17,6 @@ public class ShareVariables {
     public static final String QUESTION_ID = "Question_ID";
     public static final String DOM_JUDGE_STUDENT_ID = "DOM_JUDGE_STUDENT_ID";
     public static final String DOM_JUDGE_COURSE_ID = "DOM_JUDGE_COURSE_ID";
+    public static final String GROUP_ID = "gid";
+    public static final String TEAM_ID = "tid";
 }
