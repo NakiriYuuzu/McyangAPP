@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/groupChat"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.Group.GroupChatActivity">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/groupChat_btn_Back"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginStart="23dp"
+        android:tint="@color/blue"
+        android:src="@drawable/ic_baseline_arrow_back_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/groupChat_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/noto_sans"
+        android:text="@string/main_btn_Group"
+        android:textAppearance="?attr/title"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2.5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_gravity="center_horizontal"
+        android:background="#801CA7EC"
+        android:translationZ="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/groupChat_title" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/groupChat_RecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="30dp"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:overScrollMode="never"
+        app:stackFromEnd="true"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@+id/groupChat_textInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/groupChat_title" />
+
+    <FrameLayout
+        android:id="@+id/groupChat_btnSend"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/chat_input_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" >
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_baseline_send_24"
+            android:tint="@color/white"/>
+
+    </FrameLayout>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/groupChat_textInput"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/chat_input_button"
+        android:imeOptions="actionDone"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:textColor="@color/white"
+        android:hint="@string/group_chat_input_hint"
+        android:textColorHint="#E4E4E4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/groupChat_btnSend"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

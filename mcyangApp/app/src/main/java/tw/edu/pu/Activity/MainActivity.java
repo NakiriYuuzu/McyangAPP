@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat;
 import com.android.volley.VolleyError;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,6 +35,9 @@ import tw.edu.pu.Helper.RequestHelper;
 import tw.edu.pu.StoredData.ShareData;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = "MainActivity";
+
     boolean onClicked = false;
     boolean isScanning = false;
     boolean isAfterLogin = false;
@@ -63,10 +67,14 @@ public class MainActivity extends AppCompatActivity {
         requestHelper.requestBluetooth();
 
         tv_TeacherNames.setText(shareData.getUserNames());
-        btnGroup.setEnabled(true);
-
         checkLogin();
         initButton();
+        initFirebase();
+    }
+
+    private void initFirebase() {
+        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(s -> shareData.saveFirebaseToken(s));
+        Log.e(TAG, "initFirebase: " + shareData.getFirebaseToken());
     }
 
     private void checkLogin() {
@@ -124,6 +132,8 @@ public class MainActivity extends AppCompatActivity {
     private void beforeSign() {
         btnSign.setEnabled(true);
         btnSign.setCardBackgroundColor(ContextCompat.getColor(this, R.color.green));
+        btnGroup.setEnabled(true);
+        btnGroup.setCardBackgroundColor(ContextCompat.getColor(this, R.color.grey));
         btnEndClass.setEnabled(false);
         btnEndClass.setCardBackgroundColor(ContextCompat.getColor(this, R.color.grey));
         btnRace.setEnabled(false);
@@ -134,6 +144,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void afterSign() {
         if (shareData.getMajor() != null) {
+            btnGroup.setEnabled(true);
+            btnGroup.setCardBackgroundColor(ContextCompat.getColor(this, R.color.green));
             btnEndClass.setEnabled(true);
             btnEndClass.setCardBackgroundColor(ContextCompat.getColor(this, R.color.green));
             btnRace.setEnabled(true);

@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(result);
                             String student_ID = jsonObject.getString("S_id");
                             String api_Password = jsonObject.getString("S_Password");
-                            shareData.saveStudentName(jsonObject.getString("S_Name") + "同學");
+                            shareData.saveStudentName(jsonObject.getString("S_Name"));
 
                             if (shareData.getLoginPassword().equals(api_Password)) {
                                 Intent ii = new Intent(getApplicationContext(), MainActivity.class);
@@ -117,7 +117,7 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(result);
                             String student_ID = jsonObject.getString("S_id");
                             String api_Password = jsonObject.getString("S_Password");
-                            shareData.saveStudentName(jsonObject.getString("S_Name") + "同學");
+                            shareData.saveStudentName(jsonObject.getString("S_Name"));
 
                             if (pass.equals(api_Password)) {
                                 if (btn_rememberMe.isChecked()) {

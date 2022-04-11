@@ -333,4 +333,17 @@ public class ShareData {
 
         return groupMemberList;
     }
+
+    // TODO: Firebase
+    public void saveFirebaseToken(String token) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ShareVariables.FIREBASE_TOKEN, token);
+        editor.apply();
+    }
+
+    public String getFirebaseToken() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getString(ShareVariables.FIREBASE_TOKEN, null);
+    }
 }

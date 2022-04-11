@@ -31,7 +31,7 @@ public class DefaultSetting {
     //FIXME:Url for DomJudge Api
     public static final String URL_DOM_JUDGE = "http://120.110.114.104/domjudge/api/v4/";
     public static final String DOM_JUDGE_CONTESTS = "contests";
-    public static final String URL_DOM_JUDGE_USERS = "http://120.110.114.104/domjudge/api/v4/users";
+    public static final String URL_DOM_JUDGE_USERS = "http://120.110.114.104/domjudge/api/v4/users/";
     public static final String DOM_JUDGE_SCOREBOARD = "http://120.110.114.104/domjudge/api/v4/contests/";
     public static final String URL_DOM_JUDGE_PROBLEMS = "http://120.110.114.104/domjudge/team/problems/";
 }

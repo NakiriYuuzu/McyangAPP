@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import tw.edu.mcyangstudentapp.Activity.Answer.AnswerActivity;
 import tw.edu.mcyangstudentapp.Activity.Group.GroupActivity;
@@ -49,12 +50,18 @@ public class MainActivity extends AppCompatActivity {
 
         checkLogin();
         initButton();
+        initFirebase();
     }
 
+    private void initFirebase() {
+        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(s -> shareData.saveToken(s));
+    }
+
+    @SuppressLint("SetTextI18n")
     private void checkLogin() {
         String studentID = getIntent().getStringExtra("studentID");
         isAfterLogin = getIntent().getBooleanExtra("check", isAfterLogin);
-        tvNames.setText(shareData.getStudentNames());
+        tvNames.setText(shareData.getStudentNames() + "同學");
 
         if (studentID == null)
             return;
@@ -96,8 +103,8 @@ public class MainActivity extends AppCompatActivity {
         tvNames.setText(shareData.getStudentNames());
         btn_Sign.setEnabled(true);
         btn_Sign.setCardBackgroundColor(ContextCompat.getColor(this, R.color.blue));
-        btn_Group.setEnabled(false);
-        btn_Group.setCardBackgroundColor(ContextCompat.getColor(this, R.color.grey));
+        btn_Group.setEnabled(true);
+        btn_Group.setCardBackgroundColor(ContextCompat.getColor(this, R.color.blue));
         btn_Qa.setEnabled(false);
         btn_Qa.setCardBackgroundColor(ContextCompat.getColor(this, R.color.grey));
         btn_Answer.setEnabled(false);

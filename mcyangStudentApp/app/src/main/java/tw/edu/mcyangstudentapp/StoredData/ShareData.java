@@ -198,6 +198,62 @@ public class ShareData {
     }
 
     ///////////////////////////////////////////////////////////////////////////
+    //  TODO: GroupView and Chat Activity
+    ///////////////////////////////////////////////////////////////////////////
+
+    public void saveChat_ID(String chat_ID) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ShareVariables.CHAT_ID, chat_ID);
+        editor.apply();
+    }
+
+    public String getChat_ID() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getString(ShareVariables.CHAT_ID, null);
+    }
+
+    public void saveChat_Name(String chatName) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ShareVariables.CHAT_NAME, chatName);
+        editor.apply();
+    }
+
+    public String getChat_Name() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getString(ShareVariables.CHAT_NAME, null);
+    }
+
+    public void saveChat_Room(String chatRoom) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ShareVariables.CHATROOM, chatRoom);
+        editor.apply();
+    }
+
+    public String getChat_Room() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getString(ShareVariables.CHATROOM, null);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    //  TODO: Firebase
+    ///////////////////////////////////////////////////////////////////////////
+
+    public void saveToken(String token) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ShareVariables.TOKEN, token);
+        editor.apply();
+    }
+
+    public String getToken() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getString(ShareVariables.TOKEN, null);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
     // TODO: Other
     ///////////////////////////////////////////////////////////////////////////
 

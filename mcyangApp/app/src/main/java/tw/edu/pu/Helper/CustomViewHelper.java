@@ -94,6 +94,17 @@ public class CustomViewHelper {
                 .show();
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
+    public void showAlertBuilder(String title, String message, String positiveButton, String negativeButton, AlertListener alertListener) {
+        new MaterialAlertDialogBuilder(activity, R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog)
+                .setBackground(activity.getResources().getDrawable(R.drawable.rounded_corner))
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(positiveButton, alertListener::onPositive)
+                .setNegativeButton(negativeButton, alertListener::onNegative)
+                .show();
+    }
+
     public interface AlertListener {
         void onPositive(DialogInterface dialogInterface, int i);
         void onNegative(DialogInterface dialogInterface, int i);

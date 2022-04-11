@@ -1,6 +1,7 @@
 package tw.edu.mcyangstudentapp.Activity.Group;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +15,7 @@ import tw.edu.mcyangstudentapp.StoredData.ShareData;
 public class GroupActivity extends AppCompatActivity {
 
     ShapeableImageView btnBack;
-    MaterialButton btnLeader, btnMember;
+    MaterialButton btnLeader, btnMember, btnChat;
 
     ShareData shareData;
 
@@ -25,7 +26,22 @@ public class GroupActivity extends AppCompatActivity {
 
         initView();
         initButton();
+        btnPermission();
         shareData.saveTeam_ID(null);
+    }
+
+    private void btnPermission() {
+        if (shareData.getMajor() != null) {
+            btnLeader.setEnabled(true);
+            btnLeader.setBackgroundColor(ContextCompat.getColor(this, R.color.blue));
+            btnMember.setEnabled(true);
+            btnMember.setBackgroundColor(ContextCompat.getColor(this, R.color.blue));
+        } else {
+            btnLeader.setEnabled(false);
+            btnLeader.setBackgroundColor(ContextCompat.getColor(this, R.color.grey));
+            btnMember.setEnabled(false);
+            btnMember.setBackgroundColor(ContextCompat.getColor(this, R.color.grey));
+        }
     }
 
     private void initButton() {
@@ -39,12 +55,18 @@ public class GroupActivity extends AppCompatActivity {
             Intent ii = new Intent(this, GroupMemberActivity.class);
             startActivity(ii);
         });
+
+        btnChat.setOnClickListener(v -> {
+            Intent ii = new Intent(this, GroupViewActivity.class);
+            startActivity(ii);
+        });
     }
 
     private void initView() {
         btnBack = findViewById(R.id.group_btn_Back);
         btnLeader = findViewById(R.id.group_btn_Leader);
         btnMember = findViewById(R.id.group_btn_member);
+        btnChat = findViewById(R.id.group_btn_chat);
 
         shareData = new ShareData(this);
     }

@@ -32,4 +32,5 @@ public class ShareVariables {
     public static final String REMOVE_TEAM_ID = "remove_team_id";
     public static final String GROUP_SECOND = "groupSeconds";
     public static final String GROUP_MEMBER = "groupMember";
+    public static final String FIREBASE_TOKEN = "firebaseToken";
 }
