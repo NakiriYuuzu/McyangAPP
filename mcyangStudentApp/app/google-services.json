@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "614922673789",
+    "firebase_url": "https://mcyangproject-e7463-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "mcyangproject-e7463",
+    "storage_bucket": "mcyangproject-e7463.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:614922673789:android:e365fe0aa5f64495e1db14",
+        "android_client_info": {
+          "package_name": "tw.edu.mcyangstudentapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "614922673789-6c86njqsrgn6h9hlvt762b4f46rk5rs1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCm4gBdQc0QWjuMswExLNUftPVAxuKW2bw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "614922673789-6c86njqsrgn6h9hlvt762b4f46rk5rs1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
