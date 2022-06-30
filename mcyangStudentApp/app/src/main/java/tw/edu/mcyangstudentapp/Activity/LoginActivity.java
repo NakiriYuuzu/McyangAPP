@@ -23,6 +23,7 @@ import tw.edu.mcyangstudentapp.DefaultSetting;
 import tw.edu.mcyangstudentapp.Helper.CustomViewHelper;
 import tw.edu.mcyangstudentapp.R;
 import tw.edu.mcyangstudentapp.Helper.RequestHelper;
+import tw.edu.mcyangstudentapp.SplashScreen.SplashActivity;
 import tw.edu.mcyangstudentapp.StoredData.ShareData;
 
 public class LoginActivity extends AppCompatActivity {
@@ -45,12 +46,32 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         initView();
-        requestHelper.flushBluetooth();
 
         if (requestHelper.checkInternet_Enabled()) {
-            initButton();
-            autoLogin();
-            customViewHelper.setupUI(findViewById(R.id.activity_main_view));
+            if (shareData.getSplashScreen() == null) {
+                shareData.saveSplashScreen("false");
+                Intent ii = new Intent(LoginActivity.this, SplashActivity.class);
+                startActivity(ii);
+                finish();
+
+            } else {
+                if (shareData.getSplashScreen().equals("true")) {
+                    initButton();
+                    autoLogin();
+                    customViewHelper.setupUI(findViewById(R.id.activity_main_view));
+
+                } else if (shareData.getSplashScreen().equals("once")) {
+                    initButton();
+                    autoLogin();
+                    customViewHelper.setupUI(findViewById(R.id.activity_main_view));
+                    shareData.saveSplashScreen("false");
+
+                } else {
+                    Intent intent = new Intent(LoginActivity.this, SplashActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
 
         } else {
             Toast.makeText(getApplicationContext(), R.string.tag_NoInternet, Toast.LENGTH_SHORT).show();
@@ -77,6 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                                 ii.putExtra("check", true);
                                 ii.putExtra("studentID", student_ID);
                                 startActivity(ii);
+                                finish();
 
                             } else
                                 Log.e(TAG, "AutoLogin: failed.");
@@ -129,6 +151,7 @@ public class LoginActivity extends AppCompatActivity {
                                 ii.putExtra("check", true);
                                 ii.putExtra("studentID", student_ID);
                                 startActivity(ii);
+                                finish();
 
                             } else {
                                 Toast.makeText(getApplicationContext(), "密碼錯誤，請重新輸入密碼！", Toast.LENGTH_SHORT).show();

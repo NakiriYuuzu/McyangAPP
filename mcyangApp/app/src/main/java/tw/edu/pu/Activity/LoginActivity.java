@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         initView();
-        requestHelper.flushBluetooth();
+//        requestHelper.flushBluetooth();
 
         if (requestHelper.checkInternet_Enabled()) {
             initButton();
