@@ -6,9 +6,16 @@
     <string name="tag_NoInput">請輸入賬號和密碼！</string>
     <string name="tag_NoInternet">偵測無網絡，請打開網絡在重試。</string>
     <string name="tag_request_Gps_Not_Enabled">偵測GPS未打開，請麻煩打開GPS之後在使用APP。</string>
+    <string name="tag_request_Ble_Not_Enabled">偵測藍牙未打開，請麻煩打開藍牙之後在使用APP。</string>
     <string name="tag_Login">登入中，請稍後…</string>
     <string name="tag_LoginFailed">登入失敗，賬號密碼錯誤！</string>
     <string name="tag_ServerFailed">連接伺服器失敗，請稍後嘗試。</string>
+
+    <!--Splash Screen-->
+    <string name="splash_Prev">上一頁</string>
+    <string name="splash_Next">下一頁</string>
+    <string name="splash_Start">開始使用</string>
+    <string name="splash_CheckBox">不再提示</string>
 
     <!--LoginActivity-->
     <string name="login_text_Account">賬號</string>
@@ -36,6 +43,7 @@
     <!--GroupActivity-->
     <string name="group_btn_Leader">我要當隊長</string>
     <string name="group_btn_member">我要當組員</string>
+    <string name="group_btn_chat">群組聊天</string>
 
     <!--GroupLeaderActivity-->
     <string name="groupLeader_recyclerView_Left">隊伍ID</string>
@@ -54,6 +62,14 @@
     <string name="groupMemberSecond_recyclerView_Right">姓名</string>
     <string name="groupMemberSecond_Notification">目前暫無資料</string>
     <string name="groupMemberSecond_Button">完成組隊</string>
+
+    <!--GroupViewActivity-->
+    <string name="groupView_Notification">查無資料，請重試</string>
+    <string name="groupView_recyclerView_Left">隊伍編號</string>
+    <string name="groupView_recyclerView_Right">隊長名稱</string>
+
+    <!--GroupChatActivity-->
+    <string name="group_chat_input_hint">請輸入訊息</string>
 
     <!--RaceActivity-->
     <string name="race_tv_Title">搶答</string>

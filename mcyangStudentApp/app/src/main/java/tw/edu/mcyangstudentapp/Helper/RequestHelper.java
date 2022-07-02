@@ -93,6 +93,60 @@ public class RequestHelper {
                 BluetoothMedic.TRANSMIT_TEST);
     }
 
+    public boolean checkAll_Enabled() {
+        String result = "";
+
+        LocationManager lm = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
+        BluetoothAdapter ba = BluetoothAdapter.getDefaultAdapter();
+
+        try {
+            if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                result += "gps ";
+            }
+        } catch (Exception e) {
+            result += "gps ";
+        }
+
+        try {
+            if (!lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                result += "gps ";
+            }
+        } catch (Exception e) {
+            result += "gps ";
+        }
+
+        try {
+            if (ba == null) {
+                result += "ble_UnSupport";
+            } else if (!ba.isEnabled()) {
+                result += "ble";
+            }
+        } catch (Exception e) {
+            result += "ble";
+        }
+
+        Log.e(TAG, "checkAll_Enabled: " + result);
+        String[] results = result.split(" ");
+
+        for (String s : results) {
+            if (s.equals("gps")) {
+                new MaterialAlertDialogBuilder(activity)
+                        .setMessage(R.string.tag_request_Gps_Not_Enabled)
+                        .setPositiveButton("確認", (dialogInterface, j) -> activity.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)))
+                        .setNegativeButton("取消", null)
+                        .show();
+            } else if (s.equals("ble")) {
+                new MaterialAlertDialogBuilder(activity)
+                        .setMessage(R.string.tag_request_Ble_Not_Enabled)
+                        .setPositiveButton("確認", (dialogInterface, j) -> activity.startActivity(new Intent(Settings.ACTION_BLUETOOTH_SETTINGS)))
+                        .setNegativeButton("取消", null)
+                        .show();
+            }
+        }
+
+        return result.equals("");
+    }
+
     public void checkGPS_Enabled() {
 
         boolean gps_enabled = false;
@@ -130,6 +184,6 @@ public class RequestHelper {
             if (networkInfo.isConnected())
                 internet = true;
 
-       return internet;
+        return internet;
     }
 }

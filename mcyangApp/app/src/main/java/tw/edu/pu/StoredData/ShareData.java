@@ -64,6 +64,18 @@ public class ShareData {
     // TODO: LoginActivity
     ///////////////////////////////////////////////////////////////////////////
 
+    public void saveSplashScreen(String isClicked) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ShareVariables.isChecked, isClicked);
+        editor.apply();
+    }
+
+    public String getSplashScreen() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getString(ShareVariables.isChecked, null);
+    }
+
     public void saveAccount(String account) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = preferences.edit();
@@ -332,5 +344,18 @@ public class ShareData {
         groupMemberList = gson.fromJson(json, type);
 
         return groupMemberList;
+    }
+
+    // TODO: Firebase
+    public void saveFirebaseToken(String token) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ShareVariables.FIREBASE_TOKEN, token);
+        editor.apply();
+    }
+
+    public String getFirebaseToken() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getString(ShareVariables.FIREBASE_TOKEN, null);
     }
 }

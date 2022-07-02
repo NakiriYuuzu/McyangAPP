@@ -23,6 +23,7 @@ import tw.edu.pu.DefaultSetting;
 import tw.edu.pu.Helper.CustomViewHelper;
 import tw.edu.pu.R;
 import tw.edu.pu.Helper.RequestHelper;
+import tw.edu.pu.SplashScreen.SplashActivity;
 import tw.edu.pu.StoredData.ShareData;
 
 public class LoginActivity extends AppCompatActivity {
@@ -46,12 +47,32 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         initView();
-        requestHelper.flushBluetooth();
 
         if (requestHelper.checkInternet_Enabled()) {
-            initButton();
-            autoLogin();
-            customViewHelper.setupUI(findViewById(R.id.login_activity_view));
+            if (shareData.getSplashScreen() == null) {
+                shareData.saveSplashScreen("false");
+                Intent ii = new Intent(LoginActivity.this, SplashActivity.class);
+                startActivity(ii);
+                finish();
+
+            } else {
+                if (shareData.getSplashScreen().equals("true")) {
+                    initButton();
+                    autoLogin();
+                    customViewHelper.setupUI(findViewById(R.id.login_activity_view));
+
+                } else if (shareData.getSplashScreen().equals("once")) {
+                    initButton();
+                    autoLogin();
+                    customViewHelper.setupUI(findViewById(R.id.login_activity_view));
+                    shareData.saveSplashScreen("false");
+
+                } else {
+                    Intent intent = new Intent(LoginActivity.this, SplashActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
 
         } else {
             Toast.makeText(getApplicationContext(), R.string.tag_NoInternet, Toast.LENGTH_SHORT).show();

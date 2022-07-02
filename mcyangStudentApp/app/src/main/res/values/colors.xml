@@ -10,4 +10,5 @@
 
     <color name="blue">#1CA7EC</color>
     <color name="grey">#a3a598</color>
+    <color name="textHint">#808080</color>
 </resources>

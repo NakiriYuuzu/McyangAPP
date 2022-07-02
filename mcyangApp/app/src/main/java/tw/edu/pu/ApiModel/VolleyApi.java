@@ -13,7 +13,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class VolleyApi {
+    private static final String TAG = "VolleyAPI";
     private final RequestQueue requestQueue;
+    private StringRequest stringRequest;
 
     public VolleyApi(Activity activity) {
         this.requestQueue = Volley.newRequestQueue(activity);
@@ -70,7 +72,6 @@ public class VolleyApi {
     }
 
     public void api(int request, String url, VolleyGet get) {
-//        RequestQueue requestQueue = Volley.newRequestQueue(activity);
         StringRequest stringRequest = new StringRequest(request, url,
                 get::onSuccess, get::onFailed) {
         };
@@ -79,7 +80,6 @@ public class VolleyApi {
     }
 
     public void api(int request, String url, VolleyGet get, VolleyPost post) {
-//        RequestQueue requestQueue = Volley.newRequestQueue(activity);
         StringRequest stringRequest = new StringRequest(request, url,
                 get::onSuccess, get::onFailed) {
             @Nullable
@@ -98,6 +98,18 @@ public class VolleyApi {
         };
 
         requestQueue.add(stringRequest);
+    }
+
+    public void connectAPI(int request, String url, VolleyGet get) {
+        stringRequest = new StringRequest(request, url, get::onSuccess, get::onFailed) {};
+        stringRequest.setTag(TAG);
+        requestQueue.add(stringRequest);
+        requestQueue.getCache().clear();
+    }
+
+    public void stopAPI() {
+        if (requestQueue != null)
+            requestQueue.cancelAll(TAG);
     }
 
     public interface VolleyGet {

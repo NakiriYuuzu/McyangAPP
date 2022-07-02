@@ -23,6 +23,7 @@ import tw.edu.mcyangstudentapp.DefaultSetting;
 import tw.edu.mcyangstudentapp.Helper.CustomViewHelper;
 import tw.edu.mcyangstudentapp.R;
 import tw.edu.mcyangstudentapp.Helper.RequestHelper;
+import tw.edu.mcyangstudentapp.SplashScreen.SplashActivity;
 import tw.edu.mcyangstudentapp.StoredData.ShareData;
 
 public class LoginActivity extends AppCompatActivity {
@@ -45,12 +46,32 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         initView();
-        requestHelper.flushBluetooth();
 
         if (requestHelper.checkInternet_Enabled()) {
-            initButton();
-            autoLogin();
-            customViewHelper.setupUI(findViewById(R.id.activity_main_view));
+            if (shareData.getSplashScreen() == null) {
+                shareData.saveSplashScreen("false");
+                Intent ii = new Intent(LoginActivity.this, SplashActivity.class);
+                startActivity(ii);
+                finish();
+
+            } else {
+                if (shareData.getSplashScreen().equals("true")) {
+                    initButton();
+                    autoLogin();
+                    customViewHelper.setupUI(findViewById(R.id.activity_main_view));
+
+                } else if (shareData.getSplashScreen().equals("once")) {
+                    initButton();
+                    autoLogin();
+                    customViewHelper.setupUI(findViewById(R.id.activity_main_view));
+                    shareData.saveSplashScreen("false");
+
+                } else {
+                    Intent intent = new Intent(LoginActivity.this, SplashActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
 
         } else {
             Toast.makeText(getApplicationContext(), R.string.tag_NoInternet, Toast.LENGTH_SHORT).show();
@@ -70,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(result);
                             String student_ID = jsonObject.getString("S_id");
                             String api_Password = jsonObject.getString("S_Password");
-                            shareData.saveStudentName(jsonObject.getString("S_Name") + "同學");
+                            shareData.saveStudentName(jsonObject.getString("S_Name"));
 
                             if (shareData.getLoginPassword().equals(api_Password)) {
                                 Intent ii = new Intent(getApplicationContext(), MainActivity.class);
@@ -117,7 +138,7 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(result);
                             String student_ID = jsonObject.getString("S_id");
                             String api_Password = jsonObject.getString("S_Password");
-                            shareData.saveStudentName(jsonObject.getString("S_Name") + "同學");
+                            shareData.saveStudentName(jsonObject.getString("S_Name"));
 
                             if (pass.equals(api_Password)) {
                                 if (btn_rememberMe.isChecked()) {

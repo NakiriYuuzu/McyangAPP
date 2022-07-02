@@ -126,6 +126,7 @@ public class GroupActivity extends AppCompatActivity {
                     result = new String(text);
                     JSONObject jsonObject = new JSONObject(result);
                     shareData.saveDesc_ID(jsonObject.getString("TeamDesc_id"));
+
                     Intent ii = new Intent(getApplicationContext(), GroupSecondActivity.class);
                     startActivity(ii);
 

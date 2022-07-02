@@ -1,6 +1,7 @@
 package tw.edu.mcyangstudentapp.BeaconModel;
 
 import android.app.Activity;
+import android.os.RemoteException;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconManager;
@@ -23,6 +24,7 @@ public class BeaconController {
     private Beacon beacon;
     private BeaconManager beaconManager;
     private BeaconTransmitter beaconTransmitter;
+    private Boolean isScanning = false;
 
     ShareData shareData;
 
@@ -49,14 +51,21 @@ public class BeaconController {
     }
 
     public void startScanning(BeaconModify beaconModify) {
+        isScanning = true;
         beaconManager.addRangeNotifier(beaconModify::modifyData);
         beaconManager.startRangingBeacons(region);
+        //beaconManager.startRangingBeacons(region);
     }
 
     public void stopScanning() {
+        isScanning = false;
         beaconManager.removeAllMonitorNotifiers();
         beaconManager.stopRangingBeacons(region);
         beaconManager.removeAllRangeNotifiers();
+    }
+
+    public boolean checkScanning() {
+        return isScanning;
     }
 
     public void init_BroadcastBeacon() {

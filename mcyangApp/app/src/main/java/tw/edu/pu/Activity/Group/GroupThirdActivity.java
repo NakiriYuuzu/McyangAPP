@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +18,8 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,6 +27,7 @@ import org.json.JSONObject;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Date;
 
 import tw.edu.pu.Activity.MainActivity;
 import tw.edu.pu.ActivityModel.GroupMemberModel;
@@ -32,6 +36,8 @@ import tw.edu.pu.ActivityModel.GroupThirdModel;
 import tw.edu.pu.ApiModel.VolleyApi;
 import tw.edu.pu.BeaconModel.BeaconController;
 import tw.edu.pu.DefaultSetting;
+import tw.edu.pu.Firebase.FirebaseVariables;
+import tw.edu.pu.Helper.CustomViewHelper;
 import tw.edu.pu.Helper.RepeatHelper;
 import tw.edu.pu.R;
 import tw.edu.pu.RecyclerAdapter.GroupThirdAdapter;
@@ -45,6 +51,7 @@ public class GroupThirdActivity extends AppCompatActivity {
     ArrayList<GroupThirdModel> groupModels;
     ArrayList<GroupMemberModel> groupMemberModels;
 
+
     ShapeableImageView btnBack;
     MaterialButton btn_Finish;
     MaterialTextView tvBeacon, tv_NotFound;
@@ -54,9 +61,13 @@ public class GroupThirdActivity extends AppCompatActivity {
     BeaconController beaconController;
     GroupThirdViewModel groupThirdViewModel;
     GroupThirdAdapter groupAdapter;
+    CustomViewHelper viewHelper;
     RepeatHelper repeatHelper;
     VolleyApi volleyApi;
     ShareData shareData;
+
+    FirebaseDatabase database;
+    DatabaseReference myRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +77,7 @@ public class GroupThirdActivity extends AppCompatActivity {
         initView();
         initButton();
         sendData();
-        syncData();
+        updateData();
         initRecyclerView();
     }
 
@@ -86,6 +97,8 @@ public class GroupThirdActivity extends AppCompatActivity {
                 });
             }
         }
+
+        syncData();
     }
 
     private synchronized void syncData() {
@@ -93,7 +106,7 @@ public class GroupThirdActivity extends AppCompatActivity {
             for (GroupSecondModel groupSecondModel : shareData.getGroupSecond())
                 groupModels.add(new GroupThirdModel(groupSecondModel.getTeamID(), groupSecondModel.getLeaderName(), 1));
         }
-        Log.e("syncData: ", groupModels.toString());
+
         notFound();
         syncViewModel();
     }
@@ -114,6 +127,10 @@ public class GroupThirdActivity extends AppCompatActivity {
                         }
 
                         groupModel.setTotal(jsonArray.length() + 1);
+
+                        Log.e("syncData: ", groupModels.toString());
+                        Log.e("syncData: ", groupMemberModels.toString());
+
                         syncViewModel();
 
                     } catch (JSONException e) {
@@ -126,6 +143,23 @@ public class GroupThirdActivity extends AppCompatActivity {
                     Log.e(TAG, "UpdateData: VolleyError!");
                 }
             });
+    }
+
+    private void updateDataToFirebase() {
+        for (GroupThirdModel groupModel : groupModels) {
+            myRef = database.getReference(shareData.getDesc_ID()).child(groupModel.getTeamID());
+
+            for (GroupMemberModel memberModel : groupMemberModels)
+                if (groupModel.getTeamID().equals(memberModel.getTeamID()))
+                    myRef.child(memberModel.getMemberName()).child("Chat").setValue(new Date().getTime());
+
+            myRef.child(groupModel.getLeaderName()).child("Chat").setValue(new Date().getTime());
+        }
+    }
+
+
+    private void editDataToFirebase() {
+        // TODO: Add edit firebase data to here
     }
 
     private void getStudentName(String teamID, String memberID, String memberName) {
@@ -160,7 +194,6 @@ public class GroupThirdActivity extends AppCompatActivity {
         boolean isExist = true;
         if (groupMemberModels.size() > 0)
             for (GroupMemberModel groupMemberModel : groupMemberModels) {
-                Log.e(TAG, groupMemberModel.getMemberName().equals(memberName) + "");
                 if (groupMemberModel.getMemberName().equals(memberName)) {
                     isExist = false;
                     break;
@@ -213,11 +246,23 @@ public class GroupThirdActivity extends AppCompatActivity {
             }
         });
 
-        btn_Finish.setOnClickListener(v -> {
-            Intent ii = new Intent(this, MainActivity.class);
-            ii.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(ii);
-        });
+        btn_Finish.setOnClickListener(v -> viewHelper.showAlertBuilder("設定聊天室", "建立新的聊天室請按建立，修改聊天室請安修改", "建立", "修改", new CustomViewHelper.AlertListener() {
+            @Override
+            public void onPositive(DialogInterface dialogInterface, int i) {
+                updateDataToFirebase();
+                Intent ii = new Intent(getApplicationContext(), MainActivity.class);
+                ii.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(ii);
+            }
+
+            @Override
+            public void onNegative(DialogInterface dialogInterface, int i) {
+                editDataToFirebase();
+                Intent ii = new Intent(getApplicationContext(), MainActivity.class);
+                ii.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(ii);
+            }
+        }));
     }
 
     private void initView() {
@@ -231,10 +276,14 @@ public class GroupThirdActivity extends AppCompatActivity {
         groupModels = new ArrayList<>();
         groupMemberModels = new ArrayList<>();
 
+        viewHelper = new CustomViewHelper(this);
         beaconController = new BeaconController(this);
         shareData = new ShareData(this);
         volleyApi = new VolleyApi(this);
         repeatHelper = new RepeatHelper(this::updateData);
+
+        database = FirebaseDatabase.getInstance(FirebaseVariables.FIREBASE_URL);
+        myRef = database.getReference(shareData.getDesc_ID());
     }
 
     @Override

@@ -68,6 +68,7 @@ public class GroupSecondActivity extends AppCompatActivity {
 
         initView();
         initButton();
+        syncData();
         initRecyclerView();
     }
 
@@ -75,14 +76,25 @@ public class GroupSecondActivity extends AppCompatActivity {
         btnBack.setOnClickListener(v -> finish());
 
         btnEnter.setOnClickListener(v -> {
+            Log.e(TAG,groupModels.toString());
             if (shareData.getTeam_ID() != null) {
                 if (shareData.getTeam_ID().size() > 0) {
                     viewHelper.showAlertBuilder("選擇隊長", "目前已選擇" + shareData.getTeam_ID().size() + "位隊長", new CustomViewHelper.AlertListener() {
                         @Override
                         public void onPositive(DialogInterface dialogInterface, int i) {
                             for (GroupSecondModel groupModel : groupModels)
-                                if (!isRemoved(groupModel.getTeamID(), shareData.getTeam_ID()))
+                                if (!isSelected(groupModel.getTeamID(), shareData.getTeam_ID()))
                                     removeTeamID.add(groupModel.getTeamID());
+
+
+                            for (int j = 0; j < removeTeamID.size(); j++) {
+                                for (int k = 0; k < groupModels.size(); k++) {
+                                    if (removeTeamID.get(j).equals(groupModels.get(k).getTeamID())) {
+                                        groupModels.remove(k);
+                                        break;
+                                    }
+                                }
+                            }
 
                             shareData.saveRemoveTeam_ID(removeTeamID);
                             shareData.saveGroupSecond(groupModels);
@@ -128,7 +140,7 @@ public class GroupSecondActivity extends AppCompatActivity {
         });
     }
 
-    private boolean isRemoved(String teamID, ArrayList<String> list) {
+    private boolean isSelected(String teamID, ArrayList<String> list) {
         return list.contains(teamID);
     }
 

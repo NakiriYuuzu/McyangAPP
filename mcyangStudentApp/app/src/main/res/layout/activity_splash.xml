@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SplashScreen.SplashActivity">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/splash_btn_Next"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="@string/splash_Next"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:translationZ="10dp"
+        app:cornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/splash_btn_Prev"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="@string/splash_Prev"
+        android:translationZ="10dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="30dp"
+        app:cornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/splash_img_backgroundImg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/scene1" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/splash_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="@string/splash_CheckBox"
+        android:textColor="@color/white"
+        android:buttonTint="@color/blue"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/splash_img_backgroundImg"
+        app:layout_constraintEnd_toStartOf="@+id/splash_btn_Next"
+        app:layout_constraintStart_toEndOf="@+id/splash_btn_Prev" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
