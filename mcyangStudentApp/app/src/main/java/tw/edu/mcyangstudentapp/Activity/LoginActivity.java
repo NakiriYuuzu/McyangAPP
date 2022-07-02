@@ -98,7 +98,6 @@ public class LoginActivity extends AppCompatActivity {
                                 ii.putExtra("check", true);
                                 ii.putExtra("studentID", student_ID);
                                 startActivity(ii);
-                                finish();
 
                             } else
                                 Log.e(TAG, "AutoLogin: failed.");
@@ -151,7 +150,6 @@ public class LoginActivity extends AppCompatActivity {
                                 ii.putExtra("check", true);
                                 ii.putExtra("studentID", student_ID);
                                 startActivity(ii);
-                                finish();
 
                             } else {
                                 Toast.makeText(getApplicationContext(), "密碼錯誤，請重新輸入密碼！", Toast.LENGTH_SHORT).show();
