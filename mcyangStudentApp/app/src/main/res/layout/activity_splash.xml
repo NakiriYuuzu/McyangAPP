@@ -37,4 +37,16 @@
         android:scaleType="centerCrop"
         android:src="@drawable/scene1" />
 
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/splash_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="@string/splash_CheckBox"
+        android:textColor="@color/white"
+        android:buttonTint="@color/blue"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/splash_img_backgroundImg"
+        app:layout_constraintEnd_toStartOf="@+id/splash_btn_Next"
+        app:layout_constraintStart_toEndOf="@+id/splash_btn_Prev" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

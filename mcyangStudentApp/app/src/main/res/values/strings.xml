@@ -15,6 +15,7 @@
     <string name="splash_Prev">上一頁</string>
     <string name="splash_Next">下一頁</string>
     <string name="splash_Start">開始使用</string>
+    <string name="splash_CheckBox">不再提示</string>
 
     <!--LoginActivity-->
     <string name="login_text_Account">賬號</string>

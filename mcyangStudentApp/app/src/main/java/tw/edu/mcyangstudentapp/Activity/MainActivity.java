@@ -239,7 +239,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(ii);
         });
 
-        btn_SignOut.setOnClickListener(v -> finish());
+        btn_SignOut.setOnClickListener(v -> {
+            shareData.saveLoginAccount("");
+            shareData.saveLoginPassword("");
+            finish();
+        });
     }
 
     private void initView() {

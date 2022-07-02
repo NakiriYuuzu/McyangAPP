@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class SplashActivity extends AppCompatActivity {
 
     MaterialButton btnNext;
     MaterialButton btnPrev;
+    MaterialCheckBox checkBox;
     ShapeableImageView imgSplash;
 
     @Override
@@ -42,7 +44,11 @@ public class SplashActivity extends AppCompatActivity {
     private void buttonInit() {
         btnNext.setOnClickListener(v -> {
             if (currentPage == scene) {
-                shareData.saveSplashScreen("once");
+                if (checkBox.isChecked())
+                    shareData.saveSplashScreen("true");
+                else
+                    shareData.saveSplashScreen("once");
+
                 Intent ii = new Intent(SplashActivity.this, LoginActivity.class);
                 startActivity(ii);
                 finish();
@@ -80,6 +86,7 @@ public class SplashActivity extends AppCompatActivity {
 
         imgSplash = findViewById(R.id.splash_img_backgroundImg);
         imgSplash.setImageResource(sceneList.get(currentPage));
+        checkBox = findViewById(R.id.splash_checkbox);
         btnNext = findViewById(R.id.splash_btn_Next);
         btnPrev = findViewById(R.id.splash_btn_Prev);
         btnPrev.setVisibility(View.INVISIBLE);
