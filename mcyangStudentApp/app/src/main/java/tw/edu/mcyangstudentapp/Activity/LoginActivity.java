@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailed(VolleyError error) {
-                        Log.e(TAG, error.toString());
+                        Toast.makeText(LoginActivity.this, "無法取得伺服器！", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
