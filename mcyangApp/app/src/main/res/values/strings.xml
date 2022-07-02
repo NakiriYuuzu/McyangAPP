@@ -13,7 +13,7 @@
     <string name="tag_LoginFailed">登入失敗，賬號密碼錯誤！</string>
     <string name="tag_ServerFailed">連接伺服器失敗，請稍後嘗試。</string>
 
-    <!--Splash Screen-->
+    <!--SplashActivity-->
     <string name="splash_Prev">上一頁</string>
     <string name="splash_Next">下一頁</string>
     <string name="splash_Start">開始使用</string>
