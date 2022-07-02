@@ -64,6 +64,18 @@ public class ShareData {
     // TODO: LoginActivity
     ///////////////////////////////////////////////////////////////////////////
 
+    public void saveSplashScreen(String isClicked) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ShareVariables.isChecked, isClicked);
+        editor.apply();
+    }
+
+    public String getSplashScreen() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getString(ShareVariables.isChecked, null);
+    }
+
     public void saveAccount(String account) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = preferences.edit();

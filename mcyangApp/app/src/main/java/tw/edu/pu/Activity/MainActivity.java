@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -25,6 +26,7 @@ import tw.edu.pu.Activity.Answer.AnswerActivity;
 import tw.edu.pu.Activity.Group.GroupActivity;
 import tw.edu.pu.Activity.Race.RaceActivity;
 import tw.edu.pu.Activity.Sign.SignActivity;
+import tw.edu.pu.Activity.Sign.Sign_Second_Activity;
 import tw.edu.pu.ApiModel.VolleyApi;
 import tw.edu.pu.BeaconModel.BeaconController;
 import tw.edu.pu.DefaultSetting;
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     boolean onClicked = false;
     boolean isScanning = false;
     boolean isAfterLogin = false;
+
+    boolean func_Race, func_Ans, func_Group, func_EndClass;
 
     MaterialCardView btnCreate, btnSign, btnGroup, btnRace, btnAnswer, btnEndClass, btnSignOut, btnReceive;
     MaterialTextView tv_TeacherNames, tv_beaconBTN;
@@ -130,27 +134,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void beforeSign() {
-        btnSign.setEnabled(true);
         btnSign.setCardBackgroundColor(ContextCompat.getColor(this, R.color.green));
-        btnGroup.setEnabled(true);
+        func_Group = false;
         btnGroup.setCardBackgroundColor(ContextCompat.getColor(this, R.color.grey));
-        btnEndClass.setEnabled(false);
+        func_EndClass = false;
         btnEndClass.setCardBackgroundColor(ContextCompat.getColor(this, R.color.grey));
-        btnRace.setEnabled(false);
+        func_Race = false;
         btnRace.setCardBackgroundColor(ContextCompat.getColor(this, R.color.grey));
-        btnAnswer.setEnabled(false);
+        func_Ans = false;
         btnAnswer.setCardBackgroundColor(ContextCompat.getColor(this, R.color.grey));
     }
 
     private void afterSign() {
         if (shareData.getMajor() != null) {
-            btnGroup.setEnabled(true);
+            func_Group = true;
             btnGroup.setCardBackgroundColor(ContextCompat.getColor(this, R.color.green));
-            btnEndClass.setEnabled(true);
+            func_EndClass = true;
             btnEndClass.setCardBackgroundColor(ContextCompat.getColor(this, R.color.green));
-            btnRace.setEnabled(true);
+            func_Race = true;
             btnRace.setCardBackgroundColor(ContextCompat.getColor(this, R.color.green));
-            btnAnswer.setEnabled(true);
+            func_Ans = true;
             btnAnswer.setCardBackgroundColor(ContextCompat.getColor(this, R.color.green));
         }
     }
@@ -205,60 +208,144 @@ public class MainActivity extends AppCompatActivity {
             startActivity(ii);
         });
 
+
         btnSign.setOnClickListener(v -> {
-            Intent ii = new Intent(this, SignActivity.class);
-            startActivity(ii);
+            if (requestHelper.checkAll_Enabled()) {
+                Intent ii = new Intent(this, SignActivity.class);
+                startActivity(ii);
+            }
         });
 
         btnGroup.setOnClickListener(v -> {
-            Intent ii = new Intent(this, GroupActivity.class);
-            startActivity(ii);
+            if (func_Group) {
+                if (requestHelper.checkAll_Enabled()) {
+                    if (shareData.getCourseID() != null) {
+                        customViewHelper.showAlertBuilder("繼續點名", "請問需要補點名嗎？", new CustomViewHelper.AlertListener() {
+                            @Override
+                            public void onPositive(DialogInterface dialogInterface, int i) {
+                                shareData.saveMajor(shareData.getCourseID());
+                                Intent ii = new Intent(getApplicationContext(), Sign_Second_Activity.class);
+                                ii.putExtra("isResume", true);
+                                startActivity(ii);
+                                dialogInterface.dismiss();
+                            }
+
+                            @Override
+                            public void onNegative(DialogInterface dialogInterface, int i) {
+                                Intent ii = new Intent(getApplicationContext(), GroupActivity.class);
+                                startActivity(ii);
+                                dialogInterface.dismiss();
+                            }
+                        });
+                    }
+                }
+            } else {
+                Toast.makeText(this, "您還未開啟點名，請先點名後在使用此功能。", Toast.LENGTH_SHORT).show();
+            }
         });
 
         btnAnswer.setOnClickListener(v -> {
-            Intent ii = new Intent(this, AnswerActivity.class);
-            startActivity(ii);
+            if (func_Ans) {
+                if (requestHelper.checkAll_Enabled()) {
+                    if (shareData.getCourseID() != null) {
+                        customViewHelper.showAlertBuilder("繼續點名", "請問需要補點名嗎？", new CustomViewHelper.AlertListener() {
+                            @Override
+                            public void onPositive(DialogInterface dialogInterface, int i) {
+                                shareData.saveMajor(shareData.getCourseID());
+                                Intent ii = new Intent(getApplicationContext(), Sign_Second_Activity.class);
+                                ii.putExtra("isResume", true);
+                                startActivity(ii);
+                                dialogInterface.dismiss();
+                            }
+
+                            @Override
+                            public void onNegative(DialogInterface dialogInterface, int i) {
+                                Intent ii = new Intent(getApplicationContext(), AnswerActivity.class);
+                                startActivity(ii);
+                                dialogInterface.dismiss();
+                            }
+                        });
+                    }
+                }
+            } else {
+                Toast.makeText(this, "您還未開啟點名，請先點名後在使用此功能。", Toast.LENGTH_SHORT).show();
+            }
         });
 
         btnRace.setOnClickListener(v -> {
-            Intent ii = new Intent(this, RaceActivity.class);
-            startActivity(ii);
+            if (func_Race) {
+                if (requestHelper.checkAll_Enabled()) {
+                    if (shareData.getCourseID() != null) {
+                        customViewHelper.showAlertBuilder("繼續點名", "請問需要補點名嗎？", new CustomViewHelper.AlertListener() {
+                            @Override
+                            public void onPositive(DialogInterface dialogInterface, int i) {
+                                shareData.saveMajor(shareData.getCourseID());
+                                Intent ii = new Intent(getApplicationContext(), Sign_Second_Activity.class);
+                                ii.putExtra("isResume", true);
+                                startActivity(ii);
+                                dialogInterface.dismiss();
+                            }
+
+                            @Override
+                            public void onNegative(DialogInterface dialogInterface, int i) {
+                                Intent ii = new Intent(getApplicationContext(), RaceActivity.class);
+                                startActivity(ii);
+                                dialogInterface.dismiss();
+                            }
+                        });
+                    }
+                }
+            } else {
+                Toast.makeText(this, "您還未開啟點名，請先點名後在使用此功能。", Toast.LENGTH_SHORT).show();
+            }
         });
 
 
-        btnEndClass.setOnClickListener(v -> customViewHelper.showAlertBuilder("結束課程", "是否要結束課程？", new CustomViewHelper.AlertListener() {
-            @Override
-            public void onPositive(DialogInterface dialogInterface, int i) {
-                shareData.cleanData();
-                shareData.saveCourseID(null);
-                beforeSign();
-                dialogInterface.dismiss();
-            }
+        btnEndClass.setOnClickListener(v -> {
+            if (func_EndClass) {
+                customViewHelper.showAlertBuilder("結束課程", "是否要結束課程？", new CustomViewHelper.AlertListener() {
+                    @Override
+                    public void onPositive(DialogInterface dialogInterface, int i) {
+                        shareData.cleanData();
+                        shareData.saveCourseID(null);
+                        beforeSign();
+                        dialogInterface.dismiss();
+                    }
 
-            @Override
-            public void onNegative(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
+                    @Override
+                    public void onNegative(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+            } else {
+                Toast.makeText(this, "您還未開啟點名，請先點名後在使用此功能。", Toast.LENGTH_SHORT).show();
             }
-        }));
+        });
 
         btnReceive.setOnClickListener(v -> {
-            if (isScanning) {
-                isScanning = false;
-                beaconController.stopScanning();
-                repeatHelper.stop();
-                tv_beaconBTN.setText(R.string.main_btn_beaconBtn_off);
-                btnReceive.setCardBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_red_dark));
-            } else {
-                isScanning = true;
-                startScanning();
-                repeatHelper.start(2000);
-                tv_beaconBTN.setText(R.string.main_btn_beaconBtn_on);
-                btnReceive.setCardBackgroundColor(ContextCompat.getColor(this, R.color.green));
+            if (requestHelper.checkAll_Enabled()) {
+                if (isScanning) {
+                    isScanning = false;
+                    beaconController.stopScanning();
+                    repeatHelper.stop();
+                    tv_beaconBTN.setText(R.string.main_btn_beaconBtn_off);
+                    btnReceive.setCardBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_red_dark));
+                } else {
+                    isScanning = true;
+                    startScanning();
+                    repeatHelper.start(2000);
+                    tv_beaconBTN.setText(R.string.main_btn_beaconBtn_on);
+                    btnReceive.setCardBackgroundColor(ContextCompat.getColor(this, R.color.green));
+                }
             }
         });
 
         // FIXME: Add when sign out turn off auto login
-        btnSignOut.setOnClickListener(v -> finish());
+        btnSignOut.setOnClickListener(v -> {
+            shareData.saveAccount("");
+            shareData.savePassword("");
+            finish();
+        });
     }
 
     private void initView() {

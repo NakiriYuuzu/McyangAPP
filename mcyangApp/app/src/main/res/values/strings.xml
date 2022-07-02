@@ -8,9 +8,16 @@
     <string name="tag_NoInput">請輸入賬號和密碼！</string>
     <string name="tag_NoInternet">偵測無網絡，請打開網絡在重試。</string>
     <string name="tag_request_Gps_Not_Enabled">偵測GPS未打開，請麻煩打開GPS之後在使用APP。</string>
+    <string name="tag_request_Ble_Not_Enabled">偵測藍芽為打開，請麻煩打開藍芽之後在使用APP。</string>
     <string name="tag_Login">登入中，請稍後…</string>
     <string name="tag_LoginFailed">登入失敗，賬號密碼錯誤！</string>
     <string name="tag_ServerFailed">連接伺服器失敗，請稍後嘗試。</string>
+
+    <!--Splash Screen-->
+    <string name="splash_Prev">上一頁</string>
+    <string name="splash_Next">下一頁</string>
+    <string name="splash_Start">開始使用</string>
+    <string name="splash_CheckBox">不再提示</string>
 
     <!--LoginActivity-->
     <string name="login_text_Account">賬號</string>

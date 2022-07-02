@@ -6,6 +6,7 @@ public class ShareVariables {
     public static final String MINOR = "minor";
 
     // FIXME: Login
+    public static final String isChecked = "isChecked";
     public static final String ACCOUNT = "Account";
     public static final String PASSWORD = "Password";
     public static final String ID = "ID";
