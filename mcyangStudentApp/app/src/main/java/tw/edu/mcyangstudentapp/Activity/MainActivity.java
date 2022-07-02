@@ -27,6 +27,7 @@ import tw.edu.mcyangstudentapp.StoredData.ShareData;
 public class MainActivity extends AppCompatActivity {
     boolean beaconChecked = false;
     boolean isAfterLogin = false;
+    boolean func_Sign, func_Qa, func_Question, func_EndClass, func_Answer;
 
     MaterialCardView btn_Sign, btn_SignOut, btn_Qa, btn_Question, btn_Group, btn_EndClass, btn_Answer, btn_LearningRecord;
     MaterialTextView tvNames;
@@ -101,98 +102,113 @@ public class MainActivity extends AppCompatActivity {
 
     private void beforeSign() {
         tvNames.setText(shareData.getStudentNames());
-        btn_Sign.setEnabled(true);
-        btn_Sign.setCardBackgroundColor(ContextCompat.getColor(this, R.color.blue));
-        btn_Group.setEnabled(true);
         btn_Group.setCardBackgroundColor(ContextCompat.getColor(this, R.color.blue));
-        btn_Qa.setEnabled(false);
+        func_Sign = true;
+        btn_Sign.setCardBackgroundColor(ContextCompat.getColor(this, R.color.blue));
+        func_Qa = false;
         btn_Qa.setCardBackgroundColor(ContextCompat.getColor(this, R.color.grey));
-        btn_Answer.setEnabled(false);
+        func_Answer = false;
         btn_Answer.setCardBackgroundColor(ContextCompat.getColor(this, R.color.grey));
-        btn_Question.setEnabled(false);
+        func_Question = false;
         btn_Question.setCardBackgroundColor(ContextCompat.getColor(this, R.color.grey));
-        btn_EndClass.setEnabled(false);
+        func_EndClass = false;
         btn_EndClass.setCardBackgroundColor(ContextCompat.getColor(this, R.color.grey));
     }
 
     private void afterSign() {
         tvNames.setText(shareData.getStudentNames());
         if (shareData.getMajor() != null) {
-            btn_Sign.setEnabled(false);
+            func_Sign = false;
             btn_Sign.setCardBackgroundColor(ContextCompat.getColor(this, R.color.grey));
-            btn_Group.setEnabled(true);
-            btn_Group.setCardBackgroundColor(ContextCompat.getColor(this, R.color.blue));
-            btn_Qa.setEnabled(true);
+            func_Qa = true;
             btn_Qa.setCardBackgroundColor(ContextCompat.getColor(this, R.color.blue));
-            btn_Answer.setEnabled(true);
+            func_Answer = true;
             btn_Answer.setCardBackgroundColor(ContextCompat.getColor(this, R.color.blue));
-            btn_Question.setEnabled(true);
+            func_Question = true;
             btn_Question.setCardBackgroundColor(ContextCompat.getColor(this, R.color.blue));
-            btn_EndClass.setEnabled(true);
+            func_EndClass = true;
             btn_EndClass.setCardBackgroundColor(ContextCompat.getColor(this, R.color.blue));
+            btn_Group.setCardBackgroundColor(ContextCompat.getColor(this, R.color.blue));
         }
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private void initButton() {
         btn_Sign.setOnClickListener(v -> {
-            Intent ii = new Intent(getApplicationContext(), SignActivity.class);
-            startActivity(ii);
+            if (func_Sign) {
+                if (requestHelper.checkAll_Enabled()) {
+                    Intent ii = new Intent(MainActivity.this, SignActivity.class);
+                    startActivity(ii);
+                }
+            } else {
+                Toast.makeText(this, "您還沒結束課程！", Toast.LENGTH_SHORT).show();
+            }
         });
 
         btn_Qa.setOnClickListener(v -> {
-            Intent ii = new Intent(getApplicationContext(), RaceActivity.class);
-            startActivity(ii);
+            if (func_Qa) {
+                if (requestHelper.checkAll_Enabled()) {
+                    Intent ii = new Intent(getApplicationContext(), RaceActivity.class);
+                    startActivity(ii);
+                }
+            } else {
+                Toast.makeText(this, "您還沒簽到！", Toast.LENGTH_SHORT).show();
+            }
+
         });
 
-        btn_Group.setOnClickListener(v -> {
-            Intent ii = new Intent(getApplicationContext(), GroupActivity.class);
-            startActivity(ii);
-        });
-
-        btn_Question.setOnClickListener(v ->
-                viewHelper.showAlertBuilder("我要提問", "是否要向老師提出問題?", "確認", "取消", new CustomViewHelper.AlertListener() {
-                    @Override
-                    public void onPositive(DialogInterface dialogInterface, int i) {
-                        if (!beaconChecked) {
-                            beaconChecked = true;
-                            beaconController.init_BroadcastBeacon();
-                            beaconController.start_BroadcastBeacon();
-                            Log.e("initButton: ", "01");
-
-                            new Handler().postDelayed(() -> {
-                                beaconController.stop_BroadcastBeacon();
-                                Log.e("initButton: ", "02");
+        btn_Question.setOnClickListener(v -> {
+            if (func_Question) {
+                if (requestHelper.checkAll_Enabled()) {
+                    viewHelper.showAlertBuilder("我要提問", "是否要向老師提出問題?", "確認", "取消", new CustomViewHelper.AlertListener() {
+                        @Override
+                        public void onPositive(DialogInterface dialogInterface, int i) {
+                            if (!beaconChecked) {
+                                beaconChecked = true;
+                                beaconController.init_BroadcastBeacon();
+                                beaconController.start_BroadcastBeacon();
+                                Log.e("initButton: ", "01");
 
                                 new Handler().postDelayed(() -> {
-                                    beaconChecked = false;
-                                    Log.e("initButton: ", "03");
-                                }, 30000);
+                                    beaconController.stop_BroadcastBeacon();
+                                    Log.e("initButton: ", "02");
 
-                            }, 10000);
-                        } else
-                            Toast.makeText(getApplicationContext(), "30秒後在嘗試。", Toast.LENGTH_SHORT).show();
+                                    new Handler().postDelayed(() -> {
+                                        beaconChecked = false;
+                                        Log.e("initButton: ", "03");
+                                    }, 30000);
 
-                        dialogInterface.dismiss();
-                    }
+                                }, 10000);
+                            } else
+                                Toast.makeText(getApplicationContext(), "30秒後在嘗試。", Toast.LENGTH_SHORT).show();
 
-                    @Override
-                    public void onNegative(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                }));
+                            dialogInterface.dismiss();
+                        }
+
+                        @Override
+                        public void onNegative(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+                }
+
+            } else
+                Toast.makeText(this, "您還沒簽到！", Toast.LENGTH_SHORT).show();
+        });
 
         btn_Answer.setOnClickListener(v -> {
-            Intent ii = new Intent(getApplicationContext(), AnswerActivity.class);
-            startActivity(ii);
+            if (func_Answer) {
+                if (requestHelper.checkAll_Enabled()) {
+                    Intent ii = new Intent(getApplicationContext(), AnswerActivity.class);
+                    startActivity(ii);
+                }
+            } else {
+                Toast.makeText(this, "您還沒簽到！", Toast.LENGTH_SHORT).show();
+            }
         });
 
-        btn_LearningRecord.setOnClickListener(v -> {
-            Intent ii = new Intent(getApplicationContext(), LearningRecordActivity.class);
-            startActivity(ii);
-        });
-
-        btn_EndClass.setOnClickListener(v ->
+        btn_EndClass.setOnClickListener(v -> {
+            if (func_EndClass) {
                 viewHelper.showAlertBuilder("結束課程", "是否要結束課程？", "確認", "取消", new CustomViewHelper.AlertListener() {
                     @Override
                     public void onPositive(DialogInterface dialogInterface, int i) {
@@ -205,10 +221,29 @@ public class MainActivity extends AppCompatActivity {
                     public void onNegative(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
                     }
-                })
-        );
+                });
+            } else {
+                Toast.makeText(this, "您還沒簽到！", Toast.LENGTH_SHORT).show();
+            }
+        });
 
-        btn_SignOut.setOnClickListener(v -> finish());
+        btn_Group.setOnClickListener(v -> {
+            if (requestHelper.checkAll_Enabled()) {
+                Intent ii = new Intent(getApplicationContext(), GroupActivity.class);
+                startActivity(ii);
+            }
+        });
+
+        btn_LearningRecord.setOnClickListener(v -> {
+            Intent ii = new Intent(getApplicationContext(), LearningRecordActivity.class);
+            startActivity(ii);
+        });
+
+        btn_SignOut.setOnClickListener(v -> {
+            shareData.saveLoginAccount("");
+            shareData.saveLoginPassword("");
+            finish();
+        });
     }
 
     private void initView() {

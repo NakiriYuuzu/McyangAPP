@@ -91,6 +91,7 @@
         android:layout_marginEnd="30dp"
         android:checked="false"
         android:fontFamily="@font/noto_sans"
+        android:buttonTint="@color/blue"
         android:text="@string/login_toggle_RememberMe"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

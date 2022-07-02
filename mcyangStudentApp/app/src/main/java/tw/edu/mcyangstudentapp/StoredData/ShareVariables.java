@@ -2,6 +2,7 @@ package tw.edu.mcyangstudentapp.StoredData;
 
 public class ShareVariables {
     // FIXME: Login
+    public static String isChecked = "isChecked";
     public static final String LOGIN_ACCOUNT = "Account";
     public static final String LOGIN_PASSWORD = "Password";
     public static final String LOGIN_NAME = "loginName";

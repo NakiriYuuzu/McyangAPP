@@ -4,18 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
-
 import org.altbeacon.beacon.Beacon;
-
 import java.util.ArrayList;
-
 import tw.edu.mcyangstudentapp.ActivityModel.SignModel;
 import tw.edu.mcyangstudentapp.BeaconModel.BeaconController;
 import tw.edu.mcyangstudentapp.DefaultSetting;
@@ -46,8 +41,8 @@ public class SignActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign);
         initView();
         initButton();
-        startScanning();
         initRecycleView();
+        startScanning();
     }
 
     private void syncViewModel() {
@@ -116,18 +111,21 @@ public class SignActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        beaconController.stopScanning();
+        if (beaconController.checkScanning())
+            beaconController.stopScanning();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        beaconController.stopScanning();
+        if (beaconController.checkScanning())
+            beaconController.stopScanning();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        beaconController.stopScanning();
+        if (beaconController.checkScanning())
+            beaconController.stopScanning();
     }
 }
