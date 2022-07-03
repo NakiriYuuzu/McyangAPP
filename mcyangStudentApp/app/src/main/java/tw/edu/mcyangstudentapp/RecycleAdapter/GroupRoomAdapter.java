@@ -39,12 +39,14 @@ public class GroupRoomAdapter extends RecyclerView.Adapter<GroupRoomAdapter.Grou
         return new GroupRoomViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull GroupRoomViewHolder holder, int position) {
-        holder.tvLeft.setText(groupRooms.get(position).getGroupNumbers());
+        holder.tvLeft.setText(position + 1 + "");
         holder.tvRight.setText(groupRooms.get(position).getGroupNames());
 
         holder.btnEnter.setOnClickListener(v -> {
+            shareData.saveChat_Count(0);
             shareData.saveChatRoom_Name(groupRooms.get(position).getGroupNames());
             Intent ii = new Intent(activity, GroupChatActivity.class);
             activity.startActivity(ii);

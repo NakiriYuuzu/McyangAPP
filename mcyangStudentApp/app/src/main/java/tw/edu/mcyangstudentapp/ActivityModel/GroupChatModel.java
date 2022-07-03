@@ -2,11 +2,13 @@ package tw.edu.mcyangstudentapp.ActivityModel;
 
 public class GroupChatModel {
     private String user, message, time;
+    private int current;
 
-    public GroupChatModel(String user, String message, String time) {
+    public GroupChatModel(String user, String message, String time, int current) {
         this.user = user;
         this.message = message;
         this.time = time;
+        this.current = current;
     }
 
     public String getUser() {
@@ -33,12 +35,21 @@ public class GroupChatModel {
         this.time = time;
     }
 
+    public int getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(int current) {
+        this.current = current;
+    }
+
     @Override
     public String toString() {
         return "GroupChatModel{" +
                 "user='" + user + '\'' +
                 ", message='" + message + '\'' +
                 ", time='" + time + '\'' +
+                ", current='" + current + '\'' +
                 '}';
     }
 }

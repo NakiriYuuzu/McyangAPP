@@ -1,6 +1,7 @@
 package tw.edu.mcyangstudentapp.StoredData;
 
 public class ShareVariables {
+    public static final String CHAT_COUNT = "chat_count";
     // FIXME: Login
     public static String isChecked = "isChecked";
     public static final String LOGIN_ACCOUNT = "Account";

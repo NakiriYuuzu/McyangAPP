@@ -42,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:text="@string/splash_CheckBox"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:buttonTint="@color/green"
         android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toBottomOf="@+id/splash_img_backgroundImg"

@@ -21,7 +21,7 @@ import tw.edu.mcyangstudentapp.StoredData.ShareData;
 @SuppressLint("CustomSplashScreen")
 public class SplashActivity extends AppCompatActivity {
 
-    private final int scene = 3;
+    private final int scene = 6;
     private int currentPage = 0;
     ArrayList<Integer> sceneList;
 
@@ -96,9 +96,12 @@ public class SplashActivity extends AppCompatActivity {
 
     private void initSceneList() {
         sceneList = new ArrayList<>();
-        sceneList.add(R.drawable.scene1);
-        sceneList.add(R.drawable.scene2);
-        sceneList.add(R.drawable.scene3);
-        sceneList.add(R.drawable.scene4);
+        sceneList.add(R.drawable.student1);
+        sceneList.add(R.drawable.student2);
+        sceneList.add(R.drawable.student3);
+        sceneList.add(R.drawable.student4);
+        sceneList.add(R.drawable.student5);
+        sceneList.add(R.drawable.student6);
+        sceneList.add(R.drawable.student7);
     }
 }

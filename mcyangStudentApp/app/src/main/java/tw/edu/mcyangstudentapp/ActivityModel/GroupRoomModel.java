@@ -1,19 +1,10 @@
 package tw.edu.mcyangstudentapp.ActivityModel;
 
 public class GroupRoomModel {
-    private String groupNumbers, groupNames;
+    private String groupNames;
 
-    public GroupRoomModel(String groupNumbers, String groupNames) {
-        this.groupNumbers = groupNumbers;
+    public GroupRoomModel(String groupNames) {
         this.groupNames = groupNames;
-    }
-
-    public String getGroupNumbers() {
-        return groupNumbers;
-    }
-
-    public void setGroupNumbers(String groupNumbers) {
-        this.groupNumbers = groupNumbers;
     }
 
     public String getGroupNames() {
@@ -27,8 +18,7 @@ public class GroupRoomModel {
     @Override
     public String toString() {
         return "GroupRoomModel{" +
-                "groupNumbers='" + groupNumbers + '\'' +
-                ", groupNames='" + groupNames + '\'' +
+                "groupNames='" + groupNames + '\'' +
                 '}';
     }
 }

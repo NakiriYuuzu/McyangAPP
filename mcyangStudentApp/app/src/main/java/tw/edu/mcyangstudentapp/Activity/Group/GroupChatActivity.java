@@ -42,7 +42,6 @@ import tw.edu.mcyangstudentapp.ViewModel.GroupChatViewModel;
 public class GroupChatActivity extends AppCompatActivity {
 
     private static final String TAG = "GroupChatActivity";
-    private boolean isSearch = false;
     private boolean isClicked = false;
 
     ArrayList<GroupChatModel> chatMessage;
@@ -71,30 +70,17 @@ public class GroupChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_group_chat);
 
         initView();
-        initButton();
         initData();
+        initButton();
         initRecyclerView();
 
+        Log.e(TAG, "onCreate: " + shareData.getChat_Count());
+
         datePicker.addOnPositiveButtonClickListener(selection -> {
-            Log.e(TAG, "datePicker: " + datePicker.getHeaderText());
+            Log.e(TAG, "datePicker: " + datePicker.getSelection());
             isClicked = false;
             String dateTime = datePicker.getHeaderText();
             dateSearch(dateTime);
-        });
-
-        datePicker.addOnNegativeButtonClickListener(selection -> {
-            isClicked = false;
-            initData();
-        });
-
-        datePicker.addOnCancelListener(dialogInterface -> {
-            isClicked = false;
-            initData();
-        });
-
-        datePicker.addOnDismissListener(dialog -> {
-            isClicked = false;
-            initData();
         });
     }
 
@@ -106,7 +92,6 @@ public class GroupChatActivity extends AppCompatActivity {
     }
 
     private synchronized void dateSearch(String dateTime) {
-        isSearch = true;
         ArrayList<GroupChatModel> groupChatList = new ArrayList<>();
         String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
         int year = Integer.parseInt(dateTime.substring(0, 4));
@@ -116,7 +101,7 @@ public class GroupChatActivity extends AppCompatActivity {
         for (int i = 0; i < chatMessage.size(); i++) {
             String chatTime = chatMessage.get(i).getTime();
             String chatOldMonth = chatTime.substring(4, 7);
-            int chatYear = Integer.parseInt(chatTime.substring(20, 24));
+            int chatYear = Integer.parseInt(chatTime.substring(30, 34));
             int chatMonth = 0;
             int chatDay = Integer.parseInt(chatTime.substring(8, 10));
 
@@ -127,20 +112,16 @@ public class GroupChatActivity extends AppCompatActivity {
                 }
             }
 
-            Log.e(TAG, "dateSearch: " + year + " " + month + " " + day);
-            Log.e(TAG, "CHAT: " + chatYear + " " + chatMonth + " " + chatDay);
-
             if (chatYear == year && chatMonth == month && chatDay == day)
                 groupChatList.add(chatMessage.get(i));
         }
 
-        if (groupChatList.size() == 0) {
+        if (groupChatList.size() == 0)
             Toast.makeText(this, "查無資料", Toast.LENGTH_SHORT).show();
-
-        } else {
+        else
             chatMessage = groupChatList;
-            syncViewModel();
-        }
+
+        syncViewModel();
     }
 
     private synchronized void initData() {
@@ -150,40 +131,32 @@ public class GroupChatActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<GroupChatModel> chatTempData = new ArrayList<>();
-
                 for (DataSnapshot child : snapshot.getChildren()) {
                     String names = child.getKey();
                     for (DataSnapshot childChild : child.getChildren()) {
                         for (DataSnapshot childChildChild : childChild.getChildren()) {
-                            for (DataSnapshot data : childChildChild.getChildren()) {
-                                int i = 0;
-                                String[] chatData = new String[2];
-                                Log.e(TAG, "onDataChange: " + data);
+                            if (Objects.requireNonNull(childChildChild.getKey()).equals(shareData.getChatRoom_Name())) {
+                                for (DataSnapshot data : childChildChild.getChildren()) {
+                                    int i = 0;
+                                    String[] chatData = new String[3];
 
-                                for (DataSnapshot dataChild : data.getChildren())
-                                    chatData[i++] = Objects.requireNonNull(dataChild.getValue()).toString();
+                                    for (DataSnapshot dataChild : data.getChildren())
+                                        chatData[i++] = Objects.requireNonNull(dataChild.getValue()).toString();
 
-                                String msg = chatData[1];
-                                String date = chatData[0].substring(0, 19) + " " + chatData[0].substring(30, 34);
+                                    String msg = chatData[1];
+                                    String date = chatData[0];
 
-                                chatTempData.add(new GroupChatModel(names, msg, date));
+                                    chatTempData.add(new GroupChatModel(names, msg, date, Integer.parseInt(Objects.requireNonNull(data.getKey()))));
+                                }
                             }
                         }
                     }
                 }
 
-                Collections.sort(chatTempData, Comparator.comparing(GroupChatModel::getTime));
+                shareData.saveChat_Count(chatTempData.size());
 
-                if (isSearch) {
-                    chatMessage = chatTempData;
-                    isSearch = false;
-
-                } else {
-                    if (chatMessage.size() > 0)
-                        chatMessage.add(chatTempData.get(chatTempData.size() - 1));
-                    else
-                        chatMessage.addAll(chatTempData);
-                }
+                Collections.sort(chatTempData, Comparator.comparing(GroupChatModel::getCurrent));
+                chatMessage = chatTempData;
 
                 syncViewModel();
                 recyclerView.scrollToPosition(chatMessage.size() - 1);
@@ -207,7 +180,7 @@ public class GroupChatActivity extends AppCompatActivity {
     }
 
     private void sendMessage(String msg) {
-        ref = database.getReference(shareData.getChat_Room()).child(shareData.getChat_ID()).child(shareData.getStudentNames()).child(FirebaseVariables.CHAT).child(shareData.getChatRoom_Name()).child(String.valueOf(new Date().getTime()));
+        ref = database.getReference(shareData.getChat_Room()).child(shareData.getChat_ID()).child(shareData.getStudentNames()).child(FirebaseVariables.CHAT).child(shareData.getChatRoom_Name()).child((shareData.getChat_Count() + 1) + "");
         HashMap<String, String> message = new HashMap<>();
         message.put(FirebaseVariables.MESSAGE, msg);
         message.put(FirebaseVariables.DATETIME, String.valueOf(new Date()));
@@ -229,6 +202,7 @@ public class GroupChatActivity extends AppCompatActivity {
         btnSearch.setOnClickListener(v -> {
             if (!isClicked) {
                 isClicked = true;
+                initData();
                 datePicker.show(getSupportFragmentManager(), "Material_Date_Picker");
             }
         });
@@ -257,5 +231,11 @@ public class GroupChatActivity extends AppCompatActivity {
         datePicker = dateBuilder.build();
 
         tvTitle.setText(shareData.getChatRoom_Name());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        shareData.saveChat_Count(0);
     }
 }

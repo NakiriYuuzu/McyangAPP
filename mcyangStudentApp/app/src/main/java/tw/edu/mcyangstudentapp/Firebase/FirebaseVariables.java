@@ -6,4 +6,5 @@ public class FirebaseVariables {
     public static final String MESSAGE = "message";
     public static final String DATETIME = "datetime";
     public static final String CHAT = "Chat";
+    public static final String COUNT = "COUNT";
 }

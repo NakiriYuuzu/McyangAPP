@@ -261,6 +261,18 @@ public class ShareData {
         return preferences.getString(ShareVariables.CHATROOM_NAME, null);
     }
 
+    public void saveChat_Count(int count) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(ShareVariables.CHAT_COUNT, count);
+        editor.apply();
+    }
+
+    public int getChat_Count() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getInt(ShareVariables.CHAT_COUNT, 0);
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     //  TODO: Firebase
     ///////////////////////////////////////////////////////////////////////////
@@ -286,5 +298,6 @@ public class ShareData {
         saveMinor(null);
         saveQuestionID(null);
         saveAnswerID(null);
+        saveChat_Count(0);
     }
 }

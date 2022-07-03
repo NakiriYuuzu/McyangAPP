@@ -1,6 +1,6 @@
 package tw.edu.mcyangstudentapp.Activity.Group;
 
-import androidx.annotation.NonNull;
+import  androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -135,17 +135,12 @@ public class GroupRoomActivity extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<GroupRoomModel> groupRooms = new ArrayList<>();
                 for (DataSnapshot data1 : snapshot.getChildren()) {
-                    if (groupRoom.size() > 0) {
-                        if (!groupRoom.get(groupRoom.size() - 1).getGroupNames().equals(data1.getKey())) {
-                            int i = Integer.parseInt(groupRoom.get(groupRoom.size() - 1).getGroupNumbers()) + 1;
-                            groupRoom.add(new GroupRoomModel(i + "", data1.getKey()));
-                        }
-                    } else {
-                        int i = 1;
-                        groupRoom.add(new GroupRoomModel(i + "", data1.getKey()));
-                    }
+                    groupRooms.add(new GroupRoomModel(data1.getKey()));
                 }
+
+                groupRoom = groupRooms;
 
                 notFound();
                 syncViewModel();
@@ -159,10 +154,6 @@ public class GroupRoomActivity extends AppCompatActivity {
     }
 
     private synchronized void syncViewModel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Collections.sort(groupRoom, Comparator.comparing(GroupRoomModel::getGroupNumbers));
-        }
-
         groupRoomViewModel = new ViewModelProvider(this).get(GroupRoomViewModel.class);
         groupRoomViewModel.getGroupRoomObserver().observe(this, groupRoomModels -> {
             if (groupRoom != null)
