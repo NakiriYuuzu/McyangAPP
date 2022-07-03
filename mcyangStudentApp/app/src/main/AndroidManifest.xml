@@ -4,10 +4,8 @@
     package="tw.edu.mcyangstudentapp">
     <!-- Internet -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.p
-    .0ermission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- Bluetooth -->
+    <uses-permission android:name="android.p     .0ermission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- Bluetooth -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
@@ -32,6 +30,9 @@
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="stateVisible|adjustResize"
         tools:ignore="AllowBackup,UnusedAttribute">
+        <activity
+            android:name=".Activity.Group.GroupRoomActivity"
+            android:exported="false" />
         <activity
             android:name=".SplashScreen.SplashActivity"
             android:exported="false"

@@ -16,64 +16,61 @@ import com.google.android.material.textview.MaterialTextView;
 import java.util.ArrayList;
 
 import tw.edu.mcyangstudentapp.Activity.Group.GroupChatActivity;
-import tw.edu.mcyangstudentapp.Activity.Group.GroupRoomActivity;
-import tw.edu.mcyangstudentapp.ActivityModel.GroupViewModel;
+import tw.edu.mcyangstudentapp.ActivityModel.GroupRoomModel;
 import tw.edu.mcyangstudentapp.R;
 import tw.edu.mcyangstudentapp.StoredData.ShareData;
 
-public class GroupViewAdapter extends RecyclerView.Adapter<GroupViewAdapter.GroupViewHolder> {
+public class GroupRoomAdapter extends RecyclerView.Adapter<GroupRoomAdapter.GroupRoomViewHolder> {
 
-    ArrayList<GroupViewModel> groupView;
-    ShareData shareData;
+    ArrayList<GroupRoomModel> groupRooms;
     Activity activity;
+    ShareData shareData;
 
-    public GroupViewAdapter(Activity activity, ArrayList<GroupViewModel> groupView) {
+    public GroupRoomAdapter(Activity activity, ArrayList<GroupRoomModel> groupRooms) {
         this.activity = activity;
-        this.groupView = groupView;
+        this.groupRooms = groupRooms;
         shareData = new ShareData(activity);
     }
 
     @NonNull
     @Override
-    public GroupViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public GroupRoomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_2_recyclerview, parent, false);
-        return new GroupViewHolder(view);
+        return new GroupRoomViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull GroupViewHolder holder, int position) {
-        holder.tvLeft.setText(groupView.get(position).getTeamID());
-        holder.tvRight.setText(groupView.get(position).getLeaderName());
+    public void onBindViewHolder(@NonNull GroupRoomViewHolder holder, int position) {
+        holder.tvLeft.setText(groupRooms.get(position).getGroupNumbers());
+        holder.tvRight.setText(groupRooms.get(position).getGroupNames());
 
         holder.btnEnter.setOnClickListener(v -> {
-            shareData.saveChat_ID(groupView.get(position).getTeamID());
-            shareData.saveChat_Name(groupView.get(position).getLeaderName());
-            shareData.saveChat_Room(groupView.get(position).getTeamDesc());
-            Intent ii = new Intent(activity, GroupRoomActivity.class);
+            shareData.saveChatRoom_Name(groupRooms.get(position).getGroupNames());
+            Intent ii = new Intent(activity, GroupChatActivity.class);
             activity.startActivity(ii);
         });
     }
 
     @Override
     public int getItemCount() {
-        if (groupView != null)
-            return groupView.size();
+        if (groupRooms != null)
+            return groupRooms.size();
         else
             return 0;
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void updateGroupViewAdapter(ArrayList<GroupViewModel> groupView) {
-        this.groupView = groupView;
+    public void updateGroupRoomAdapter(ArrayList<GroupRoomModel> groupRooms) {
+        this.groupRooms = groupRooms;
         notifyDataSetChanged();
     }
 
-    public static class GroupViewHolder extends RecyclerView.ViewHolder {
+    static class GroupRoomViewHolder extends RecyclerView.ViewHolder {
 
         LinearLayout btnEnter;
         MaterialTextView tvLeft, tvRight;
 
-        public GroupViewHolder(@NonNull View itemView) {
+        public GroupRoomViewHolder(@NonNull View itemView) {
             super(itemView);
 
             btnEnter = itemView.findViewById(R.id.sign_recycleView_btn);

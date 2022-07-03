@@ -210,7 +210,7 @@ public class ShareData {
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    //  TODO: GroupView and Chat Activity
+    //  TODO: GroupView/Room and Chat Activity
     ///////////////////////////////////////////////////////////////////////////
 
     public void saveChat_ID(String chat_ID) {
@@ -247,6 +247,18 @@ public class ShareData {
     public String getChat_Room() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         return preferences.getString(ShareVariables.CHATROOM, null);
+    }
+
+    public void saveChatRoom_Name(String roomNames) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ShareVariables.CHATROOM_NAME, roomNames);
+        editor.apply();
+    }
+
+    public String getChatRoom_Name() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getString(ShareVariables.CHATROOM_NAME, null);
     }
 
     ///////////////////////////////////////////////////////////////////////////

@@ -42,6 +42,8 @@
         <entry key="..\:/AndroidStudio/mcyangApp/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.458758109360519" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.4728516460025652" />
+        <entry key="app/src/main/res/layout/layout_bottom_sheet.xml" value="0.2697734074390765" />
+        <entry key="app/src/main/res/layout/layout_bottom_sheet_race.xml" value="0.2697734074390765" />
       </map>
     </option>
   </component>

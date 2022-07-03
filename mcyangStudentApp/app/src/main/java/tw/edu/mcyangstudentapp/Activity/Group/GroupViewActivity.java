@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +27,8 @@ import org.json.JSONObject;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import tw.edu.mcyangstudentapp.ActivityModel.GroupViewModel;
 import tw.edu.mcyangstudentapp.ApiModel.VolleyApi;
@@ -75,6 +78,9 @@ public class GroupViewActivity extends AppCompatActivity {
     }
 
     private synchronized void syncViewModel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Collections.sort(groupView, Comparator.comparing(GroupViewModel::getTeamID));
+        }
         groupViewModel = new ViewModelProvider(this).get(GroupViewViewModel.class);
         groupViewModel.getGroupObserver().observe(this, groupViewList -> {
             if (groupView != null)

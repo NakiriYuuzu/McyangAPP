@@ -14,7 +14,6 @@ import com.google.android.material.textview.MaterialTextView;
 import java.util.ArrayList;
 
 import tw.edu.mcyangstudentapp.ActivityModel.GroupChatModel;
-import tw.edu.mcyangstudentapp.ActivityModel.GroupViewModel;
 import tw.edu.mcyangstudentapp.R;
 import tw.edu.mcyangstudentapp.StoredData.ShareData;
 
@@ -46,11 +45,11 @@ public class GroupChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (getItemViewType(position) == VIEW_TYPE_SENT) {
             ((SendMessageViewHolder) holder).tv_SendMessage.setText(chatMessage.get(position).getMessage());
-            ((SendMessageViewHolder) holder).tv_SendMessageTime.setText(chatMessage.get(position).getTime());
+            ((SendMessageViewHolder) holder).tv_SendMessageTime.setText(chatMessage.get(position).getTime().substring(0, 19));
         } else {
             ((ReceivedMessageViewHolder) holder).tv_ReceiveMessageName.setText(chatMessage.get(position).getUser());
             ((ReceivedMessageViewHolder) holder).tv_ReceiveMessage.setText(chatMessage.get(position).getMessage());
-            ((ReceivedMessageViewHolder) holder).tv_ReceiveMessageTime.setText(chatMessage.get(position).getTime());
+            ((ReceivedMessageViewHolder) holder).tv_ReceiveMessageTime.setText(chatMessage.get(position).getTime().substring(0, 19));
         }
     }
 

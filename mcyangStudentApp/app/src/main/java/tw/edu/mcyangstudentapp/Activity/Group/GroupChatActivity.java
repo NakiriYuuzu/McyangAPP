@@ -12,7 +12,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
+import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
@@ -23,6 +25,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Objects;
@@ -38,14 +42,19 @@ import tw.edu.mcyangstudentapp.ViewModel.GroupChatViewModel;
 public class GroupChatActivity extends AppCompatActivity {
 
     private static final String TAG = "GroupChatActivity";
+    private boolean isSearch = false;
+    private boolean isClicked = false;
 
     ArrayList<GroupChatModel> chatMessage;
 
-    ShapeableImageView btnBack;
+    ShapeableImageView btnBack, btnSearch;
     FrameLayout btnSend;
     MaterialTextView tvTitle;
     TextInputEditText inputMsg;
     RecyclerView recyclerView;
+
+    MaterialDatePicker.Builder dateBuilder;
+    MaterialDatePicker datePicker;
 
     FirebaseDatabase database;
     DatabaseReference ref;
@@ -65,6 +74,28 @@ public class GroupChatActivity extends AppCompatActivity {
         initButton();
         initData();
         initRecyclerView();
+
+        datePicker.addOnPositiveButtonClickListener(selection -> {
+            Log.e(TAG, "datePicker: " + datePicker.getHeaderText());
+            isClicked = false;
+            String dateTime = datePicker.getHeaderText();
+            dateSearch(dateTime);
+        });
+
+        datePicker.addOnNegativeButtonClickListener(selection -> {
+            isClicked = false;
+            initData();
+        });
+
+        datePicker.addOnCancelListener(dialogInterface -> {
+            isClicked = false;
+            initData();
+        });
+
+        datePicker.addOnDismissListener(dialog -> {
+            isClicked = false;
+            initData();
+        });
     }
 
     private void initRecyclerView() {
@@ -74,35 +105,84 @@ public class GroupChatActivity extends AppCompatActivity {
         recyclerView.setAdapter(chatAdapter);
     }
 
+    private synchronized void dateSearch(String dateTime) {
+        isSearch = true;
+        ArrayList<GroupChatModel> groupChatList = new ArrayList<>();
+        String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+        int year = Integer.parseInt(dateTime.substring(0, 4));
+        int month = Integer.parseInt(dateTime.substring(5, 6));
+        int day = Integer.parseInt(dateTime.substring(7, 8));
+
+        for (int i = 0; i < chatMessage.size(); i++) {
+            String chatTime = chatMessage.get(i).getTime();
+            String chatOldMonth = chatTime.substring(4, 7);
+            int chatYear = Integer.parseInt(chatTime.substring(20, 24));
+            int chatMonth = 0;
+            int chatDay = Integer.parseInt(chatTime.substring(8, 10));
+
+            for (int j = 0; j < months.length; j++) {
+                if (chatOldMonth.equals(months[j])) {
+                    chatMonth = j + 1;
+                    break;
+                }
+            }
+
+            Log.e(TAG, "dateSearch: " + year + " " + month + " " + day);
+            Log.e(TAG, "CHAT: " + chatYear + " " + chatMonth + " " + chatDay);
+
+            if (chatYear == year && chatMonth == month && chatDay == day)
+                groupChatList.add(chatMessage.get(i));
+        }
+
+        if (groupChatList.size() == 0) {
+            Toast.makeText(this, "查無資料", Toast.LENGTH_SHORT).show();
+
+        } else {
+            chatMessage = groupChatList;
+            syncViewModel();
+        }
+    }
+
     private synchronized void initData() {
         ref = database.getReference(shareData.getChat_Room()).child(shareData.getChat_ID());
         ref.addValueEventListener(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<GroupChatModel> chatTempData = new ArrayList<>();
+
                 for (DataSnapshot child : snapshot.getChildren()) {
-                    String name = child.getKey();
-                    Log.e(TAG, "onDataChange: " + name);
+                    String names = child.getKey();
+                    for (DataSnapshot childChild : child.getChildren()) {
+                        for (DataSnapshot childChildChild : childChild.getChildren()) {
+                            for (DataSnapshot data : childChildChild.getChildren()) {
+                                int i = 0;
+                                String[] chatData = new String[2];
+                                Log.e(TAG, "onDataChange: " + data);
 
-                    for (DataSnapshot child2 : child.getChildren()) {
-                        for (DataSnapshot child3 : child2.getChildren()) {
-                            int i = 0;
-                            String[] data = new String[2];
+                                for (DataSnapshot dataChild : data.getChildren())
+                                    chatData[i++] = Objects.requireNonNull(dataChild.getValue()).toString();
 
-                            Log.e(TAG, "onDataChange: " + child3);
+                                String msg = chatData[1];
+                                String date = chatData[0].substring(0, 19) + " " + chatData[0].substring(30, 34);
 
-                            for (DataSnapshot child4 : child3.getChildren())
-                                data[i++] = Objects.requireNonNull(child4.getValue()).toString();
-
-                            String msg = data[1];
-                            String date = data[0].substring(0, 19);
-
-                            Log.e(TAG, "onDataChang1e: " + msg + " | " + date);
-                            if (!isExisted_Data(date)) {
-                                chatMessage.add(new GroupChatModel(name, msg, date));
+                                chatTempData.add(new GroupChatModel(names, msg, date));
                             }
                         }
                     }
+                }
+
+                Collections.sort(chatTempData, Comparator.comparing(GroupChatModel::getTime));
+
+                if (isSearch) {
+                    chatMessage = chatTempData;
+                    isSearch = false;
+
+                } else {
+                    if (chatMessage.size() > 0)
+                        chatMessage.add(chatTempData.get(chatTempData.size() - 1));
+                    else
+                        chatMessage.addAll(chatTempData);
                 }
 
                 syncViewModel();
@@ -116,17 +196,6 @@ public class GroupChatActivity extends AppCompatActivity {
         });
     }
 
-    private boolean isExisted_Data(String date) {
-        boolean isExisted = false;
-        for (GroupChatModel groupChatModel : chatMessage)
-            if (groupChatModel.getTime().equals(date)) {
-                isExisted = true;
-                break;
-            }
-
-        return isExisted;
-    }
-
     private synchronized void syncViewModel() {
         chatViewModel = new ViewModelProvider(this).get(GroupChatViewModel.class);
         chatViewModel.getChatObserver().observe(this, groupChatModels -> {
@@ -138,7 +207,7 @@ public class GroupChatActivity extends AppCompatActivity {
     }
 
     private void sendMessage(String msg) {
-        ref = database.getReference(shareData.getChat_Room()).child(shareData.getChat_ID()).child(shareData.getStudentNames()).child(FirebaseVariables.CHAT).child(String.valueOf(new Date().getTime()));
+        ref = database.getReference(shareData.getChat_Room()).child(shareData.getChat_ID()).child(shareData.getStudentNames()).child(FirebaseVariables.CHAT).child(shareData.getChatRoom_Name()).child(String.valueOf(new Date().getTime()));
         HashMap<String, String> message = new HashMap<>();
         message.put(FirebaseVariables.MESSAGE, msg);
         message.put(FirebaseVariables.DATETIME, String.valueOf(new Date()));
@@ -156,10 +225,18 @@ public class GroupChatActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btnSearch.setOnClickListener(v -> {
+            if (!isClicked) {
+                isClicked = true;
+                datePicker.show(getSupportFragmentManager(), "Material_Date_Picker");
+            }
+        });
     }
 
     @SuppressLint("SetTextI18n")
     private void initView() {
+        btnSearch = findViewById(R.id.groupChat_btn_Search);
         btnBack = findViewById(R.id.groupChat_btn_Back);
         btnSend = findViewById(R.id.groupChat_btnSend);
         tvTitle = findViewById(R.id.groupChat_title);
@@ -175,6 +252,10 @@ public class GroupChatActivity extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance(FirebaseVariables.FIREBASE_URL);
 
-        tvTitle.setText(shareData.getChat_Name() + "的隊伍");
+        dateBuilder = MaterialDatePicker.Builder.datePicker();
+        dateBuilder.setTitleText("搜尋：選擇日期");
+        datePicker = dateBuilder.build();
+
+        tvTitle.setText(shareData.getChatRoom_Name());
     }
 }

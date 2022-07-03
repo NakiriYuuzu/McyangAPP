@@ -246,7 +246,7 @@ public class GroupThirdActivity extends AppCompatActivity {
             }
         });
 
-        btn_Finish.setOnClickListener(v -> viewHelper.showAlertBuilder("設定聊天室", "建立新的聊天室請按建立，修改聊天室請安修改", "建立", "修改", new CustomViewHelper.AlertListener() {
+        btn_Finish.setOnClickListener(v -> viewHelper.showAlertBuilder("設定聊天室", "請問要建立新的聊天室嗎?", "建立", "取消", new CustomViewHelper.AlertListener() {
             @Override
             public void onPositive(DialogInterface dialogInterface, int i) {
                 updateDataToFirebase();

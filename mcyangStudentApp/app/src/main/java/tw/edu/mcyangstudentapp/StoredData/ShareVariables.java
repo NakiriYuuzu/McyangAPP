@@ -24,4 +24,5 @@ public class ShareVariables {
     public static final String TOKEN = "token";
     public static final String CHAT_NAME = "chat_NAME";
     public static final String CHATROOM = "CHATROOM";
+    public static final String CHATROOM_NAME = "chat_Room";
 }

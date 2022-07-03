@@ -68,6 +68,12 @@
     <string name="groupView_recyclerView_Left">隊伍編號</string>
     <string name="groupView_recyclerView_Right">隊長名稱</string>
 
+    <!--GroupRoomActivity-->
+    <string name="groupRoom_Title">群組聊天室</string>
+    <string name="groupRoom_Left">序</string>
+    <string name="groupRoom_Right">聊天室名稱</string>
+    <string name="groupRoom_Create">創建聊天室</string>
+
     <!--GroupChatActivity-->
     <string name="group_chat_input_hint">請輸入訊息</string>
 
