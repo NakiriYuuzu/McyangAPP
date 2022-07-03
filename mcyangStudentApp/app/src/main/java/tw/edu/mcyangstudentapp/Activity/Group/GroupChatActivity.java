@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -79,8 +80,11 @@ public class GroupChatActivity extends AppCompatActivity {
         datePicker.addOnPositiveButtonClickListener(selection -> {
             Log.e(TAG, "datePicker: " + datePicker.getSelection());
             isClicked = false;
-            String dateTime = datePicker.getHeaderText();
-            dateSearch(dateTime);
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                Instant instant = Instant.ofEpochMilli((Long) datePicker.getSelection());
+                String x = String.valueOf(instant);
+                dateSearch(x);
+            }
         });
     }
 
@@ -94,26 +98,30 @@ public class GroupChatActivity extends AppCompatActivity {
     private synchronized void dateSearch(String dateTime) {
         ArrayList<GroupChatModel> groupChatList = new ArrayList<>();
         String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-        int year = Integer.parseInt(dateTime.substring(0, 4));
-        int month = Integer.parseInt(dateTime.substring(5, 6));
-        int day = Integer.parseInt(dateTime.substring(7, 8));
+        String[] monthX = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+        String[] time = dateTime.split("-");
+        String year = time[0];
+        String month = time[1];
+        String day = time[2].substring(0, 2);
 
         for (int i = 0; i < chatMessage.size(); i++) {
             String chatTime = chatMessage.get(i).getTime();
-            String chatOldMonth = chatTime.substring(4, 7);
-            int chatYear = Integer.parseInt(chatTime.substring(30, 34));
-            int chatMonth = 0;
-            int chatDay = Integer.parseInt(chatTime.substring(8, 10));
+            String chatYear = chatTime.substring(30, 34);
+            String chatMonth = chatTime.substring(4, 7);
+            String chatDay = chatTime.substring(8, 10);
 
             for (int j = 0; j < months.length; j++) {
-                if (chatOldMonth.equals(months[j])) {
-                    chatMonth = j + 1;
-                    break;
+                if (chatMonth.equals(months[j])) {
+                    chatMonth = monthX[j];
                 }
             }
 
-            if (chatYear == year && chatMonth == month && chatDay == day)
+            Log.e(TAG, "chatTime: " + chatYear + " " + chatMonth + " " + chatDay);
+            Log.e(TAG, "SelectTime: " + year + " " + month + " " + day);
+
+            if (chatYear.equals(year) && chatMonth.equals(month) && chatDay.equals(day)) {
                 groupChatList.add(chatMessage.get(i));
+            }
         }
 
         if (groupChatList.size() == 0)
