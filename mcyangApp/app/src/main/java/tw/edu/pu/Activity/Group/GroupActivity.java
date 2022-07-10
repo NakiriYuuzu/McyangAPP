@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -101,8 +102,34 @@ public class GroupActivity extends AppCompatActivity {
             if (isSelected_CurrentGroup) {
                 shareData.saveDesc_ID(groupID.get(selected));
                 Log.e(TAG, groupID.get(selected) + " | " + shareData.getDesc_ID());
-                Intent ii = new Intent(getApplicationContext(), GroupSecondActivity.class);
-                startActivity(ii);
+
+                volleyApi.api(Request.Method.GET, DefaultSetting.URL_GROUP_TEAM_DESCRIPTION, new VolleyApi.VolleyGet() {
+                    @Override
+                    public void onSuccess(String result) {
+                        try {
+                            JSONArray jsonArray = new JSONArray(new String(result.getBytes(StandardCharsets.ISO_8859_1)));
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                if (jsonObject.getString("TeamDesc_id").equals(groupID.get(selected))) {
+                                    shareData.saveNumberOfLeader(jsonObject.getInt("Group_Total"));
+                                    shareData.saveNumberOfMember(jsonObject.getInt("Group_limit"));
+
+                                    Intent ii = new Intent(getApplicationContext(), GroupSecondActivity.class);
+                                    startActivity(ii);
+                                    break;
+                                }
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailed(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), "連接不上伺服器，無法更新資料。", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
             } else {
                 if (et_Info.getText() != null && et_groupCount.getText() != null && et_peopleCount.getText() != null) {
@@ -126,6 +153,8 @@ public class GroupActivity extends AppCompatActivity {
                     result = new String(text);
                     JSONObject jsonObject = new JSONObject(result);
                     shareData.saveDesc_ID(jsonObject.getString("TeamDesc_id"));
+                    shareData.saveNumberOfLeader(jsonObject.getInt("Group_Total"));
+                    shareData.saveNumberOfMember(jsonObject.getInt("Group_limit"));
 
                     Intent ii = new Intent(getApplicationContext(), GroupSecondActivity.class);
                     startActivity(ii);
@@ -164,6 +193,9 @@ public class GroupActivity extends AppCompatActivity {
 
         volleyApi = new VolleyApi(this);
         shareData = new ShareData(this);
+        shareData.saveDesc_ID(null);
+        shareData.saveNumberOfLeader(0);
+        shareData.saveNumberOfMember(0);
         viewHelper = new CustomViewHelper(this);
     }
 }

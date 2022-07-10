@@ -1,7 +1,6 @@
 package tw.edu.pu.Activity.Answer;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,7 +13,6 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
 
@@ -44,7 +42,7 @@ public class AnswerSecondActivity extends AppCompatActivity {
     ArrayList<AnswerModel> answerModels;
 
     ShapeableImageView btnBack;
-    MaterialCardView btnBeacon;
+//    MaterialCardView btnBeacon;
     MaterialTextView tv_NotFound, tvBeacon;
     MaterialButton btnFinish, btnNext;
     RecyclerView recyclerView;
@@ -63,7 +61,16 @@ public class AnswerSecondActivity extends AppCompatActivity {
 
         initView();
         initButton();
+        initData();
         initRecyclerView();
+    }
+
+    private void initData() {
+        if (!checkedBeacon) {
+            checkedBeacon = true;
+            repeatHelper.start(1000);
+            beaconController.start_BroadcastBeacon();
+        }
     }
 
     private boolean isExisted_answerData(String id) {
@@ -85,25 +92,25 @@ public class AnswerSecondActivity extends AppCompatActivity {
     }
 
     private void initButton() {
-        btnBeacon.setOnClickListener(v -> {
-            if (checkedBeacon) {
-                checkedBeacon = false;
-                beaconController.stop_BroadcastBeacon();
-                repeatHelper.stop();
-                tvBeacon.setText(R.string.btn_StartAnswer);
-                btnBeacon.setCardBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_red_dark));
-                Toast.makeText(getApplicationContext(), "關閉廣播", Toast.LENGTH_SHORT).show();
-
-            } else {
-                checkedBeacon = true;
-                beaconController.init_Answer_BroadcastBeacon();
-                beaconController.start_BroadcastBeacon();
-                repeatHelper.start(2000);
-                tvBeacon.setText(R.string.btn_StopAnswer);
-                btnBeacon.setCardBackgroundColor(ContextCompat.getColor(this, R.color.green));
-                Toast.makeText(getApplicationContext(), "開始廣播", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        btnBeacon.setOnClickListener(v -> {
+//            if (checkedBeacon) {
+//                checkedBeacon = false;
+//                beaconController.stop_BroadcastBeacon();
+//                repeatHelper.stop();
+//                tvBeacon.setText(R.string.btn_StartAnswer);
+//                btnBeacon.setCardBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_red_dark));
+//                Toast.makeText(getApplicationContext(), "關閉廣播", Toast.LENGTH_SHORT).show();
+//
+//            } else {
+//                checkedBeacon = true;
+//                beaconController.init_Answer_BroadcastBeacon();
+//                beaconController.start_BroadcastBeacon();
+//                repeatHelper.start(2000);
+//                tvBeacon.setText(R.string.btn_StopAnswer);
+//                btnBeacon.setCardBackgroundColor(ContextCompat.getColor(this, R.color.green));
+//                Toast.makeText(getApplicationContext(), "開始廣播", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         btnBack.setOnClickListener(v -> finish());
 
@@ -122,11 +129,11 @@ public class AnswerSecondActivity extends AppCompatActivity {
 
     private void initView() {
         btnBack = findViewById(R.id.answerSecond_btn_Back);
-        btnBeacon = findViewById(R.id.answerSecond_btn_Beacon);
+//        btnBeacon = findViewById(R.id.answerSecond_btn_Beacon);
         btnFinish = findViewById(R.id.answerSecond_btn_Finish);
         btnNext = findViewById(R.id.answerSecond_btn_NextPage);
         tv_NotFound = findViewById(R.id.answerSecond_textView_NotFound);
-        tvBeacon = findViewById(R.id.answerSecond_tv_Beacon);
+//        tvBeacon = findViewById(R.id.answerSecond_tv_Beacon);
         recyclerView = findViewById(R.id.answerSecond_recyclerview);
 
         answerModels = new ArrayList<>();

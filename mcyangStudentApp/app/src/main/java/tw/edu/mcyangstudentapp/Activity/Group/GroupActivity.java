@@ -27,7 +27,7 @@ public class GroupActivity extends AppCompatActivity {
         initView();
         initButton();
         btnPermission();
-        shareData.saveTeam_ID(null);
+        shareData.saveTeam_ID_Array(null);
     }
 
     private void btnPermission() {

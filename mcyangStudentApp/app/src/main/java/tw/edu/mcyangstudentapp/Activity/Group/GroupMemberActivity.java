@@ -102,7 +102,8 @@ public class GroupMemberActivity extends AppCompatActivity {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         String team_id = jsonObject.getString("Team_id");
                         String leader_id = jsonObject.getString("Leader_id");
-                        getStudentData(team_id, leader_id);
+                        String teamDesc = jsonObject.getString("Team_desc");
+                        getStudentData(team_id, leader_id, teamDesc);
                     }
 
                 } catch (JSONException e) {
@@ -117,7 +118,7 @@ public class GroupMemberActivity extends AppCompatActivity {
         });
     }
 
-    private synchronized void getStudentData(String team_id, String leader_id) {
+    private synchronized void getStudentData(String team_id, String leader_id, String teamDesc) {
         volleyApi.api(Request.Method.GET, DefaultSetting.URL_STUDENT + leader_id, new VolleyApi.VolleyGet() {
             @Override
             public void onSuccess(String result) {
@@ -129,9 +130,7 @@ public class GroupMemberActivity extends AppCompatActivity {
                     String names = jsonObject.getString("S_Name");
 
                     if (isExisted(names))
-                        memberModels.add(new MemberModel(team_id, names, "未選擇"));
-
-                    Log.e(TAG, "getStudentData: " + memberModels.toString());
+                        memberModels.add(new MemberModel(team_id, names, "未選擇", teamDesc, leader_id));
 
                     notFound();
                     syncViewModel();
@@ -177,12 +176,69 @@ public class GroupMemberActivity extends AppCompatActivity {
 
         btnEnter.setOnClickListener(v -> {
             //Fixme:
-            if (shareData.getTeam_ID() != null) {
-                repeatHelper.stop();
-                Intent ii = new Intent(getApplicationContext(), GroupMemberSecondActivity.class);
-                startActivity(ii);
+            getTeamSize();
+            if (shareData.getTeam_ID_Array() != null) {
+                volleyApi.api(Request.Method.GET, DefaultSetting.URL_GROUP_TEAM_DESCRIPTION + shareData.getGroup_ID(), new VolleyApi.VolleyGet() {
+                    @Override
+                    public void onSuccess(String result) {
+                        try {
+                            JSONArray jsonArray = new JSONArray(new String(result.getBytes(StandardCharsets.ISO_8859_1)));
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                                if (jsonObject.getInt("TeamDesc_id") == Integer.parseInt(shareData.getTeam_ID_Array().get(0).getTeamDesc())) {
+                                    int memberSize = jsonObject.getInt("Group_limit");
+                                    Log.e(TAG, memberSize + " | " + shareData.getNumberOfMember());
+
+                                    if (shareData.getNumberOfMember() >= memberSize) {
+                                        Toast.makeText(GroupMemberActivity.this, "此組已滿", Toast.LENGTH_SHORT).show();
+                                        return;
+
+                                    } else {
+                                        Toast.makeText(GroupMemberActivity.this, "Success!", Toast.LENGTH_SHORT).show();
+                                        repeatHelper.stop();
+                                        Intent ii = new Intent(getApplicationContext(), GroupMemberSecondActivity.class);
+                                        startActivity(ii);
+                                    }
+                                    // return;
+                                }
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailed(VolleyError error) {
+                        Toast.makeText(GroupMemberActivity.this, "連線異常...", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             } else
                 Toast.makeText(this, "請選擇組別！", Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    private void getTeamSize() {
+        volleyApi.api(Request.Method.GET, DefaultSetting.URL_GROUP_TEAM_MEMBER + shareData.getTeam_ID_Array().get(0).getTeamID(), new VolleyApi.VolleyGet() {
+            @Override
+            public void onSuccess(String result) {
+                int count = 1;
+                try {
+                    JSONArray jsonArray = new JSONArray(new String(result.getBytes(StandardCharsets.ISO_8859_1)));
+                    count += jsonArray.length();
+                    shareData.saveNumberOfMember(count);
+
+                } catch (JSONException e) {
+                    Toast.makeText(GroupMemberActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailed(VolleyError error) {
+                Toast.makeText(GroupMemberActivity.this, "連線異常...", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
@@ -198,6 +254,7 @@ public class GroupMemberActivity extends AppCompatActivity {
         beaconController.beaconInit(DefaultSetting.BEACON_UUID_TEAM);
         repeatHelper = new RepeatHelper(this::syncData);
         shareData = new ShareData(this);
+        shareData.saveNumberOfMember(0);
         volleyApi = new VolleyApi(this);
     }
 

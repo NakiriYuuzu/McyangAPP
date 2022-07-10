@@ -2,6 +2,7 @@ package tw.edu.pu.Activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -185,6 +186,8 @@ public class MainActivity extends AppCompatActivity {
                         customViewHelper.showSnackBar(constraintLayout, studentNames + "同學：提問中...", (view, snackbar) -> {
                             if (studentRequest.size() > 0)
                                 studentRequest.remove(0);
+                            final MediaPlayer mp = MediaPlayer.create(MainActivity.this, R.raw.notification);
+                            mp.start();
                             onClicked = false;
                             snackbar.dismiss();
                         });

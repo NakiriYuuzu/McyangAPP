@@ -254,6 +254,30 @@ public class ShareData {
         return preferences.getString(ShareVariables.DESC_ID, null);
     }
 
+    public void saveNumberOfLeader(int numberOfLeader) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(ShareVariables.NUMBER_OF_LEADER, numberOfLeader);
+        editor.apply();
+    }
+
+    public int getNumberOfLeader() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getInt(ShareVariables.NUMBER_OF_LEADER, 0);
+    }
+
+    public void saveNumberOfMember(int numberOfMember) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(ShareVariables.NUMBER_OF_MEMBER, numberOfMember);
+        editor.apply();
+    }
+
+    public int getNumberOfMember() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getInt(ShareVariables.NUMBER_OF_MEMBER, 0);
+    }
+
     public void saveTeam_ID(ArrayList<String> teamID) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = preferences.edit();

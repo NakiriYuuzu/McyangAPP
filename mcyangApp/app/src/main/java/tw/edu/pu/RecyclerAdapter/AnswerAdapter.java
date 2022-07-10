@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.VolleyError;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.radiobutton.MaterialRadioButton;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
@@ -27,6 +28,9 @@ import tw.edu.pu.DefaultSetting;
 import tw.edu.pu.R;
 
 public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerViewHolder> {
+
+    private int selectedPosition = -1;
+
     ArrayList<AnswerModel> answerModels;
 
     Activity activity;
@@ -47,10 +51,11 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerView
     @NonNull
     @Override
     public AnswerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_3_recyclerview, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_3_radio_recyclerview, parent, false);
         return new AnswerViewHolder(view);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onBindViewHolder(@NonNull AnswerViewHolder holder, int position) {
         StringBuilder miniDoc = new StringBuilder();
@@ -71,7 +76,14 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerView
         holder.tvLeft.setText(answerModels.get(position).getStudentNames());
         holder.tvMid.setText(miniDoc);
 
-        holder.btnEnter.setOnClickListener(v -> bottomSheet(position));
+        holder.radio.setChecked(position == selectedPosition);
+        holder.radio.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                selectedPosition = holder.getAdapterPosition();
+                holder.radio.setOnClickListener(v -> bottomSheet(position));
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -140,15 +152,18 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerView
     public static class AnswerViewHolder extends RecyclerView.ViewHolder {
 
         LinearLayout btnEnter;
+        MaterialRadioButton radio;
         MaterialTextView tvLeft, tvMid, tvRight;
 
         public AnswerViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            btnEnter = itemView.findViewById(R.id.three_recyclerView_Button);
-            tvLeft = itemView.findViewById(R.id.three_recycleView_tv_Left);
-            tvMid = itemView.findViewById(R.id.three_recycleView_tv_Mid);
-            tvRight = itemView.findViewById(R.id.three_recycleView_tv_Right);
+            radio = itemView.findViewById(R.id.layout3_radio_recyclerview_radio);
+
+            btnEnter = itemView.findViewById(R.id.layout3_radio_recyclerview_btn);
+            tvLeft = itemView.findViewById(R.id.layout3_radio_recyclerview_left);
+            tvMid = itemView.findViewById(R.id.layout3_radio_recyclerview_mid);
+            tvRight = itemView.findViewById(R.id.layout3_radio_recyclerview_right);
         }
     }
 }

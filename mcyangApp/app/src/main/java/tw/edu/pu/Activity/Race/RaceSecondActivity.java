@@ -69,7 +69,17 @@ public class RaceSecondActivity extends AppCompatActivity {
 
         initView();
         initButton();
+        initData();
         initRecycleView();
+    }
+
+    private void initData() {
+        if (!checkedBeacon) {
+            checkedBeacon = true;
+            if (shareData.getRaceID() != null)
+                repeatHelper.start(500);
+            beaconController.start_BroadcastBeacon();
+        }
     }
 
     private void notFound() {
@@ -213,36 +223,38 @@ public class RaceSecondActivity extends AppCompatActivity {
     }
 
     private void initButton() {
-        btnBeacon.setOnClickListener(v -> {
-            if (checkedBeacon) {
-                checkedBeacon = false;
-                beaconController.stop_BroadcastBeacon();
-                repeatHelper.stop();
-                tvBeacon.setText(R.string.btn_StartRace);
-                btnBeacon.setCardBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_red_dark));
-                Toast.makeText(getApplicationContext(), "關閉廣播", Toast.LENGTH_SHORT).show();
-
-            } else {
-                checkedBeacon = true;
-                beaconController.init_Race_BroadcastBeacon();
-                beaconController.start_BroadcastBeacon();
-
-                if (shareData.getRaceID() != null)
-                    repeatHelper.start(2000);
-
-                tvBeacon.setText(R.string.btn_StopRace);
-                btnBeacon.setCardBackgroundColor(ContextCompat.getColor(this, R.color.green));
-                Toast.makeText(getApplicationContext(), "開始廣播", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        btnBeacon.setOnClickListener(v -> {
+//            if (checkedBeacon) {
+//                checkedBeacon = false;
+//                beaconController.stop_BroadcastBeacon();
+//                repeatHelper.stop();
+//                tvBeacon.setText(R.string.btn_StartRace);
+//                btnBeacon.setCardBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_red_dark));
+//                Toast.makeText(getApplicationContext(), "關閉廣播", Toast.LENGTH_SHORT).show();
+//
+//            } else {
+//                checkedBeacon = true;
+//                beaconController.init_Race_BroadcastBeacon();
+//                beaconController.start_BroadcastBeacon();
+//
+//                if (shareData.getRaceID() != null)
+//                    repeatHelper.start(2000);
+//
+//                tvBeacon.setText(R.string.btn_StopRace);
+//                btnBeacon.setCardBackgroundColor(ContextCompat.getColor(this, R.color.green));
+//                Toast.makeText(getApplicationContext(), "開始廣播", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         btnNext.setOnClickListener(v -> {
             endApi();
+            repeatHelper.stop();
             finish();
         });
 
         btnEnd.setOnClickListener(v -> {
             endApi();
+            repeatHelper.stop();
             Intent ii = new Intent(this, MainActivity.class);
             ii.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(ii);
@@ -250,6 +262,7 @@ public class RaceSecondActivity extends AppCompatActivity {
 
         btnBack.setOnClickListener(v -> {
             endApi();
+            repeatHelper.stop();
             finish();
         });
     }
@@ -260,10 +273,11 @@ public class RaceSecondActivity extends AppCompatActivity {
         btnEnd = findViewById(R.id.raceSecond_btn_Enter);
         tvNotFound = findViewById(R.id.raceSecond_textView_NotFound);
         recyclerView = findViewById(R.id.raceSecond_recycleView);
-        btnBeacon = findViewById(R.id.raceSecond_btn_Beacon);
-        tvBeacon = findViewById(R.id.raceSecond_tv_Beacon);
+//        btnBeacon = findViewById(R.id.raceSecond_btn_Beacon);
+//        tvBeacon = findViewById(R.id.raceSecond_tv_Beacon);
 
         beaconController = new BeaconController(this);
+        beaconController.init_Race_BroadcastBeacon();
 
         studentID = new ArrayList<>();
         raceModels = new ArrayList<>();

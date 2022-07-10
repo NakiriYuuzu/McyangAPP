@@ -100,7 +100,7 @@ public class GroupMemberSecondActivity extends AppCompatActivity {
     }
 
     private synchronized void syncData() {
-        volleyApi.api(Request.Method.GET, DefaultSetting.URL_GROUP_TEAM_MEMBER + shareData.getTeam_ID().get(0).getTeamID(), new VolleyApi.VolleyGet() {
+        volleyApi.api(Request.Method.GET, DefaultSetting.URL_GROUP_TEAM_MEMBER + shareData.getTeam_ID_Array().get(0).getTeamID(), new VolleyApi.VolleyGet() {
             @Override
             public void onSuccess(String result) {
                 try {
@@ -158,7 +158,7 @@ public class GroupMemberSecondActivity extends AppCompatActivity {
             @Override
             public void onSuccess(String result) {
                 Log.e(TAG, "SendData: onSuccess");
-                memberModels.add(new SecondMemberModel("隊長", shareData.getTeam_ID().get(0).getLeaderName()));
+                memberModels.add(new SecondMemberModel("隊長", shareData.getTeam_ID_Array().get(0).getLeaderName()));
             }
 
             @Override
@@ -168,7 +168,7 @@ public class GroupMemberSecondActivity extends AppCompatActivity {
         }, () -> {
             Map<String, String> params = new HashMap<>();
             params.put("S_id", shareData.getStudentID());
-            params.put("Team_id", shareData.getTeam_ID().get(0).getTeamID());
+            params.put("Team_id", shareData.getTeam_ID_Array().get(0).getTeamID());
             return params;
         });
     }

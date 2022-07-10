@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 import tw.edu.mcyangstudentapp.Activity.LearningRecord.LearningRecord3Activity;
 import tw.edu.mcyangstudentapp.ActivityModel.LearningModel;
+import tw.edu.mcyangstudentapp.DefaultSetting;
 import tw.edu.mcyangstudentapp.R;
 
 public class LearningAdapter extends RecyclerView.Adapter<LearningAdapter.LearningViewHolder> {
@@ -51,8 +52,13 @@ public class LearningAdapter extends RecyclerView.Adapter<LearningAdapter.Learni
         holder.tvRight.setText(learningModels.get(position).getNum_judged());
 
         holder.btnEnter.setOnClickListener(v -> {
-            Intent ii = new Intent(activity, LearningRecord3Activity.class);
-            ii.putExtra("problemID", learningModels.get(position).getProblem_id());
+//            Intent ii = new Intent(activity, LearningRecord3Activity.class);
+//            ii.putExtra("problemID", learningModels.get(position).getProblem_id());
+//            activity.startActivity(ii);
+            Intent ii = new Intent(Intent.ACTION_VIEW);
+            String problems_id = learningModels.get(position).getProblem_id();
+            String url = DefaultSetting.URL_DOM_JUDGE_PROBLEMS + problems_id + "/text/";
+            ii.setData(android.net.Uri.parse(url));
             activity.startActivity(ii);
         });
     }

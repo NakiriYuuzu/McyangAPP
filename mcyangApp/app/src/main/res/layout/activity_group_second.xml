@@ -66,6 +66,18 @@
         app:layout_constraintTop_toBottomOf="@+id/groupSecond_btn_Back">
 
         <com.google.android.material.textview.MaterialTextView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/layout_checkbox"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:background="@drawable/recyclerview_background"
+            android:buttonTint="@color/green" />
+
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="125dp"
             android:layout_height="match_parent"
             android:background="@drawable/recyclerview_background"

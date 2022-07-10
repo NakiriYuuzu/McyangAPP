@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.VolleyError;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.radiobutton.MaterialRadioButton;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
@@ -29,6 +31,8 @@ import tw.edu.pu.R;
 import tw.edu.pu.StoredData.ShareData;
 
 public class RaceAdapter extends RecyclerView.Adapter<RaceAdapter.RaceViewHolder> {
+
+    private int selectedPosition = -1;
 
     ArrayList<RaceModel> raceModels;
     ArrayList<String> sid;
@@ -55,17 +59,25 @@ public class RaceAdapter extends RecyclerView.Adapter<RaceAdapter.RaceViewHolder
     @NonNull
     @Override
     public RaceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_3_recyclerview, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_3_radio_recyclerview, parent, false);
         return new RaceViewHolder(view);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onBindViewHolder(@NonNull RaceViewHolder holder, int position) {
         holder.tvLeft.setText(raceModels.get(position).getRaceID());
         holder.tvMid.setText(raceModels.get(position).getStudentNames());
         holder.tvRight.setText(raceModels.get(position).getRaceCorrect());
 
-        holder.btnEnter.setOnClickListener(view -> bottomSheet(position));
+        holder.radio.setChecked(position == selectedPosition);
+        holder.radio.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                selectedPosition = holder.getAdapterPosition();
+                holder.radio.setOnClickListener(v -> bottomSheet(position));
+                notifyDataSetChanged();
+            }
+        });
     }
 
     private void bottomSheet(int position) {
@@ -149,14 +161,16 @@ public class RaceAdapter extends RecyclerView.Adapter<RaceAdapter.RaceViewHolder
     public static class RaceViewHolder extends RecyclerView.ViewHolder {
 
         MaterialTextView tvLeft, tvMid, tvRight;
+        MaterialRadioButton radio;
         LinearLayout btnEnter;
 
         public RaceViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvLeft = itemView.findViewById(R.id.three_recycleView_tv_Left);
-            tvMid = itemView.findViewById(R.id.three_recycleView_tv_Mid);
-            tvRight = itemView.findViewById(R.id.three_recycleView_tv_Right);
-            btnEnter = itemView.findViewById(R.id.three_recyclerView_Button);
+            radio = itemView.findViewById(R.id.layout3_radio_recyclerview_radio);
+            tvLeft = itemView.findViewById(R.id.layout3_radio_recyclerview_left);
+            tvMid = itemView.findViewById(R.id.layout3_radio_recyclerview_mid);
+            tvRight = itemView.findViewById(R.id.layout3_radio_recyclerview_right);
+            btnEnter = itemView.findViewById(R.id.layout3_radio_recyclerview_btn);
         }
     }
 }

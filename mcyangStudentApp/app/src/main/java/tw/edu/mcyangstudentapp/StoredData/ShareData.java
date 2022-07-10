@@ -186,22 +186,34 @@ public class ShareData {
         return preferences.getString(ShareVariables.GROUP_ID, null);
     }
 
-    public void saveTeam_ID(ArrayList<SubMemberModel> teamID) {
+    public void save_TeamID(String team_ID) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ShareVariables.TEAM_ID, team_ID);
+        editor.apply();
+    }
+
+    public String get_TeamID() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getString(ShareVariables.TEAM_ID, null);
+    }
+
+    public void saveTeam_ID_Array(ArrayList<SubMemberModel> teamID) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = preferences.edit();
 
         Gson gson = new Gson();
         String json = gson.toJson(teamID);
 
-        editor.putString(ShareVariables.TEAM_ID, json);
+        editor.putString(ShareVariables.TEAM_ID_2, json);
         editor.apply();
     }
 
-    public ArrayList<SubMemberModel> getTeam_ID() {
+    public ArrayList<SubMemberModel> getTeam_ID_Array() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         Gson gson = new Gson();
         ArrayList<SubMemberModel> teamID;
-        String json = preferences.getString(ShareVariables.TEAM_ID, null);
+        String json = preferences.getString(ShareVariables.TEAM_ID_2, null);
         Type type = new TypeToken<ArrayList<SubMemberModel>>() {}.getType();
 
         teamID = gson.fromJson(json, type);
@@ -223,6 +235,18 @@ public class ShareData {
     public String getChat_ID() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         return preferences.getString(ShareVariables.CHAT_ID, null);
+    }
+
+    public void saveNumberOfMember(int numberOfMember) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(ShareVariables.NUMBER_OF_MEMBER, numberOfMember);
+        editor.apply();
+    }
+
+    public int getNumberOfMember() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getInt(ShareVariables.NUMBER_OF_MEMBER, 0);
     }
 
     public void saveChat_Name(String chatName) {

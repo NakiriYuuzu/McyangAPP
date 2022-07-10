@@ -34,4 +34,6 @@ public class ShareVariables {
     public static final String GROUP_SECOND = "groupSeconds";
     public static final String GROUP_MEMBER = "groupMember";
     public static final String FIREBASE_TOKEN = "firebaseToken";
+    public static final String NUMBER_OF_LEADER = "NUMBER_OF_LEADER";
+    public static final String NUMBER_OF_MEMBER = "numberOfMember";
 }

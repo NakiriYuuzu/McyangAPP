@@ -70,6 +70,8 @@ public class GroupSecondActivity extends AppCompatActivity {
         initButton();
         syncData();
         initRecyclerView();
+
+        Log.e(TAG, "onCreate: " + shareData.getNumberOfLeader() + " | " + shareData.getNumberOfMember());
     }
 
     private void initButton() {
@@ -79,40 +81,81 @@ public class GroupSecondActivity extends AppCompatActivity {
             Log.e(TAG,groupModels.toString());
             if (shareData.getTeam_ID() != null) {
                 if (shareData.getTeam_ID().size() > 0) {
-                    viewHelper.showAlertBuilder("選擇隊長", "目前已選擇" + shareData.getTeam_ID().size() + "位隊長", new CustomViewHelper.AlertListener() {
-                        @Override
-                        public void onPositive(DialogInterface dialogInterface, int i) {
-                            for (GroupSecondModel groupModel : groupModels)
-                                if (!isSelected(groupModel.getTeamID(), shareData.getTeam_ID()))
-                                    removeTeamID.add(groupModel.getTeamID());
+                    if (shareData.getTeam_ID().size() > shareData.getNumberOfLeader()) {
+                        Toast.makeText(this, "只能選擇" + shareData.getNumberOfLeader() + "位隊長！", Toast.LENGTH_SHORT).show();
+
+                    } else if (shareData.getTeam_ID().size() == shareData.getNumberOfLeader()) {
+                        viewHelper.showAlertBuilder("選擇隊長", "目前已選擇" + shareData.getTeam_ID().size() + "位隊長", new CustomViewHelper.AlertListener() {
+                            @Override
+                            public void onPositive(DialogInterface dialogInterface, int i) {
+                                for (GroupSecondModel groupModel : groupModels)
+                                    if (!isSelected(groupModel.getTeamID(), shareData.getTeam_ID()))
+                                        removeTeamID.add(groupModel.getTeamID());
 
 
-                            for (int j = 0; j < removeTeamID.size(); j++) {
-                                for (int k = 0; k < groupModels.size(); k++) {
-                                    if (removeTeamID.get(j).equals(groupModels.get(k).getTeamID())) {
-                                        groupModels.remove(k);
-                                        break;
+                                for (int j = 0; j < removeTeamID.size(); j++) {
+                                    for (int k = 0; k < groupModels.size(); k++) {
+                                        if (removeTeamID.get(j).equals(groupModels.get(k).getTeamID())) {
+                                            groupModels.remove(k);
+                                            break;
+                                        }
                                     }
                                 }
+
+                                shareData.saveRemoveTeam_ID(removeTeamID);
+                                shareData.saveGroupSecond(groupModels);
+
+                                if (isBroadcast)
+                                    beaconController.stop_BroadcastBeacon();
+                                repeatHelper.stop();
+
+                                Intent ii = new Intent(getApplicationContext(), GroupThirdActivity.class);
+                                startActivity(ii);
+                                dialogInterface.dismiss();
                             }
 
-                            shareData.saveRemoveTeam_ID(removeTeamID);
-                            shareData.saveGroupSecond(groupModels);
+                            @Override
+                            public void onNegative(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        });
 
-                            if (isBroadcast)
-                                beaconController.stop_BroadcastBeacon();
-                            repeatHelper.stop();
+                    } else {
+                        viewHelper.showAlertBuilder("選擇隊長", "目前已選擇" + shareData.getTeam_ID().size() + "位隊長， 但是您設定一共有" + shareData.getNumberOfLeader() + "隊長，請問是否要送出呢？", new CustomViewHelper.AlertListener() {
+                            @Override
+                            public void onPositive(DialogInterface dialogInterface, int i) {
+                                for (GroupSecondModel groupModel : groupModels)
+                                    if (!isSelected(groupModel.getTeamID(), shareData.getTeam_ID()))
+                                        removeTeamID.add(groupModel.getTeamID());
 
-                            Intent ii = new Intent(getApplicationContext(), GroupThirdActivity.class);
-                            startActivity(ii);
-                            dialogInterface.dismiss();
-                        }
 
-                        @Override
-                        public void onNegative(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                        }
-                    });
+                                for (int j = 0; j < removeTeamID.size(); j++) {
+                                    for (int k = 0; k < groupModels.size(); k++) {
+                                        if (removeTeamID.get(j).equals(groupModels.get(k).getTeamID())) {
+                                            groupModels.remove(k);
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                shareData.saveRemoveTeam_ID(removeTeamID);
+                                shareData.saveGroupSecond(groupModels);
+
+                                if (isBroadcast)
+                                    beaconController.stop_BroadcastBeacon();
+                                repeatHelper.stop();
+
+                                Intent ii = new Intent(getApplicationContext(), GroupThirdActivity.class);
+                                startActivity(ii);
+                                dialogInterface.dismiss();
+                            }
+
+                            @Override
+                            public void onNegative(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        });
+                    }
 
                 } else {
                     Toast.makeText(this, "請選擇隊長！", Toast.LENGTH_SHORT).show();

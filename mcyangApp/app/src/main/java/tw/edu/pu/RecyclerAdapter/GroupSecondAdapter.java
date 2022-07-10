@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
@@ -41,16 +42,15 @@ public class GroupSecondAdapter extends RecyclerView.Adapter<GroupSecondAdapter.
     @NonNull
     @Override
     public GroupSecondViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_2_recyclerview, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_2_checkbox_recyclerview, parent, false);
         return new GroupSecondViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull GroupSecondViewHolder holder, int position) {
-        holder.tvLeft.setText(groupModels.get(position).getIsSelected());
+        holder.tvLeft.setText(groupModels.get(position).getTeamID());
         holder.tvRight.setText(groupModels.get(position).getLeaderName());
-
-        holder.btnEnter.setOnClickListener(v -> {
+        holder.checkBox.setOnClickListener(v -> {
             String tid = groupModels.get(position).getTeamID();
 
             if (isExisted(tid)) {
@@ -75,6 +75,32 @@ public class GroupSecondAdapter extends RecyclerView.Adapter<GroupSecondAdapter.
             Log.e("teamID", teamID.toString() + " | " + shareData.getTeam_ID());
             updateGroupAdapter(groupModels);
         });
+
+//        holder.btnEnter.setOnClickListener(v -> {
+//            String tid = groupModels.get(position).getTeamID();
+//
+//            if (isExisted(tid)) {
+//                teamID.add(tid);
+//                groupModels.get(position).setIsSelected("已選擇");
+//
+//            } else {
+//                for (int i = 0; i < teamID.size(); i++)
+//                    if (teamID.get(i).equals(tid)) {
+//                        teamID.remove(i);
+//                        break;
+//                    }
+//
+//                groupModels.get(position).setIsSelected("選擇");
+//            }
+//
+//            if (teamID.size() > 0)
+//                shareData.saveTeam_ID(teamID);
+//            else
+//                shareData.saveTeam_ID(null);
+//
+//            Log.e("teamID", teamID.toString() + " | " + shareData.getTeam_ID());
+//            updateGroupAdapter(groupModels);
+//        });
     }
 
     private boolean isExisted(String tid) {
@@ -105,13 +131,15 @@ public class GroupSecondAdapter extends RecyclerView.Adapter<GroupSecondAdapter.
     public static class GroupSecondViewHolder extends RecyclerView.ViewHolder {
 
         LinearLayout btnEnter;
+        MaterialCheckBox checkBox;
         MaterialTextView tvLeft, tvRight;
 
         public GroupSecondViewHolder(@NonNull View itemView) {
             super(itemView);
-            btnEnter = itemView.findViewById(R.id.recyclerView_Button);
-            tvLeft = itemView.findViewById(R.id.recycleView_tv_Left);
-            tvRight = itemView.findViewById(R.id.recycleView_tv_Right);
+            checkBox = itemView.findViewById(R.id.layout2_checkbox_recyclerview_left);
+            btnEnter = itemView.findViewById(R.id.layout2_checkbox_recyclerview_btn);
+            tvLeft = itemView.findViewById(R.id.layout2_checkbox_recyclerview_mid);
+            tvRight = itemView.findViewById(R.id.layout2_checkbox_recyclerview_right);
         }
     }
 }

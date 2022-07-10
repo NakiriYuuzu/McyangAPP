@@ -1,8 +1,12 @@
 <resources>
     <!--Default-->
-    <string name="app_name">Mcyang老師APP</string>
+    <string name="app_name">情境劇本Beacon互動教學工具</string>
     <string name="default_Beacon_Open">Open</string>
     <string name="default_Beacon_Close">Close</string>
+
+    <!--Layout-->
+    <string name="layout_radio">單選</string>
+    <string name="layout_checkbox">多選</string>
 
     <!--TAG-->
     <string name="tag_NoInput">請輸入賬號和密碼！</string>
@@ -83,7 +87,7 @@
     <string name="group_btn_Enter">確認</string>
 
     <!--GroupSecondActivity-->
-    <string name="groupSecond_recycleView_title_Left">點選</string>
+    <string name="groupSecond_recycleView_title_Left">隊伍編號</string>
     <string name="groupSecond_recycleView_title_Right">隊長後選</string>
     <string name="groupSecond_notification_NoData">目前暫無資料。</string>
     <string name="groupSecond_btn_NextPage">完成選擇隊長</string>

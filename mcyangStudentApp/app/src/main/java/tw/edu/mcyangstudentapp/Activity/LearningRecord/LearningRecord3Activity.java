@@ -3,6 +3,7 @@ package tw.edu.mcyangstudentapp.Activity.LearningRecord;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebView;
@@ -33,15 +34,19 @@ public class LearningRecord3Activity extends AppCompatActivity {
     @SuppressLint("SetJavaScriptEnabled")
     private void initWebView() {
         String problems_id = getIntent().getStringExtra("problemID");
-        String url = DefaultSetting.URL_DOM_JUDGE_PROBLEMS + problems_id + "/text";
+        String url = DefaultSetting.URL_DOM_JUDGE_PROBLEMS + problems_id + "/text/";
         Log.e(TAG, "initWebView: " + url);
 
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setAllowFileAccess(true);
+        webView.getSettings().setAllowContentAccess(true);
+        webView.getSettings().setAllowFileAccessFromFileURLs(true);
+        webView.getSettings().setAllowUniversalAccessFromFileURLs(true);
+        webView.getSettings().setSupportZoom(true);
         webView.setWebViewClient(new WebViewClient() {
             @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
             }
         });
         webView.loadUrl(url);

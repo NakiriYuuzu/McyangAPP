@@ -1,6 +1,6 @@
 <resources>
     <!--Default-->
-    <string name="app_name">Mcyang學生APP</string>
+    <string name="app_name">情境劇本Beacon互動教學工具</string>
 
     <!--TAG-->
     <string name="tag_NoInput">請輸入賬號和密碼！</string>
@@ -16,6 +16,9 @@
     <string name="splash_Next">下一頁</string>
     <string name="splash_Start">開始使用</string>
     <string name="splash_CheckBox">不再提示</string>
+
+    <!--RecycleView-->
+    <string name="recyclerView_Radio">單選</string>
 
     <!--LoginActivity-->
     <string name="login_text_Account">賬號</string>

@@ -55,26 +55,23 @@ public class AnswerActivity extends AppCompatActivity {
     }
 
     private void syncData() {
-        volleyApi.getApi(DefaultSetting.URL_ANSWER_TOPIC, new VolleyApi.VolleyGet() {
+        volleyApi.getApi(DefaultSetting.URL_ANSWER_TOPIC + shareData.getCourseID(), new VolleyApi.VolleyGet() {
             @Override
             public void onSuccess(String result) {
                 try {
                     JSONArray jsonArray = new JSONArray(new String(result.getBytes(StandardCharsets.ISO_8859_1)));
-                    JSONObject jsonObject;
-                    Log.e(TAG, jsonArray.toString());
-
                     for (int i = 0; i < jsonArray.length(); i++) {
-                        jsonObject = jsonArray.getJSONObject(i);
-
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
                         String doc = jsonObject.getString("QA_doc");
-                        StringBuilder miniDoc = new StringBuilder();
                         if (doc.length() > 16) {
-                            char[] txt = doc.toCharArray();
+                            char[] chr = doc.toCharArray();
+                            StringBuilder miniDoc = new StringBuilder();
 
                             for (int j = 0; j < 16; j++)
-                                miniDoc.append(txt[j]);
+                                miniDoc.append(chr[j]);
 
                             topic.add(miniDoc.toString());
+
                         } else {
                             topic.add(doc);
                         }
@@ -83,7 +80,7 @@ public class AnswerActivity extends AppCompatActivity {
                     }
 
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Toast.makeText(AnswerActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
 
